@@ -9,10 +9,10 @@ Companion repository: the shop's Google review page, `pullayagaricement-googlere
 ## What is on the page
 
 - **Top bar and hero:** logo, "Call", "WhatsApp" and "Directions" buttons, and the tagline "Your trusted store for cement, paint and hardware".
-- **Quick facts:** Google rating, hours, what the shop sells, location.
+- **Quick facts:** location, hours, what the shop sells, and how to ask for a price.
 - **Products:** cement, paints, waterproofing and construction chemicals, adhesives and sealants, hardware.
 - **Get a price on WhatsApp:** the customer ticks what they need, adds quantity and delivery location, and the message is ready to send to the shop's WhatsApp.
-- **Reviews:** a review box that copies the text and opens the shop's Google review box, plus a link to the review helper page.
+- **Reviews:** an invitation to be one of the first Google reviewers (the listing has no reviews yet), a review box that copies the text and opens the shop's Google review box, and a link to the review helper page.
 - **Visit us:** address, phone, hours, Google Maps and directions links.
 - **Mobile action bar:** Call, WhatsApp and Directions stay at the bottom of the screen on phones.
 - **Search data:** schema.org `HardwareStore` markup with name, phone, address and coordinates.
@@ -36,12 +36,12 @@ No build step and no dependencies. Only the Google Fonts (Plus Jakarta Sans, Not
 
 | Item | Value |
 | --- | --- |
-| Address | Near Adi Lakshmi Amma Temple, Gunupudi, Bhimavaram, Andhra Pradesh 534201 |
+| Address | 18-10-3, Gandhi Nagar, Gunupudi, Bhimavaram, Andhra Pradesh 534201 |
 | Phone / WhatsApp | +91 81799 51999 |
-| Hours (per Google listing) | 9 AM – 9 PM, may differ on festival days |
-| Coordinates | 16.5405094, 81.5367524 |
-| Google Maps CID | `5900465120403943280` |
-| Google Place ID | `ChIJNy0G4evTNzoRcG9C18Op4lE` |
+| Hours (per Google listing) | 7:30 AM – 7:30 PM, may differ on festival days |
+| Coordinates | 16.5412239, 81.5264281 |
+| Google Maps CID | `12673521240897900903` |
+| Google Place ID | `ChIJYXtqRQDTNzoRZ1EW4Wtk4a8` |
 
 ## Editing
 
@@ -55,8 +55,9 @@ Open `index.html` and search for:
 
 ## Before launch
 
-- Confirm that 81799 51999 is on WhatsApp.
+- Confirm that 81799 51999 is on WhatsApp. The current Google listing shows no phone number, so this number comes from the shop's earlier listing.
 - The "Help me write it" button opens the companion review page, so it only works once GitHub Pages is on for `pullayagaricement-googlereview`.
 - The logo was captured from the shop's Google Maps photos at 390 × 315 px. Replace the embedded image with the owner's original file for a sharper result.
 - Stock and prices are not listed on purpose: they change often, so customers are asked to call or message for today's price.
 - Check the opening hours with the owner. They come from the Google listing.
+- Once the shop has real Google reviews, add the rating back to the quick facts and the reviews section.
