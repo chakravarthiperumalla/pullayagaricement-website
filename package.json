@@ -1,0 +1,9 @@
+{
+  "name": "pullayya-gari-cement-kottu-site-build",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build step for the 3D scene bundle (the site itself needs no build).",
+  "scripts": { "build": "esbuild src/scene.js --bundle --minify --format=iife --global-name=PGScene --target=es2018 --outfile=assets/js/scene.js" },
+  "dependencies": { "three": "^0.180.0" },
+  "devDependencies": { "esbuild": "^0.25.0" }
+}
