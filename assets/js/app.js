@@ -314,7 +314,8 @@
     app.innerHTML =
       '<section class="hero" aria-labelledby="hero-h"><div class="hero-in">' +
       '<div class="hero-copy">' +
-      '<img class="hero-logo" src="assets/img/logo.png" width="390" height="315" alt="Pullayya Gari Cement Kottu">' +
+      '<div class="hero-brand"><img class="hero-logo" src="assets/img/logo.png" width="390" height="315" alt="Pullayya Gari Cement Kottu">' +
+      '<a class="hero-poster" href="assets/img/poster.jpg" target="_blank" rel="noopener"><img src="assets/img/poster.jpg" width="1000" height="1000" alt="Pullayya Gari Cement Kottu poster: Mee Ramu, all leading brands, Bhimavaram"></a></div>' +
       '<ul class="tags" aria-label="' + esc('Premium quality, High strength, Waterproof protection, Trusted service') + '">' + TAGS.map(function (t, i) {
         return '<li class="tag" style="--i:' + i + '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + t.ic + '</svg><span>' + T(t.en, t.te) + '</span></li>';
       }).join('') + '</ul>' +
