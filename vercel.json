@@ -1,0 +1,6 @@
+{
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "echo 'static site, scene.js is prebuilt'",
+  "outputDirectory": "."
+}
