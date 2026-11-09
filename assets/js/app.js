@@ -177,7 +177,7 @@
       var meta = c.ask ? '<span class="ask">' + T('Ask us', 'మమ్మల్ని అడగండి') + '</span>'
         : '<span class="meta">' + T(plural(nb, 'brand', 'brands') + ', ' + plural(np, 'product', 'products'), nb + ' బ్రాండ్లు, ' + np + ' ఉత్పత్తులు') + '</span>';
       return '<li class="' + (i === 0 ? 'cat-lead' : '') + '"><a class="cat' + (c.ask ? ' cat-ask' : '') + '" href="#/c/' + c.id + '" style="--t:' + hex(c.tint) + ';--s:' + mix(hex(c.tint), '#000000', 0.2) + '">' +
-        '<span class="cat-art">' + thumb(c.shape, c.tint) + '</span>' +
+        '<img class="cat-img" src="assets/img/cats/' + c.id + '.jpg" alt="" loading="lazy" decoding="async">' +
         '<span class="cat-name">' + T(c.en, c.te) + '</span>' + meta + '</a></li>';
     }).join('');
     return '<section class="sec" aria-labelledby="h-cats">' +
@@ -185,10 +185,12 @@
       '<ul class="cats">' + tiles + '</ul></section>';
   }
 
+  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1 };
   function secBrands() {
     var rows = C.BRANDS.map(function (b) {
       var cs = catsOf(b.id), n = prodsOf(b.id).length;
       return '<li><a class="wall-row" href="#/b/' + b.id + '">' +
+        '<span class="wall-logo"><img src="assets/img/brands/' + b.id + (SVG_LOGO[b.id] ? '.svg' : '.png') + '" alt="' + esc(b.name) + ' logo" loading="lazy"></span>' +
         '<span class="wall-name">' + esc(b.name) + '</span>' +
         '<span class="wall-te l-te" lang="te">' + esc(b.te) + '</span>' +
         '<span class="wall-by">' + esc(b.by) + '</span>' +
@@ -289,15 +291,15 @@
     var bags = cementBrands.map(function (id) {
       var p = prodsOf(id, 'cement')[0]; if (!p) return null;
       var b = brandById[id];
-      return { name: b.name, line: lineName(p), sub: subLine(p), tint: p.tint, mark: packMark(p), href: '#/b/' + id,
+      return { name: b.name, line: lineName(p), sub: subLine(p), tint: 'b-' + id, mark: packMark(p), href: '#/b/' + id,
         label: '<b>' + esc(b.name) + '</b><small>' + T(plural(prodsOf(id).length, 'product', 'products'), prodsOf(id).length + ' ఉత్పత్తులు') + '</small>' };
     }).filter(Boolean);
     var spec = [
       { id: 'steel', brand: 'Steel', line: 'TMT bars', sub: '', shape: 'rebar', tint: 'slate' },
       { id: 'paint', brand: 'Paints', line: 'Interior & exterior', sub: 'Ask us', shape: 'can', tint: 'orange' },
-      { id: 'chem', brand: 'Fosroc', line: 'Waterproofing', sub: 'Roof & bathroom', shape: 'pail', tint: 'teal' },
-      { id: 'adhesive', brand: 'Fevicol', line: 'Adhesives', sub: 'Wood & tile', shape: 'bottle', tint: 'mustard' },
-      { id: 'hardware', brand: 'Godrej', line: 'Locks', sub: 'Security', shape: 'padlock', tint: 'ink' },
+      { id: 'chem', brand: 'Fosroc', line: 'Waterproofing', sub: 'Roof & bathroom', shape: 'pail', tint: 'b-fosroc' },
+      { id: 'adhesive', brand: 'Fevicol', line: 'Adhesives', sub: 'Wood & tile', shape: 'bottle', tint: 'b-fevicol' },
+      { id: 'hardware', brand: 'Godrej', line: 'Locks', sub: 'Security', shape: 'padlock', tint: 'b-godrej' },
       { id: 'white', brand: 'Birla White', line: 'WallCare Putty', sub: 'Wall finish', shape: 'sack', tint: 'white' }
     ];
     var items = spec.map(function (s) {

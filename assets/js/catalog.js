@@ -16,7 +16,10 @@
   /* ---------- colours used by the 3D models and flat thumbnails (our own palette, not brand logos) ---------- */
   var TINT = {
     kraft: '#C9A06A', grey: '#9DA3A8', white: '#EDEDEA', slate: '#56646F',
-    orange: '#F58220', teal: '#2F8079', brick: '#B4543D', mustard: '#D9A524', ink: '#2B2528'
+    orange: '#F58220', teal: '#2F8079', brick: '#B4543D', mustard: '#D9A524', ink: '#2B2528',
+    /* brand colours, used by the hero pallet */
+    'b-ultratech': '#F7D117', 'b-ambuja': '#2A6EBB', 'b-kcp': '#D99A1E', 'b-ramco': '#1D3B7A', 'b-nagarjuna': '#E0561F',
+    'b-fosroc': '#E2231A', 'b-fevicol': '#1B4F9C', 'b-godrej': '#7A1F3D', 'b-birlawhite': '#EDEDEA'
   };
 
   /* ---------- where a product is used (English, Telugu) ---------- */
