@@ -25,6 +25,12 @@
   C.PRODUCTS.forEach(function (p) { byId[p.id] = p; });
   C.BRANDS.forEach(function (b) { brandById[b.id] = b; });
   C.CATEGORIES.forEach(function (c) { catById[c.id] = c; });
+  var photo = {};
+  (C.PHOTOS || []).forEach(function (id) { photo[id] = 'assets/img/products/' + id + '.png'; });
+  /* pack photo when we have one, drawn thumbnail otherwise */
+  function art(p, big) {
+    return photo[p.id] ? '<img src="' + photo[p.id] + '" alt="' + esc(p.name) + ' pack" loading="lazy" decoding="async"' + (big ? ' class="thumb-big"' : '') + '>' : thumb(p.shape, p.tint, big);
+  }
 
   function prodsOf(brand, cat) { return C.PRODUCTS.filter(function (p) { return p.brand === brand && (!cat || p.cat === cat); }); }
   function brandsIn(cat) { return C.BRANDS.filter(function (b) { return prodsOf(b.id, cat).length; }); }
@@ -147,7 +153,7 @@
     var b = brandById[p.brand], sp = p.specs || {};
     var chips = [sp.type, sp.grade].filter(Boolean).map(function (v) { return '<span class="chip">' + esc(v) + '</span>'; }).join('');
     return '<a class="pcard" href="#/p/' + p.id + '" style="--t:' + mix(hex(p.tint), '#000000', 0.18) + '">' +
-      '<span class="pcard-art">' + thumb(p.shape, p.tint) + '</span>' +
+      '<span class="pcard-art">' + art(p) + '</span>' +
       '<span class="pcard-body"><span class="pcard-brand">' + esc(b.name) + '</span>' +
       '<strong class="pcard-name">' + esc(lineName(p)) + '</strong>' +
       '<span class="pcard-te l-te" lang="te">' + esc(p.te) + '</span>' +
@@ -220,7 +226,7 @@
     var ul = $('#q-list'); if (!ul) return;
     ul.innerHTML = enquiry.length ? enquiry.map(function (id) {
       var p = byId[id];
-      return '<li><span class="q-item"><span class="q-thumb">' + thumb(p.shape, p.tint) + '</span><span><b>' + esc(lineName(p)) + '</b><br><small>' + esc(brandById[p.brand].name) + '</small></span></span>' +
+      return '<li><span class="q-item"><span class="q-thumb">' + art(p) + '</span><span><b>' + esc(lineName(p)) + '</b><br><small>' + esc(brandById[p.brand].name) + '</small></span></span>' +
         '<button type="button" class="btn-x" data-act="rm" data-id="' + id + '" aria-label="Remove ' + esc(p.name) + '">' + T('Remove', 'తీసివేయి') + '</button></li>';
     }).join('') : '<li class="q-empty">' + T('Nothing added yet. Open any product and press “Add to enquiry”, or type what you need below.', 'ఇంకా ఏదీ చేర్చలేదు. ఏదైనా ఉత్పత్తి తెరిచి “ఎంక్వైరీకి చేర్చు” నొక్కండి, లేదా కింద మీకు కావలసింది రాయండి.') + '</li>';
     updateQuote();
@@ -398,9 +404,11 @@
     var msg = 'Hello, I would like a price for: ' + p.name + ' (' + b.name + ')';
     app.innerHTML = '<div class="page">' + crumbs([homeCrumb, [T(c.en, c.te), '#/c/' + c.id], [esc(b.name), '#/b/' + b.id + '?c=' + c.id], [esc(lineName(p))]]) +
       '<article class="prod" style="--t:' + hex(p.tint) + '">' +
+      (photo[id] ? '<div class="prod-view"><div class="viewer viewer-photo"><img src="' + photo[id] + '" alt="' + esc(p.name) + ' pack"></div>' +
+      '<p class="viewer-note">' + T('Pack photo for reference. Pack designs can change.', 'సూచన కోసం ప్యాక్ ఫోటో. ప్యాక్ డిజైన్ మారవచ్చు.') + '</p></div>' :
       '<div class="prod-view"><div class="viewer" id="viewer"><div class="viewer-fb">' + thumb(p.shape, p.tint, true) + '</div></div>' +
       '<div class="viewer-ctl"><button type="button" class="chip chip-btn" data-act="turn" data-v="-0.6" aria-label="Turn left">&#8592;</button><span class="viewer-hint">' + T('Drag to turn the product', 'ఉత్పత్తిని లాగి తిప్పండి') + '</span><button type="button" class="chip chip-btn" data-act="turn" data-v="0.6" aria-label="Turn right">&#8594;</button></div>' +
-      '<p class="viewer-note">' + T('A model drawn for this page, not the manufacturer’s pack design.', 'ఈ పేజీ కోసం గీసిన నమూనా, తయారీదారు ప్యాక్ డిజైన్ కాదు.') + '</p></div>' +
+      '<p class="viewer-note">' + T('A model drawn for this page, not the manufacturer’s pack design.', 'ఈ పేజీ కోసం గీసిన నమూనా, తయారీదారు ప్యాక్ డిజైన్ కాదు.') + '</p></div>') +
       '<div class="prod-info"><p class="by"><a href="#/b/' + b.id + '">' + esc(b.name) + '</a></p>' +
       '<h1 class="ph">' + esc(lineName(p)) + '</h1>' +
       '<p class="te-line l-te" lang="te">' + esc(p.te) + '</p>' +
@@ -415,7 +423,7 @@
       (related.length ? '<section class="sec sec-tight"><h2 class="mini">' + T('More from ' + b.name, b.te + ' నుండి మరిన్ని') + '</h2><div class="pgrid">' + related.map(pcard).join('') + '</div></section>' : '') + '</div>';
 
     var viewer = $('#viewer');
-    if (window.PGScene && PGScene.supported()) {
+    if (viewer && window.PGScene && PGScene.supported()) {
       live = PGScene.product(viewer, {
         reduced: REDUCED, shape: p.shape, tintHex: hex(p.tint), brand: b.name, line: lineName(p), sub: subLine(p), mark: packMark(p),
         alt: 'Rotating 3D model of ' + p.name + '. Use the left and right arrow keys to turn it.',

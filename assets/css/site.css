@@ -245,6 +245,10 @@ address dd a { font-weight: 700; }
 .viewer-fb svg { width: 74%; height: auto; }
 .viewer.gl-on .viewer-fb { display: none; }
 .viewer canvas { position: absolute; inset: 0; }
+.viewer-photo { background: #fff; display: flex; align-items: center; justify-content: center; }
+.viewer-photo img { max-width: 86%; max-height: 86%; object-fit: contain; }
+.pcard-art img { display: block; width: 100%; max-width: 150px; aspect-ratio: 1; object-fit: contain; margin: 0 auto; }
+.q-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .viewer-ctl { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-top: .6rem; }
 .viewer-hint { font-size: .9rem; color: var(--mute); text-align: center; }
 .viewer-note { font-size: .82rem; color: var(--mute); margin-top: .4rem; }

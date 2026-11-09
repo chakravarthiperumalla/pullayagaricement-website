@@ -26,6 +26,7 @@ Companion repository: `pullayagaricement-googlereview` (the Google review helper
 | `src/scene.js` | Source of the 3D scenes |
 | `assets/fonts/` | Archivo (Latin) and Anek Telugu, self-hosted variable fonts |
 | `assets/img/logo.png` | Shop logo |
+| `assets/img/products/` | Pack photos, `<id>.png`, listed in `PHOTOS` in `catalog.js` |
 | `package.json` | Only used to rebuild `scene.js` |
 
 Pages use hash routes (`#/c/cement`, `#/b/ultratech`, `#/p/ultratech-opc-53`, `#/all`, `#/quote`, `#/visit`), so it works on GitHub Pages and from a local file with no server config.
@@ -69,5 +70,5 @@ Settings → Pages → Deploy from a branch → `main` / root. The 3D scenes fal
 - Ask the owner for paint and steel brands, and check the thinner entries (some Fosroc, Astral and Godrej items) and the Nagarjuna bag, which was read from a blurry card photo.
 - The card says "Fevicol Cement Adhesives". Confirm which Pidilite products the shop stocks (Pidilite's tile adhesive line is sold as Roff).
 - The card address (Simhadri Appanna Temple Street) and the Google listing (Gandhi Nagar) share door number 18-10-3. Confirm the PIN code.
-- Product text is summarised from each manufacturer's site; brand names are used only to say what the shop sells. 3D models are drawn for this site and are not manufacturer pack designs.
+- Product text is summarised from each manufacturer's site; brand names are used only to say what the shop sells. Pack photos in `assets/img/products/` come from brand sites and online retailers and belong to their brands. Products without a photo fall back to a 3D model drawn for this site.
 - "Help me write it" needs GitHub Pages on for `pullayagaricement-googlereview`.
