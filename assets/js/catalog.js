@@ -8,7 +8,8 @@
  *  - Later, this file can be replaced by a fetch() from an API with the same shape.
  *
  * Product facts were summarised from each manufacturer's own website (see `site` on every brand).
- * No prices are stored here on purpose: rates change daily, customers ask on WhatsApp.
+ * Cement has no prices on purpose: rates change daily, customers ask on WhatsApp.
+ * Godrej models carry the MRP range from the Godrej price list (w.e.f. 1 July 2026); the shop negotiates below MRP.
  */
 (function () {
   'use strict';
@@ -19,7 +20,9 @@
     orange: '#F58220', teal: '#2F8079', brick: '#B4543D', mustard: '#D9A524', ink: '#2B2528',
     /* brand colours, used by the hero pallet */
     'b-ultratech': '#F7D117', 'b-ambuja': '#2A6EBB', 'b-kcp': '#D99A1E', 'b-ramco': '#1D3B7A', 'b-nagarjuna': '#E0561F',
-    'b-fosroc': '#E2231A', 'b-fevicol': '#1B4F9C', 'b-godrej': '#7A1F3D', 'b-birlawhite': '#EDEDEA'
+    'b-fosroc': '#E2231A', 'b-fevicol': '#1B4F9C', 'b-godrej': '#7A1F3D', 'b-birlawhite': '#EDEDEA',
+    'b-bharathi': '#E06A1B', 'b-dalmia': '#1F4FA3', 'b-chettinad': '#F2C318', 'b-shree': '#C8232C', 'b-penna': '#1D6FB8',
+    'b-sagar': '#2E8B3E', 'b-maha': '#F4D21F', 'b-indiacements': '#2C4C9C'
   };
 
   /* ---------- where a product is used (English, Telugu) ---------- */
@@ -91,7 +94,7 @@
       introEn: 'Glues for wood, laminates, glass and metal, plus sealants for joints and gaps.',
       introTe: 'చెక్క, లామినేట్, గాజు, మెటల్ కోసం జిగురులు; జాయింట్లకు సీలెంట్లు.' },
     { id: 'hardware', shape: 'padlock', tint: 'ink', en: 'Locks & hardware', te: 'లాక్స్ & హార్డ్‌వేర్',
-      introEn: 'Padlocks, door locks, digital locks, furniture locks and handles for homes, shops and godowns.',
+      introEn: 'Godrej padlocks, door and digital locks, handles, door fittings, and wardrobe, bed and kitchen fittings, with MRP ranges and every finish.',
       introTe: 'ఇళ్లు, షాపులు, గోడౌన్ల కోసం తాళాలు, డోర్ లాక్స్, డిజిటల్ లాక్స్, హ్యాండిల్స్.' },
     { id: 'paint', shape: 'can', tint: 'orange', en: 'Paints', te: 'పెయింట్స్', ask: true,
       introEn: 'Interior and exterior paints for new houses and repaints. Brand list coming soon.',
@@ -118,6 +121,30 @@
     { id: 'nagarjuna', name: 'Nagarjuna', te: 'నాగార్జున', by: 'NCL Industries', site: 'https://nagarjunacement.com/',
       en: `Nagarjuna Cement is an NCL Industries brand, established in the 1980s in Andhra Pradesh. It supplies OPC and PPC grades in 50 kg bags, plus a slag cement for coastal areas.`,
       tel: 'నాగార్జున సిమెంట్: 1980లలో ఆంధ్రప్రదేశ్‌లో ప్రారంభమైన NCL ఇండస్ట్రీస్ బ్రాండ్. 50 కిలోల బ్యాగుల్లో OPC, PPC.' },
+    { id: 'bharathi', name: 'Bharathi Cement', te: 'భారతి సిమెంట్', by: 'Vicat group (Bharathi Cement Corporation)', site: 'https://www.bharathicement.com/products.php',
+      en: `Bharathi Cement makes cement at Kadapa, Andhra Pradesh, with German technology, as part of the French Vicat group. It sells OPC 43, OPC 53, PPC and PSC in tamper-proof 50 kg bags across 7 states.`,
+      tel: 'భారతి సిమెంట్: కడప, ఆంధ్రప్రదేశ్‌లో వికాట్ గ్రూప్ తయారీ. OPC 43, OPC 53, PPC, PSC టాంపర్-ప్రూఫ్ బ్యాగ్‌లలో.' },
+    { id: 'dalmia', name: 'Dalmia Bharat', te: 'దాల్మియా భారత్', by: 'Dalmia Bharat Cement', site: 'https://www.dalmiacement.com/products-services/consumer-products',
+      en: `Dalmia Bharat Cement has a plant at Kadapa, Andhra Pradesh. Its range covers PPC, PCC, PSC and OPC 43/53, plus premium DSP and Infra Pro for large projects.`,
+      tel: 'దాల్మియా భారత్: కడపలో ప్లాంట్. PPC, PSC, OPC, ప్రీమియం DSP, పెద్ద ప్రాజెక్టులకు ఇన్‌ఫ్రా ప్రో.' },
+    { id: 'chettinad', name: 'Chettinad Cement', te: 'చెట్టినాడ్ సిమెంట్', by: 'Chettinad Cement Corporation', site: 'https://www.chettinadcement.com/products/',
+      en: `Chettinad Cement has been in the cement business for three generations and runs a plant in Andhra Pradesh. Its range includes Maxcrete premium PPC, Super Grade PPC, Hollow Block Cement, Composite, OPC 43/53 and Classic slag cement.`,
+      tel: 'చెట్టినాడ్ సిమెంట్: మాక్స్‌క్రీట్, సూపర్ గ్రేడ్ PPC, హాలో బ్లాక్ సిమెంట్, కాంపోజిట్, OPC, స్లాగ్ సిమెంట్.' },
+    { id: 'shree', name: 'Shree Cement (Bangur)', te: 'శ్రీ సిమెంట్ (బంగూర్)', by: 'Shree Cement Ltd', site: 'https://www.bangurcement.com/product/bangur-roofon',
+      en: `Shree Cement is one of India's top three cement makers and sells under the Bangur brand: Roofon Plus, Magna, Jungrodhak, Powermax and Rockstrong.`,
+      tel: 'శ్రీ సిమెంట్: బంగూర్ బ్రాండ్‌తో రూఫాన్ ప్లస్, మాగ్నా, జంగ్‌రోధక్, పవర్‌మ్యాక్స్, రాక్‌స్ట్రాంగ్.' },
+    { id: 'penna', name: 'Penna Cement', te: 'పెన్నా సిమెంట్', by: 'Penna Cement Industries (Adani group)', site: 'https://immadi.net/penna-cement/',
+      en: `Penna Cement runs plants in Andhra Pradesh and Telangana and is now part of the Adani group. Its range: Power PPC, Suraksha PSC, Premium OPC 43/53 and Concrete Guard for house builders.`,
+      tel: 'పెన్నా సిమెంట్: ఆంధ్ర, తెలంగాణలో ప్లాంట్లు. పవర్ PPC, సురక్ష PSC, ప్రీమియం OPC, కాంక్రీట్ గార్డ్.' },
+    { id: 'sagar', name: 'Sagar Cements', te: 'సాగర్ సిమెంట్స్', by: 'Sagar Cements Ltd', site: 'https://sagarcements.in/about/overview',
+      en: `Sagar Cements is a cement maker in the Krishna river basin with 11 MTPA capacity. It makes OPC 53 and 43, PPC, sulphate-resisting cement, slag cement and GGBS.`,
+      tel: 'సాగర్ సిమెంట్స్: కృష్ణా పరీవాహక ప్రాంతంలో తయారీ. OPC 53, 43, PPC, స్లాగ్ సిమెంట్.' },
+    { id: 'maha', name: 'Maha Cement', te: 'మహా సిమెంట్', by: 'My Home Industries', site: 'https://www.mahacement.com/',
+      en: `Maha Cement is made by My Home Industries, with plants in Telangana and Andhra Pradesh. Its range: Maha HD+ PPC, Solid HD+, Solid Concrete Special and slag cement.`,
+      tel: 'మహా సిమెంట్ (మై హోమ్ ఇండస్ట్రీస్): మహా HD+, సాలిడ్ HD+, కాంక్రీట్ స్పెషల్, స్లాగ్ సిమెంట్.' },
+    { id: 'indiacements', name: 'India Cements', te: 'ఇండియా సిమెంట్స్', by: 'The India Cements Ltd', site: 'https://en.wikipedia.org/wiki/India_Cements',
+      en: `India Cements makes the Coromandel King, Sankar Super Power and Raasi Gold brands, well known across Andhra Pradesh and Tamil Nadu.`,
+      tel: 'ఇండియా సిమెంట్స్: కోరమాండల్ కింగ్, శంకర్ సూపర్ పవర్, రాశి గోల్డ్ బ్రాండ్లు.' },
     { id: 'birlawhite', name: 'Birla White', te: 'బిర్లా వైట్', by: 'UltraTech', site: 'https://www.birlawhite.com/en',
       en: `Birla White makes white-cement-based products: white cement, WallCare and WallSeal putties, Level Plast, Textura wall textures and cement wash.`,
       tel: 'బిర్లా వైట్: వైట్ సిమెంట్ ఆధారిత ఉత్పత్తులు: వైట్ సిమెంట్, వాల్‌కేర్ పుట్టీ, టెక్స్చురా, సిమెంట్ వాష్.' },
@@ -562,40 +589,274 @@
   fev('fevicol-probond-edgelok', 'Fevicol Probond Edgelok', 'ink', 'ఫెవికాల్ ప్రోబాండ్ ఎడ్జ్‌లాక్: PVC ఎడ్జ్ బ్యాండింగ్ టేప్‌ల కోసం.',
     `Fast-setting adhesive for PVC edge-banding tapes.`, ['Fast setting', 'For edge-banding'], ['lam', 'plastic']);
 
-  /* ===== Godrej ===== */
-  p('godrej-navtal-ultra-xl', 'godrej', 'hardware', 'Godrej NavTal Ultra XL+ Padlock', 'padlock', 'ink',
-    'నవ్‌తాల్ అల్ట్రా XL+: ఇత్తడి బాడీ, గట్టి స్టీల్ షాకిల్ ఉన్న ప్యాడ్‌లాక్.',
-    `Padlock with a solid brass body and a chrome-plated hardened steel shackle that resists hacksaw and crowbar attacks. A lever mechanism and a multi-row 14-pin Ultra XL+ mechanism make key duplication very difficult. Comes with 4 keys.`,
-    ['Brass body, corrosion resistant', 'Hacksaw-resistant shackle', '14-pin mechanism, hard to duplicate', 'Indoor and outdoor use'],
-    ['door', 'shop', 'box'], { type: 'Padlock', body: 'Solid brass', shackle: 'Chrome-plated hardened steel', keys: '4', warranty: '1 year' });
-  p('godrej-no1-padlock', 'godrej', 'hardware', 'Godrej No.1 Solid Brass Padlock', 'padlock', 'mustard',
-    'గోద్రెజ్ నంబర్ 1: ఇత్తడి ప్యాడ్‌లాక్.',
-    `Solid brass padlock from Godrej's padlock range. Godrej says its padlocks have been made since 1897.`,
-    ['Solid brass', 'Classic Godrej padlock'], ['door', 'shop', 'box'], { type: 'Padlock', body: 'Solid brass' });
-  p('godrej-centaur-rim-lock', 'godrej', 'hardware', 'Godrej Centaur Ultra XL+ Rim Lock', 'mortise', 'slate',
-    'సెంటార్ అల్ట్రా XL+: ఇంటి తలుపులకు రిమ్ లాక్.',
-    `Rim lock for door safety from the Godrej Ultra XL+ range.`,
-    ['Rim lock for doors', 'Ultra XL+ security'], ['door', 'indoor'], { type: 'Rim lock' });
-  p('godrej-mortise-locks', 'godrej', 'hardware', 'Godrej Mortise Locks', 'mortise', 'ink',
-    'గోద్రెజ్ మోర్టైజ్ లాక్స్: బలం, స్టైల్ కలిసిన తలుపు తాళాలు.',
-    `Mortise locks that combine strength with style, fitted into the door. Ask us for sets that match your handle finish.`,
-    ['Fitted inside the door', 'Strength and style'], ['door', 'indoor'], { type: 'Mortise lock' });
-  p('godrej-cylindrical-locks', 'godrej', 'hardware', 'Godrej Cylindrical Locks', 'mortise', 'grey',
-    'గోద్రెజ్ సిలిండ్రికల్ లాక్స్: గది తలుపులకు.',
-    `Cylindrical door locks, usually used on room doors. Ask us which models are in stock.`,
-    ['Knob and lever styles'], ['indoor', 'door'], { type: 'Cylindrical lock' });
-  p('godrej-digital-locks', 'godrej', 'hardware', 'Godrej Digital Locks', 'mortise', 'teal',
-    'గోద్రెజ్ డిజిటల్ లాక్స్: కీలెస్, స్మార్ట్ ఎంట్రీ.',
-    `Digital door locks for connected, keyless entry. The Godrej range includes Advantis IoT9, Neo Pro View, Neo Advantage and Advantis 7-in-1 models.`,
-    ['Keyless entry', 'Connected models available'], ['smart', 'door'], { type: 'Digital lock', variants: 'Advantis IoT9, Neo Pro View, Neo Advantage, Advantis 7-in-1' });
-  p('godrej-furniture-locks', 'godrej', 'hardware', 'Godrej Furniture Locks', 'mortise', 'kraft',
-    'గోద్రెజ్ ఫర్నిచర్ లాక్స్: అల్మారాలు, డ్రాయర్లకు (కామ్ లాక్).',
-    `Furniture locks, including cam locks, for cupboards and drawers.`,
-    ['Cam locks', 'For cupboards and drawers'], ['cup', 'box'], { type: 'Furniture lock' });
-  p('godrej-home-handles', 'godrej', 'hardware', 'Godrej Home Decor Handles', 'mortise', 'orange',
-    'గోద్రెజ్ హోమ్ డెకర్ హ్యాండిల్స్: ఇంటి స్టైల్‌కు తగిన హ్యాండిల్స్.',
-    `Door handles chosen to complement your home's style.`,
-    ['Style-matched handles'], ['door', 'indoor'], { type: 'Door handle' });
+  /* ===== More cement brands sold in Andhra Pradesh ===== */
+  p('bharathi-opc-53', 'bharathi', 'cement', 'Bharathi Cement OPC 53 Grade', 'bag', 'b-bharathi',
+    'భారతి OPC 53: జర్మన్ టెక్నాలజీతో తయారైన అధిక బలం గల సిమెంట్.',
+    `Ordinary Portland Cement 53 grade from Bharathi Cement (Vicat group), made at Kadapa with German technology and packed in tamper-proof bags. For high-strength concrete in slabs, beams and columns.`,
+    ['High strength for RCC', 'Tamper-proof bag', 'Quality norms above BIS'], ['rcc', 'found', 'rmc'], { type: 'OPC', grade: '53', pack: BAG });
+  p('bharathi-opc-43', 'bharathi', 'cement', 'Bharathi Cement OPC 43 Grade', 'bag', 'b-bharathi',
+    'భారతి OPC 43: సాధారణ ఇంటి నిర్మాణానికి.',
+    `Ordinary Portland Cement 43 grade for general house construction, plastering and brickwork.`,
+    ['General-purpose OPC', 'Tamper-proof bag'], ['rcc', 'plaster', 'masonry'], { type: 'OPC', grade: '43', pack: BAG });
+  p('bharathi-ppc', 'bharathi', 'cement', 'Bharathi Cement PPC', 'bag', 'b-bharathi',
+    'భారతి PPC: మన్నికైన బ్లెండెడ్ సిమెంట్, ప్లాస్టరింగ్‌కు బాగుంటుంది.',
+    `Portland Pozzolana Cement for durable house construction, plastering and brickwork, packed in tamper-proof bags.`,
+    ['Durable blended cement', 'Good for plaster and brickwork'], ['plaster', 'masonry', 'found', 'rcc'], { type: 'PPC', pack: BAG });
+  p('bharathi-ultra-fast', 'bharathi', 'cement', 'Bharathi Ultra Fast Cement', 'bag', 'b-bharathi',
+    'భారతి అల్ట్రా ఫాస్ట్: త్వరగా సెట్ అయ్యే 53 గ్రేడ్ సిమెంట్.',
+    `Fast-setting 53 grade cement for quick construction, where early strength and faster de-shuttering help.`,
+    ['Fast setting', 'High early strength'], ['rcc', 'precast'], { type: 'OPC', grade: '53', pack: BAG });
+
+  p('dalmia-cement', 'dalmia', 'cement', 'Dalmia Bharat Cement DC (PPC & OPC)', 'bag', 'b-dalmia',
+    'దాల్మియా DC: రూఫ్, కాలమ్, ఫౌండేషన్ (RCF) కోసం సిమెంట్.',
+    `Dalmia Bharat's everyday cement, sold as PPC, PCC and OPC 43/53 depending on the region. Dalmia markets it for the Roof, Column and Foundation (RCF) of a house.`,
+    ['PPC and OPC variants', 'Made for roof, column and foundation'], ['rcc', 'found', 'plaster', 'masonry'], { type: 'PPC / OPC', pack: BAG });
+  p('dalmia-dsp', 'dalmia', 'cement', 'Dalmia Bharat DSP', 'bag', 'b-dalmia',
+    'దాల్మియా DSP: పునాది, కాలమ్, స్లాబ్‌లకు అధిక బలం గల ప్రత్యేక సిమెంట్.',
+    `Specialised premium cement formulated for high-strength concrete in foundations, columns and slabs.`,
+    ['High-strength concrete', 'Premium bag'], ['rcc', 'found', 'roof'], { type: 'Premium cement', pack: BAG });
+  p('dalmia-infra-pro', 'dalmia', 'cement', 'Dalmia Bharat Infra Pro', 'bag', 'b-dalmia',
+    'దాల్మియా ఇన్‌ఫ్రా ప్రో: పెద్ద ప్రాజెక్టులు, ప్రీకాస్ట్ పనులకు.',
+    `Cement for large projects such as ports, jetties and power plants, known for consistent quality and high strength. Works with the admixtures used in ready-mix concrete and precast.`,
+    ['Consistent quality', 'Suits admixtures', 'For large projects'], ['infra', 'rmc', 'precast'], { type: 'OPC', pack: BAG });
+
+  p('chettinad-maxcrete', 'chettinad', 'cement', 'Chettinad Maxcrete Premium PPC', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ మాక్స్‌క్రీట్: హై-పర్ఫార్మెన్స్ ప్రీమియం PPC.',
+    `High-performance premium Portland Pozzolana Cement conforming to IS 1489 Part 1.`,
+    ['Premium PPC', 'IS 1489 (Part 1)'], ['rcc', 'found', 'plaster'], { type: 'PPC', std: 'IS 1489 (Part 1)', pack: BAG });
+  p('chettinad-super-grade', 'chettinad', 'cement', 'Chettinad Super Grade PPC', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ సూపర్ గ్రేడ్ PPC.',
+    `Superior Portland Pozzolana Cement conforming to IS 1489 Part 1, for general house construction.`,
+    ['Superior PPC', 'IS 1489 (Part 1)'], ['plaster', 'masonry', 'rcc'], { type: 'PPC', std: 'IS 1489 (Part 1)', pack: BAG });
+  p('chettinad-hbc', 'chettinad', 'cement', 'Chettinad Hollow Block Cement (HBC)', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ HBC: హాలో బ్లాక్స్, పేవర్స్ తయారీకి.',
+    `Cement made for hollow blocks, solid blocks and pavers, following today's block-construction trend.`,
+    ['Made for block making'], ['precast', 'masonry'], { type: 'Special cement', pack: BAG });
+  p('chettinad-composite', 'chettinad', 'cement', 'Chettinad Composite Cement', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ కాంపోజిట్: పర్యావరణ అనుకూల 43 గ్రేడ్ బ్లెండెడ్ సిమెంట్.',
+    `Eco-friendly 43 grade composite blended cement conforming to IS 16415:2015.`,
+    ['Eco-friendly', 'IS 16415:2015'], ['rcc', 'plaster', 'masonry'], { type: 'Composite cement', grade: '43', std: 'IS 16415:2015', pack: BAG });
+  p('chettinad-opc-53', 'chettinad', 'cement', 'Chettinad OPC 53 Grade', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ OPC 53: హై-గ్రేడ్ కాంక్రీట్‌కు.',
+    `Ordinary Portland Cement 53 grade conforming to IS 269:2015, for high-grade concrete.`,
+    ['High-grade concrete', 'IS 269:2015'], ['rcc', 'rmc', 'found'], { type: 'OPC', grade: '53', std: 'IS 269:2015', pack: BAG });
+  p('chettinad-opc-43', 'chettinad', 'cement', 'Chettinad OPC 43 Grade', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ OPC 43.',
+    `Ordinary Portland Cement 43 grade conforming to IS 269:2015.`,
+    ['IS 269:2015'], ['rcc', 'plaster', 'masonry'], { type: 'OPC', grade: '43', std: 'IS 269:2015', pack: BAG });
+  p('chettinad-classic-slag', 'chettinad', 'cement', 'Chettinad Classic Slag Cement', 'bag', 'b-chettinad',
+    'చెట్టినాడ్ క్లాసిక్ స్లాగ్: తేమ, తీర ప్రాంతాలకు PSC.',
+    `Portland Slag Cement conforming to IS 455:2015, known for versatility and reliability.`,
+    ['Slag cement', 'IS 455:2015'], ['found', 'coast', 'damp'], { type: 'PSC', std: 'IS 455:2015', pack: BAG });
+
+  p('shree-roofon', 'shree', 'cement', 'Bangur Roofon Plus', 'bag', 'b-shree',
+    'బంగూర్ రూఫాన్ ప్లస్: రూఫ్ డాలాయికి కాంక్రీట్ మాస్టర్.',
+    `Shree Cement's "Concrete Master" for roofs, beams and columns. Nano-sized particles give high-density concrete, with strength from the first day of curing and long-term strength gain.`,
+    ['High-density concrete', 'Strong bond between layers', 'Protects TMT bars from corrosion'], ['roof', 'rcc', 'found'], { type: 'Premium cement', pack: BAG });
+  p('shree-magna', 'shree', 'cement', 'Bangur Magna', 'bag', 'b-shree',
+    'బంగూర్ మాగ్నా: సాలిడ్ కాంక్రీట్ కోసం.',
+    `Premium Bangur cement for solid concrete work.`,
+    ['For solid concrete'], ['rcc', 'found'], { type: 'Premium cement', pack: BAG });
+  p('shree-jungrodhak', 'shree', 'cement', 'Bangur Shree Jungrodhak', 'bag', 'b-shree',
+    'బంగూర్ శ్రీ జంగ్‌రోధక్: తుప్పు నిరోధక సిమెంట్.',
+    `Corrosion-resistant cement for long-lasting slabs ("Ghar ki Dhaal, Saalon Saal").`,
+    ['Corrosion resistant'], ['roof', 'rcc', 'coast'], { type: 'Cement', pack: BAG });
+  p('shree-powermax', 'shree', 'cement', 'Bangur Powermax', 'bag', 'b-shree',
+    'బంగూర్ పవర్‌మ్యాక్స్: పగుళ్ల నిరోధక సిమెంట్.',
+    `Cement with Power Grind technology for strong crack resistance.`,
+    ['Crack resistance'], ['plaster', 'masonry', 'rcc'], { type: 'Cement', pack: BAG });
+  p('shree-rockstrong', 'shree', 'cement', 'Bangur Rockstrong', 'bag', 'b-shree',
+    'బంగూర్ రాక్‌స్ట్రాంగ్: రాయి లాంటి బలం, మన్నిక.',
+    `Cement designed for rock-like strength and durability.`,
+    ['Strength and durability'], ['rcc', 'found', 'masonry'], { type: 'Cement', pack: BAG });
+
+  p('penna-power-ppc', 'penna', 'cement', 'Penna Power PPC', 'bag', 'b-penna',
+    'పెన్నా పవర్ PPC: తుప్పు నిరోధక కాంక్రీట్‌కు బ్లెండెడ్ సిమెంట్.',
+    `Portland Pozzolana Cement (IS 1489) made with processed fly ash. It helps make corrosion-resistant concrete, reduces cracks, improves workability, resists sulphate attack and lowers the heat of hydration.`,
+    ['Corrosion-resistant concrete', 'Fewer cracks, better workability', 'Resists sulphate attack'], ['rcc', 'plaster', 'masonry', 'found'], { type: 'PPC', std: 'IS 1489', pack: BAG });
+  p('penna-suraksha-psc', 'penna', 'cement', 'Penna Suraksha PSC', 'bag', 'b-penna',
+    'పెన్నా సురక్ష PSC: డ్యామ్‌లు, నీటి ట్యాంకులు, తీర నిర్మాణాలకు.',
+    `Portland Slag Cement (IS 455) with high strength, sulphate resistance and low heat of hydration, for mass concrete, water-retaining structures, dams and marine work.`,
+    ['Sulphate resistant', 'Low heat of hydration'], ['dock', 'tank', 'coast', 'found'], { type: 'PSC', std: 'IS 455', pack: BAG });
+  p('penna-premium-53', 'penna', 'cement', 'Penna Premium OPC 53 Grade', 'bag', 'b-penna',
+    'పెన్నా ప్రీమియం OPC 53: వంతెనలు, ఎత్తైన భవనాలు, ప్రీకాస్ట్‌కు.',
+    `Ordinary Portland Cement 53 grade (IS 269), minimum 53 MPa at 28 days. For precast items, prestressed concrete, bridges, runways, high-rise buildings and concrete roads.`,
+    ['53 MPa at 28 days', 'Optimum particle size'], ['rcc', 'precast', 'infra', 'rmc'], { type: 'OPC', grade: '53', std: 'IS 269', pack: BAG });
+  p('penna-premium-43', 'penna', 'cement', 'Penna Premium OPC 43 Grade', 'bag', 'b-penna',
+    'పెన్నా ప్రీమియం OPC 43: సాధారణ నిర్మాణానికి.',
+    `General-purpose Ordinary Portland Cement 43 grade (IS 269) for civil work, precast blocks, pipes and tiles, plastering and flooring.`,
+    ['General purpose', '43 MPa at 28 days'], ['rcc', 'plaster', 'floor', 'precast'], { type: 'OPC', grade: '43', std: 'IS 269', pack: BAG });
+  p('penna-concrete-guard', 'penna', 'cement', 'Penna Concrete Guard', 'bag', 'b-penna',
+    'పెన్నా కాంక్రీట్ గార్డ్: ఇంటి నిర్మాణానికి ప్రీమియం సిమెంట్.',
+    `Premium re-engineered pozzolanic cement for high-performance concrete, with lower heat of hydration and better flow. Packed in tamper-proof BOPP bags for individual house builders, with technical support.`,
+    ['High-performance concrete', 'Tamper-proof BOPP bag'], ['rcc', 'roof', 'found'], { type: 'Premium PPC', pack: BAG });
+
+  p('sagar-opc-53', 'sagar', 'cement', 'Sagar Cement OPC 53 Grade', 'bag', 'b-sagar',
+    'సాగర్ OPC 53: అధిక బలం గల కాంక్రీట్‌కు.',
+    `Ordinary Portland Cement 53 grade for higher-strength concrete, with a minimum 28-day strength of 53 MPa as per BIS.`,
+    ['53 MPa at 28 days', 'Economical'], ['rcc', 'found', 'rmc'], { type: 'OPC', grade: '53', pack: BAG });
+  p('sagar-ppc', 'sagar', 'cement', 'Sagar Cement PPC (Super)', 'bag', 'b-sagar',
+    'సాగర్ PPC సూపర్: ఇంటి నిర్మాణానికి.',
+    `Portland Pozzolana Cement from Sagar Cements, a cement maker in the Krishna river basin. Sagar also makes OPC 43, slag cement and sulphate-resisting cement.`,
+    ['Blended cement for house building'], ['plaster', 'masonry', 'rcc', 'found'], { type: 'PPC', pack: BAG });
+
+  p('maha-hd-ppc', 'maha', 'cement', 'Maha HD+ Cement (PPC)', 'bag', 'b-maha',
+    'మహా HD+: ప్రీమియం PPC, త్వరగా సెట్ అవుతుంది.',
+    `Premium blended Portland Pozzolana Cement from My Home Industries, designed for faster setting.`,
+    ['Premium PPC', 'Faster setting'], ['rcc', 'plaster', 'masonry'], { type: 'PPC', pack: BAG });
+  p('maha-solid-hd', 'maha', 'cement', 'Maha Solid HD+ Cement', 'bag', 'b-maha',
+    'మహా సాలిడ్ HD+: సూపర్ స్ట్రాంగ్ సిమెంట్.',
+    `Super-strong Maha cement for structural concrete.`,
+    ['Super strong'], ['rcc', 'found', 'roof'], { type: 'Cement', pack: BAG });
+  p('maha-concrete-special', 'maha', 'cement', 'Maha Solid Concrete Special', 'bag', 'b-maha',
+    'మహా కాంక్రీట్ స్పెషల్: కాంక్రీట్ పనులకు.',
+    `Special cement made for concrete work.`,
+    ['Made for concrete'], ['rcc', 'roof', 'rmc'], { type: 'Cement', pack: BAG });
+  p('maha-psc', 'maha', 'cement', 'Maha Portland Slag Cement', 'bag', 'b-maha',
+    'మహా PSC: తేమ, తీర ప్రాంతాలకు స్లాగ్ సిమెంట్.',
+    `Portland Slag Cement from Maha for foundations and structures in moist or coastal conditions.`,
+    ['Slag cement'], ['found', 'coast', 'damp'], { type: 'PSC', pack: BAG });
+
+  p('indiacements-coromandel-king', 'indiacements', 'cement', 'Coromandel King PPC', 'bag', 'b-indiacements',
+    'కోరమాండల్ కింగ్ PPC: అదనపు బలం కోసం బ్లెండెడ్ సిమెంట్.',
+    `PPC blended cement from India Cements. Its amorphous silica reacts with calcium hydroxide to form extra strength and make the concrete denser.`,
+    ['Extra strength over time', 'Denser concrete'], ['rcc', 'plaster', 'masonry', 'found'], { type: 'PPC', pack: BAG });
+  p('indiacements-sankar', 'indiacements', 'cement', 'Sankar Super Power Cement', 'bag', 'b-indiacements',
+    'శంకర్ సూపర్ పవర్: ఇండియా సిమెంట్స్ నుంచి నమ్మకమైన సిమెంట్.',
+    `India Cements' well-known cement brand, sold as OPC and PPC.`,
+    ['OPC and PPC variants'], ['rcc', 'plaster', 'masonry'], { type: 'OPC / PPC', pack: BAG });
+
+  /* Godrej model: finishes[] and the MRP range (₹, incl. taxes) from the price list */
+  function gm(id, name, shape, tint, te, desc, feats, apps, specs, finishes, min, max) {
+    p(id, 'godrej', 'hardware', name, shape, tint, te, desc, feats, apps, specs);
+    var x = PRODUCTS[PRODUCTS.length - 1]; x.finishes = finishes; x.mrp = [min, max];
+  }
+
+  /* ===== Godrej: one model per family, from the Godrej price list (w.e.f. 1 July 2026) ===== */
+  gm("godrej-advantis-iot9", "Godrej Advantis IoT9 Digital Lock", "mortise", "ink",
+    "అడ్వాంటిస్ IoT9: వైఫై, యాప్‌తో పనిచేసే స్మార్ట్ డిజిటల్ మోర్టైజ్ లాక్.",
+    "Connected digital door lock for main doors. Opens by fingerprint, PIN, RFID card, mechanical key and the mobile app, and is made in India. The top Godrej digital lock in this price list. Available in 7 finishes: Titanium Grey, Gunmetal Black, Roman Silver, Vegas Gold, Rose Gold, Oak Wood, Walnut.",
+    ["Wi-Fi and app control", "Fingerprint, PIN, card and key", "Seven designer finishes"], ["smart", "door"], {"type": "Digital mortise lock", "variants": "7 variants in the price list"}, ["Titanium Grey", "Gunmetal Black", "Roman Silver", "Vegas Gold", "Rose Gold", "Oak Wood", "Walnut"], 69999, 70999);
+  gm("godrej-neo-connect", "Godrej Neo Series Digital Locks", "mortise", "ink",
+    "నియో సిరీస్: కనెక్ట్, ప్రైమ్, ప్రో-వ్యూ, అడ్వాంటేజ్ డిజిటల్ లాక్స్.",
+    "Everyday digital door locks: Neo Connect, Neo Prime, Neo Pro-View (with a camera view) and Neo Advantage. Keyless entry by fingerprint, PIN or card, with a key for back-up. Available in 3 finishes: Black, Rose Gold, Titanium Grey.",
+    ["Four models in one series", "Keyless entry with key back-up", "Pro-View has a camera view"], ["smart", "door"], {"type": "Digital lock", "variants": "6 variants in the price list"}, ["Black", "Rose Gold", "Titanium Grey"], 10999, 29999);
+  gm("godrej-advantis-rimtronic", "Godrej Advantis Rimtronic Digital Rim Lock", "mortise", "ink",
+    "అడ్వాంటిస్ రిమ్‌ట్రానిక్: పాత తలుపుకే పెట్టుకునే డిజిటల్ రిమ్ లాక్.",
+    "Digital rim lock that fits on the inside face of the door, so existing doors can go digital without cutting a mortise. Available as Rimtronic, Rimtronic RF and Rimtronic Verti. Available in 1 finish: Black.",
+    ["Fits existing doors", "Three variants", "For 40-50 mm doors"], ["smart", "door"], {"type": "Digital rim lock", "variants": "3 variants in the price list"}, ["Black"], 17440, 34350);
+  gm("godrej-neh-21", "Godrej NEH 21 Mortise Handle Set", "mortise", "kraft",
+    "NEH 21: మెయిన్ డోర్‌కు మోర్టైజ్ హ్యాండిల్ సెట్, 4 ఫినిష్‌లు.",
+    "Popular mortise door handle set with a matching lock body and cylinder. Comes as 240 mm and 200 mm sets, with one or two cylinders and as a combipack. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper.",
+    ["Handle, lock body and cylinder", "Several sizes and cylinder options", "Four finishes"], ["door", "indoor"], {"type": "Mortise handle set", "variants": "28 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2260, 4150);
+  gm("godrej-gloria", "Godrej Gloria Mortise Handle Set", "mortise", "grey",
+    "గ్లోరియా: ప్రీమియం మోర్టైజ్ హ్యాండిల్ సెట్, 5 ఫినిష్‌లు.",
+    "Premium mortise handle set in five finishes, also sold with the Victor cylinder for extra key security. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper, Matte Black Nickel.",
+    ["Premium design", "Option with Victor cylinder", "Five finishes"], ["door", "indoor"], {"type": "Mortise handle set", "variants": "33 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper", "Matte Black Nickel"], 2620, 5620);
+  gm("godrej-essential-mortise", "Godrej Essential Mortise (EM 01 to EM 05)", "mortise", "grey",
+    "ఎసెన్షియల్ మోర్టైజ్ EM 01-05: తక్కువ ధరలో మోర్టైజ్ సెట్లు.",
+    "Five value mortise handle designs, EM 01 to EM 05, each with the lock body and cylinder. A good choice for room doors and rental homes. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black.",
+    ["Five designs", "Value range", "Three finishes"], ["indoor", "door"], {"type": "Mortise handle set", "variants": "102 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1390, 2730);
+  gm("godrej-6-lever-mortise", "Godrej 6 Lever Mortise Lock Combipack (ELC)", "mortise", "kraft",
+    "6 లివర్ మోర్టైజ్ లాక్ కాంబిప్యాక్ (ELC సిరీస్).",
+    "Lever mortise lock sold as a combipack with handles. ELC 01, 02, 09, 10 and 19 designs, plus Stella and Gloria handle options. Available in 6 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black, Matte Black Nickel, Matte Black Rose.",
+    ["Six-lever security", "Lock and handles in one pack", "Several designs"], ["door", "indoor"], {"type": "Lever mortise lock", "variants": "23 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black", "Matte Black Nickel", "Matte Black Rose"], 2080, 2590);
+  gm("godrej-ulturo-cylinder", "Godrej Ulturo Ultra XL+ Euro Cylinder", "mortise", "grey",
+    "అల్టురో అల్ట్రా XL+: డూప్లికేట్ చేయలేని కీతో యూరో సిలిండర్.",
+    "High-security euro-profile cylinder for mortise locks, with the Ultra XL+ key. Sold in 60, 70 and 80 mm lengths, with one cylinder and knob (1CK) or two cylinders (2C). Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel.",
+    ["Ultra XL+ key security", "60, 70 and 80 mm", "Four finishes"], ["door"], {"type": "Euro cylinder", "variants": "24 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel"], 1650, 2050);
+  gm("godrej-centaur-rim-lock", "Godrej Centaur Ultra XL+ Rim Lock", "mortise", "slate",
+    "సెంటార్ అల్ట్రా XL+: మెయిన్ డోర్‌కు రిమ్ లాక్.",
+    "Rim lock for main doors with the Ultra XL+ key mechanism. Latchbolt and deadbolt versions, with one or two cylinders, and a double-door model. Available in 3 finishes: Satin Nickel, Antique Brass, Antique Copper.",
+    ["Latchbolt and deadbolt versions", "Double-door model", "Ultra XL+ key"], ["door"], {"type": "Rim lock", "variants": "13 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Antique Copper"], 5820, 6650);
+  gm("godrej-tribolt-ultra-xl", "Godrej Tribolt Ultra XL+ Rim Lock", "mortise", "slate",
+    "ట్రైబోల్ట్ అల్ట్రా XL+: మూడు బోల్ట్‌ల బలమైన రిమ్ లాక్.",
+    "Rim lock that throws three bolts for extra strength on the main door, with the Ultra XL+ key. Available in 4 finishes: Satin Nickel, Antique Brass, Matte Black Nickel, Rose Gold.",
+    ["Three bolts", "Ultra XL+ key", "Four finishes"], ["door"], {"type": "Rim lock", "variants": "18 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Matte Black Nickel", "Rose Gold"], 4310, 7140);
+  gm("godrej-pentabolt-aries", "Godrej Pentabolt Aries 3KS", "mortise", "slate",
+    "పెంటాబోల్ట్ ఏరీస్: ఐదు బోల్ట్‌ల ప్రీమియం మెయిన్ డోర్ లాక్.",
+    "Premium main-door lock with five bolts, the strongest rim lock in the Godrej price list. Available in 2 finishes: Roman Silver, Vegas Gold.",
+    ["Five bolts", "Premium finishes", "For main doors"], ["door"], {"type": "Rim lock", "variants": "6 variants in the price list"}, ["Roman Silver", "Vegas Gold"], 14400, 15230);
+  gm("godrej-cylindrical-locks", "Godrej Classic Cylindrical Locks", "mortise", "grey",
+    "క్లాసిక్ సిలిండ్రికల్ లాక్స్: గది, బాత్‌రూమ్ తలుపులకు నాబ్ లాక్స్.",
+    "Knob locks for room doors. Keyed (entrance) and keyless (bathroom and privacy) versions. Available in 6 finishes: Brass, Stainless Steel, Wooden, Antique Brass, Rose Gold, Matte Black.",
+    ["Keyed and keyless versions", "Easy to fit", "Six finishes"], ["indoor"], {"type": "Cylindrical lock", "variants": "17 variants in the price list"}, ["Brass", "Stainless Steel", "Wooden", "Antique Brass", "Rose Gold", "Matte Black"], 1130, 1570);
+  gm("godrej-navtal-ultra-xl", "Godrej NavTal Ultra XL+ Padlock", "padlock", "ink",
+    "నవ్‌తాల్ అల్ట్రా XL+: ఇత్తడి బాడీ, గట్టి స్టీల్ షాకిల్ ఉన్న ప్యాడ్‌లాక్.",
+    "Padlock with a solid brass body and a hardened steel shackle that resists hacksaw and crowbar attacks. The Ultra XL+ key mechanism makes duplication very difficult. Comes with 4 keys. Available in 1 finish: Brass.",
+    ["Brass body", "Hacksaw-resistant shackle", "Hard-to-copy key"], ["door", "shop", "box"], {"type": "Padlock", "variants": "3 variants in the price list"}, ["Brass"], 1330, 2500);
+  gm("godrej-no1-padlock", "Godrej No.1 Solid Brass Padlock", "padlock", "mustard",
+    "గోద్రెజ్ నంబర్ 1: ఇత్తడి పిన్ సిలిండర్ ప్యాడ్‌లాక్.",
+    "Classic solid brass pin-cylinder padlock in several sizes. Godrej says its padlocks have been made since 1897. Available in 1 finish: Brass.",
+    ["Solid brass", "Several sizes", "Pin cylinder"], ["door", "shop", "box"], {"type": "Padlock", "variants": "5 variants in the price list"}, ["Brass"], 670, 1510);
+  gm("godrej-duralock", "Godrej Duralock Ultra XL+ Padlock", "padlock", "grey",
+    "డ్యూరాలాక్ అల్ట్రా XL+: స్టెయిన్‌లెస్ స్టీల్ డిస్క్ ప్యాడ్‌లాక్.",
+    "Round stainless steel padlock with a shielded shackle and the Ultra XL+ key, for shutters, gates and godowns. Available in 1 finish: Stainless Steel.",
+    ["Stainless steel", "Shielded shackle", "Ultra XL+ key"], ["shop", "door"], {"type": "Padlock", "variants": "6 variants in the price list"}, ["Stainless Steel"], 1030, 5720);
+  gm("godrej-shutter-lock", "Godrej Shutter Lock Ultra", "padlock", "ink",
+    "షట్టర్ లాక్ అల్ట్రా: షాప్ షట్టర్లకు సెంటర్ లాక్.",
+    "Centre lock for rolling shutters, so the shop can be locked without padlocks at the sides. Available in 1 finish: Black.",
+    ["Made for rolling shutters", "Ultra key"], ["shop"], {"type": "Shutter lock", "variants": "4 variants in the price list"}, ["Black"], 2420, 4570);
+  gm("godrej-furniture-locks", "Godrej Nuvo Drawer Lock", "mortise", "kraft",
+    "నువో: డ్రాయర్, అల్మారాకు పిన్ సిలిండర్ లాక్.",
+    "Pin-cylinder lock for drawers and cupboards, in four finishes to match the furniture. Available in 4 finishes: Satin Steel, Textured Brown, Textured Black, Cool Ivory.",
+    ["Pin cylinder", "Four finishes"], ["cup", "box"], {"type": "Furniture lock", "variants": "16 variants in the price list"}, ["Satin Steel", "Textured Brown", "Textured Black", "Cool Ivory"], 315, 570);
+  gm("godrej-curvo", "Godrej Curvo Duo Wardrobe Lock", "mortise", "grey",
+    "కర్వో డ్యుయో: SS 304 వార్డ్‌రోబ్ లాక్.",
+    "SS 304 stainless steel wardrobe lock for two-door wardrobes. Available in 1 finish: Stainless Steel.",
+    ["SS 304 stainless steel", "For two-door wardrobes"], ["cup"], {"type": "Furniture lock", "variants": "6 variants in the price list"}, ["Stainless Steel"], 540, 770);
+  gm("godrej-home-handles", "Godrej Home Decor Rose Handles (HDH)", "mortise", "orange",
+    "హోమ్ డెకర్ రోజ్ హ్యాండిల్స్: నాలుగు థీమ్‌లలో డిజైనర్ హ్యాండిల్స్.",
+    "Designer rose handles in four themes: Euro Modern, Urban Chic, Neo Luxury and Smart Ethnic. There are many designs, including HDH 01 to HDH 23, Ugo, Cameo, Udaan and Kalasam. Available in 10 finishes: Antique Brass, Antique Copper, Satin Steel, Matte Black, Matte Black Nickel, PVD Rose Gold, Satin Matte, Matte Antique Brass, Antique Brass Walnut, Matte Black Rose.",
+    ["Four design themes", "Many designs", "Ten finishes"], ["door", "indoor"], {"type": "Door handle", "variants": "100 variants in the price list"}, ["Antique Brass", "Antique Copper", "Satin Steel", "Matte Black", "Matte Black Nickel", "PVD Rose Gold", "Satin Matte", "Matte Antique Brass", "Antique Brass Walnut", "Matte Black Rose"], 3760, 19140);
+  gm("godrej-pull-handles", "Godrej Pull Handles (Anoushka, Tibo, Marin)", "mortise", "orange",
+    "పుల్ హ్యాండిల్స్: అనౌష్క, టిబో, మారిన్.",
+    "Long pull handles for main doors and glass or wooden double doors, in three designs. Available in 6 finishes: Brass, Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, Rose Gold.",
+    ["Three designs", "240 to 300 mm", "Six finishes"], ["door"], {"type": "Pull handle", "variants": "30 variants in the price list"}, ["Brass", "Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "Rose Gold"], 1390, 2630);
+  gm("godrej-door-closer", "Godrej Cerus Door Closer", "block", "grey",
+    "సెరస్ డోర్ క్లోజర్: తలుపు దానంతట అదే నెమ్మదిగా మూసుకుంటుంది.",
+    "Door closer that shuts the door gently by itself. Surface-mounted Cerus universal models and an 85 kg concealed closer. Available in 3 finishes: Silver, Matte Black, Gold.",
+    ["Surface-mounted and concealed", "Gentle closing", "Three finishes"], ["door"], {"type": "Door closer", "variants": "8 variants in the price list"}, ["Silver", "Matte Black", "Gold"], 2100, 7040);
+  gm("godrej-ss-hinges", "Godrej Stainless Steel Door Hinges", "block", "grey",
+    "స్టెయిన్‌లెస్ స్టీల్ డోర్ హింజెస్: ప్లెయిన్, కట్, బాల్ బేరింగ్.",
+    "Door hinges in plain-joint, cut and ball-bearing types, in stainless steel and SS 304. Also sold in Antique Brass and Matte Black. Available in 2 finishes: Stainless Steel, SS 304.",
+    ["Plain, cut and ball-bearing", "SS and SS 304", "Many sizes"], ["door", "indoor", "cup"], {"type": "Door hinge", "variants": "17 variants in the price list"}, ["Stainless Steel", "SS 304"], 55, 455);
+  gm("godrej-aldrop", "Godrej Aldrops", "block", "grey",
+    "ఆల్డ్రాప్స్: తలుపులకు బయటి, లోపలి గడియలు.",
+    "Aldrops (door latches) for main and room doors, in stainless steel, brass, matte black and antique brass, plus inner aldrops. Available in 3 finishes: Stainless Steel, Matte Black, Antique Brass.",
+    ["Outer and inner aldrops", "Steel and brass", "Three finishes"], ["door", "shop"], {"type": "Aldrop", "variants": "11 variants in the price list"}, ["Stainless Steel", "Matte Black", "Antique Brass"], 420, 2300);
+  gm("godrej-tower-bolt", "Godrej Tower Bolts", "block", "kraft",
+    "టవర్ బోల్ట్స్: రెగ్యులర్, డిజైనర్.",
+    "Regular stainless steel tower bolts and designer tower bolts in several lengths. Available in 4 finishes: Stainless Steel, Aluminium, Antique Brass, Matte Black.",
+    ["Regular and designer", "Several lengths", "Four finishes"], ["door", "indoor"], {"type": "Tower bolt", "variants": "26 variants in the price list"}, ["Stainless Steel", "Aluminium", "Antique Brass", "Matte Black"], 125, 970);
+  gm("godrej-hikido", "Godrej HIKIDO Sliding Door Systems", "block", "grey",
+    "హికిడో: వార్డ్‌రోబ్ స్లైడింగ్ డోర్ సిస్టమ్స్, సాఫ్ట్ క్లోజ్.",
+    "Sliding systems for wardrobes and cabinets: HIKIDO Inline, Topper, Inset and Cabinet, with soft-close rollers, dampers and tracks. Available in 2 finishes: Aluminium, Anthracite.",
+    ["Soft close", "Inline, Topper, Inset and Cabinet", "Up to 80 kg doors"], ["cup"], {"type": "Wardrobe fitting", "variants": "17 variants in the price list"}, ["Aluminium", "Anthracite"], 1720, 126220);
+  gm("godrej-neulift", "Godrej Neulift Bed Fittings", "block", "ink",
+    "న్యూలిఫ్ట్: స్టోరేజ్ బెడ్ లిఫ్ట్ ఫిట్టింగ్స్, మర్ఫీ బెడ్.",
+    "Lift-up bed fittings for storage beds: bed arms, gas springs, cross bars, bed frames with slats and a vertical Murphy bed. Available in 2 finishes: Anthracite, Nickel Plated.",
+    ["Storage-bed lift", "Gas springs up to 50 kg", "Murphy bed option"], ["cup", "wood"], {"type": "Bed fitting", "variants": "28 variants in the price list"}, ["Anthracite", "Nickel Plated"], 280, 14090);
+  gm("godrej-cabinet-hinges", "Godrej Soft Close Cabinet Hinges", "block", "grey",
+    "సాఫ్ట్ క్లోజ్ క్యాబినెట్ హింజెస్: కిచెన్, వార్డ్‌రోబ్ షట్టర్లకు.",
+    "Soft-close cabinet hinges for kitchen and wardrobe shutters: slip-on, clip-on, 3D and SS 304 types, in 2-hole and 4-hole versions. Available in 1 finish: Nickel Plated.",
+    ["Soft close", "Slip-on, clip-on and 3D", "SS 304 option"], ["cup", "wood"], {"type": "Cabinet hinge", "variants": "20 variants in the price list"}, ["Nickel Plated"], 225, 1005);
+  gm("godrej-drawer-channels", "Godrej Drawer Channels", "block", "grey",
+    "డ్రాయర్ ఛానల్స్: 35, 45 కిలోలు, సాఫ్ట్ క్లోజ్.",
+    "Telescopic drawer channels in 35 kg and 45 kg load ratings, soft-close and SS 304 versions, in many lengths. Available in 2 finishes: Zinc, Black.",
+    ["35 and 45 kg ratings", "Soft-close option", "Zinc and black"], ["cup", "wood"], {"type": "Drawer channel", "variants": "44 variants in the price list"}, ["Zinc", "Black"], 285, 3070);
+  gm("godrej-slim-ergo", "Godrej Slim Ergo Drawer System", "block", "ink",
+    "స్లిమ్ ఎర్గో: కిచెన్ డ్రాయర్ సిస్టమ్, 4, 6, 8 అంగుళాలు.",
+    "Slim-wall kitchen drawer systems, Slim Ergo and Super Slim Ergo, in 4, 6 and 8 inch heights, with rails and front fascia parts. Available in 2 finishes: Anthracite, Black.",
+    ["Slim and Super Slim", "4, 6 and 8 inch heights", "Two finishes"], ["cup"], {"type": "Kitchen drawer", "variants": "78 variants in the price list"}, ["Anthracite", "Black"], 2170, 5170);
+  gm("godrej-super-skido", "Godrej Super SKIDO Kitchen Systems", "block", "ink",
+    "సూపర్ స్కిడో: పాంట్రీ, కార్నర్, సింక్ కింద కిచెన్ సొల్యూషన్స్.",
+    "Modular kitchen units: slide-out pantry, corner solutions, swing corner, under-sink storage and grain storage. Available in 1 finish: Anthracite.",
+    ["Pantry, corner and under-sink units", "Anthracite finish"], ["cup"], {"type": "Kitchen fitting", "variants": "9 variants in the price list"}, ["Anthracite"], 5659, 32520);
+  gm("godrej-ss-baskets", "Godrej Stainless Steel Kitchen Baskets", "block", "grey",
+    "స్టెయిన్‌లెస్ స్టీల్ కిచెన్ బాస్కెట్లు: ప్లెయిన్, కప్ & సాసర్, థాలీ, కట్లరీ.",
+    "Kitchen wire baskets in stainless steel and SS 304: plain, cup and saucer, thali and perforated cutlery baskets, in many sizes. Available in 2 finishes: Stainless Steel, SS 304.",
+    ["Many sizes", "SS and SS 304", "Plain, thali, cup and cutlery"], ["cup"], {"type": "Kitchen basket", "variants": "192 variants in the price list"}, ["Stainless Steel", "SS 304"], 1300, 7940);
 
   /* ---------- "which cement for which job" (used on the home page) ---------- */
   var GUIDE = [
@@ -608,7 +869,7 @@
   ];
 
   /* products with a pack photo in assets/img/products/<id>.png */
-  var PHOTOS = ['ambuja-buildcem','ambuja-cement','ambuja-compocem','ambuja-cool-walls','ambuja-kawach','ambuja-plus','ambuja-powercem','ambuja-purasand','ambuja-railcem','astral-bondtite-cyano','astral-bondtite-epoxy','astral-bondtite-pva','astral-fast-and-clear','astral-resibond-neutral','birlawhite-ever-white','birlawhite-excel','birlawhite-level-plast','birlawhite-textura-roller','birlawhite-textura-trowel','birlawhite-wallcare-putty','birlawhite-wallcare-scented','birlawhite-wallseal','birlawhite-white-cement','fevicol-ezeespray','fevicol-heatx','fevicol-hiper-star','fevicol-hiper','fevicol-marine','fevicol-mr','fevicol-plastilok','fevicol-probond-edgelok','fevicol-probond','fevicol-relam','fevicol-sh','fevicol-speedx','fevicol-sr-998','fosroc-brushbond','fosroc-conplast-wl','fosroc-nitobond-sbr','fosroc-nitoproof-100','fosroc-nitoproof-600pf','fosroc-nitoseal-pu','godrej-centaur-rim-lock','godrej-cylindrical-locks','godrej-digital-locks','godrej-furniture-locks','godrej-home-handles','godrej-mortise-locks','godrej-navtal-ultra-xl','godrej-no1-padlock','hardworker-anchoring-grout','hardworker-block-fix','hardworker-bonding-epoxy','hardworker-bonding-sbr','hardworker-eco-plaster','hardworker-floor-screed','hardworker-integral-waterproofing','hardworker-micro-concrete','hardworker-tile-fix-epoxy','hardworker-tile-fix-slurry','hardworker-tile-fix','hardworker-tile-grout-epoxy','hardworker-tile-grout','hardworker-wall-putty','hardworker-waterproofing-coat','kcp-opc-43','kcp-opc-53','kcp-opc-53s','kcp-rhpc','kcp-shreshtaa','kcp-super-shreshtaa','nagarjuna-irs-53s','nagarjuna-opc-43','nagarjuna-opc-53','nagarjuna-ppc','nagarjuna-visistha','ramco-infra-opc-43','ramco-infra-opc-53','ramco-infra-super-opc-53','ramco-karthic-super-plus','ramco-opc-43','ramco-opc-53','ramco-samudra','ramco-super-coast','ramco-super-fast','ramco-super-steel','ramco-supercrete','ramco-superfine-efc','ramco-supergrade','ultratech-bath-kit','ultratech-bath-membrane','ultratech-bitupro','ultratech-crack-filler','ultratech-epoxy-grout','ultratech-flex','ultratech-hiflex','ultratech-membranes','ultratech-opc-43','ultratech-opc-53','ultratech-ppc','ultratech-psc','ultratech-readiplast-pro','ultratech-sbr','ultratech-tilefixo','ultratech-top-shield-ezy','ultratech-top-shield','ultratech-weather-plus','ultratech-wp200'];
+  var PHOTOS = ['ambuja-buildcem','ambuja-cement','ambuja-compocem','ambuja-cool-walls','ambuja-kawach','ambuja-plus','ambuja-powercem','ambuja-purasand','ambuja-railcem','astral-bondtite-cyano','astral-bondtite-epoxy','astral-bondtite-pva','astral-fast-and-clear','astral-resibond-neutral','bharathi-opc-43','bharathi-opc-53','bharathi-ppc','bharathi-ultra-fast','birlawhite-ever-white','birlawhite-excel','birlawhite-level-plast','birlawhite-textura-roller','birlawhite-textura-trowel','birlawhite-wallcare-putty','birlawhite-wallcare-scented','birlawhite-wallseal','birlawhite-white-cement','chettinad-classic-slag','chettinad-composite','chettinad-hbc','chettinad-maxcrete','chettinad-opc-43','chettinad-opc-53','chettinad-super-grade','dalmia-cement','dalmia-dsp','dalmia-infra-pro','fevicol-ezeespray','fevicol-heatx','fevicol-hiper','fevicol-hiper-star','fevicol-marine','fevicol-mr','fevicol-plastilok','fevicol-probond','fevicol-probond-edgelok','fevicol-relam','fevicol-sh','fevicol-speedx','fevicol-sr-998','fosroc-brushbond','fosroc-conplast-wl','fosroc-nitobond-sbr','fosroc-nitoproof-100','fosroc-nitoproof-600pf','fosroc-nitoseal-pu','godrej-6-lever-mortise','godrej-advantis-iot9','godrej-advantis-rimtronic','godrej-aldrop','godrej-cabinet-hinges','godrej-centaur-rim-lock','godrej-curvo','godrej-cylindrical-locks','godrej-door-closer','godrej-drawer-channels','godrej-duralock','godrej-essential-mortise','godrej-furniture-locks','godrej-gloria','godrej-hikido','godrej-home-handles','godrej-navtal-ultra-xl','godrej-neh-21','godrej-neo-connect','godrej-neulift','godrej-no1-padlock','godrej-pentabolt-aries','godrej-pull-handles','godrej-shutter-lock','godrej-slim-ergo','godrej-ss-baskets','godrej-ss-hinges','godrej-super-skido','godrej-tower-bolt','godrej-tribolt-ultra-xl','godrej-ulturo-cylinder','hardworker-anchoring-grout','hardworker-block-fix','hardworker-bonding-epoxy','hardworker-bonding-sbr','hardworker-eco-plaster','hardworker-floor-screed','hardworker-integral-waterproofing','hardworker-micro-concrete','hardworker-tile-fix','hardworker-tile-fix-epoxy','hardworker-tile-fix-slurry','hardworker-tile-grout','hardworker-tile-grout-epoxy','hardworker-wall-putty','hardworker-waterproofing-coat','indiacements-coromandel-king','indiacements-sankar','kcp-opc-43','kcp-opc-53','kcp-opc-53s','kcp-rhpc','kcp-shreshtaa','kcp-super-shreshtaa','maha-concrete-special','maha-hd-ppc','maha-psc','maha-solid-hd','nagarjuna-irs-53s','nagarjuna-opc-43','nagarjuna-opc-53','nagarjuna-ppc','nagarjuna-visistha','penna-concrete-guard','penna-power-ppc','penna-premium-43','penna-premium-53','penna-suraksha-psc','ramco-infra-opc-43','ramco-infra-opc-53','ramco-infra-super-opc-53','ramco-karthic-super-plus','ramco-opc-43','ramco-opc-53','ramco-samudra','ramco-super-coast','ramco-super-fast','ramco-super-steel','ramco-supercrete','ramco-superfine-efc','ramco-supergrade','sagar-opc-53','sagar-ppc','shree-jungrodhak','shree-magna','shree-powermax','shree-rockstrong','shree-roofon','ultratech-bath-kit','ultratech-bath-membrane','ultratech-bitupro','ultratech-crack-filler','ultratech-epoxy-grout','ultratech-flex','ultratech-hiflex','ultratech-membranes','ultratech-opc-43','ultratech-opc-53','ultratech-ppc','ultratech-psc','ultratech-readiplast-pro','ultratech-sbr','ultratech-tilefixo','ultratech-top-shield','ultratech-top-shield-ezy','ultratech-weather-plus','ultratech-wp200'];
 
   window.CATALOG = { PHOTOS: PHOTOS, TINT: TINT, APPS: APPS, SPEC_LABELS: SPEC_LABELS, CATEGORIES: CATEGORIES, BRANDS: BRANDS, PRODUCTS: PRODUCTS, GUIDE: GUIDE };
 })();

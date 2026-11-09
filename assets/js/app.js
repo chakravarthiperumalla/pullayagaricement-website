@@ -149,6 +149,8 @@
   }
 
   /* ---------- shared pieces ---------- */
+  function rupee(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+  function mrpText(p) { return p.mrp[0] === p.mrp[1] ? rupee(p.mrp[0]) : rupee(p.mrp[0]) + ' – ' + rupee(p.mrp[1]); }
   function pcard(p) {
     var b = brandById[p.brand], sp = p.specs || {};
     var chips = [sp.type, sp.grade].filter(Boolean).map(function (v) { return '<span class="chip">' + esc(v) + '</span>'; }).join('');
@@ -157,6 +159,7 @@
       '<span class="pcard-body"><span class="pcard-brand">' + esc(b.name) + '</span>' +
       '<strong class="pcard-name">' + esc(lineName(p)) + '</strong>' +
       '<span class="pcard-te l-te" lang="te">' + esc(p.te) + '</span>' +
+      (p.mrp ? '<span class="pcard-mrp">MRP ' + mrpText(p) + '</span>' : '') +
       '<span class="pcard-chips">' + chips + '</span></span></a>';
   }
   function crumbs(list) {
@@ -185,7 +188,7 @@
       '<ul class="cats">' + tiles + '</ul></section>';
   }
 
-  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1 };
+  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1 };
   function secBrands() {
     var rows = C.BRANDS.map(function (b) {
       var cs = catsOf(b.id), n = prodsOf(b.id).length;
@@ -416,6 +419,9 @@
       '<h1 class="ph">' + esc(lineName(p)) + '</h1>' +
       '<p class="te-line l-te" lang="te">' + esc(p.te) + '</p>' +
       '<p class="desc">' + esc(p.desc) + '</p>' +
+      (p.mrp ? '<div class="mrp"><p class="mrp-n"><span>MRP</span> ' + mrpText(p) + '</p>' +
+        '<p class="mrp-note">' + T('Price is negotiable: we are Godrej distributors, so ask us for the best rate. MRP includes taxes, from the Godrej price list effective 1 July 2026.', 'ధర చర్చించుకోవచ్చు: మేము గోద్రెజ్ డిస్ట్రిబ్యూటర్లం, మంచి ధర కోసం అడగండి. MRP పన్నులతో కలిపి, 1 జూలై 2026 గోద్రెజ్ ధరల జాబితా ప్రకారం.') + '</p></div>' : '') +
+      (p.finishes && p.finishes.length ? '<h2 class="mini">' + T(plural(p.finishes.length, 'finish', 'finishes') + ' available', p.finishes.length + ' ఫినిష్‌లు అందుబాటులో') + '</h2><ul class="fins">' + p.finishes.map(function (f) { return '<li class="chip">' + esc(f) + '</li>'; }).join('') + '</ul>' : '') +
       (p.feats.length ? '<h2 class="mini">' + T('Why people choose it', 'ఎందుకు ఎంచుకుంటారు') + '</h2><ul class="feats">' + p.feats.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' : '') +
       (apps ? '<h2 class="mini">' + T('Where to use it', 'ఎక్కడ వాడాలి') + '</h2><ul class="apps">' + apps + '</ul>' : '') +
       (specs ? '<h2 class="mini">' + T('Details', 'వివరాలు') + '</h2><dl class="specs">' + specs + '</dl>' : '') +
