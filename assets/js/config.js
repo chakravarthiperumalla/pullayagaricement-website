@@ -4,6 +4,6 @@
  * The anon key is public by design: Row Level Security in supabase/schema.sql decides who can write.
  */
 window.PG_CONFIG = {
-  supabaseUrl: '',
-  supabaseKey: ''
+  supabaseUrl: 'https://acbnwvjrrbryybaylhpp.supabase.co',
+  supabaseKey: 'sb_publishable_kaf1RDdr3qtTos75vwJfUA_aD5u0zFx'
 };
