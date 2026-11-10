@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin · Pullayya Gari Cement Kottu</title>
+<link rel="icon" href="../assets/img/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="../" target="_blank" rel="noopener"><img src="../assets/img/logo.png" alt=""><span>Admin</span></a>
+  <nav id="tabs" hidden>
+    <button data-tab="product" class="on">Products</button>
+    <button data-tab="brand">Brands</button>
+    <button data-tab="category">Categories</button>
+    <button data-tab="guide">Cement guide</button>
+    <button data-tab="about">About Us</button>
+    <button data-tab="settings">Shop details</button>
+    <button data-tab="data">Backup</button>
+  </nav>
+  <button id="logout" class="ghost" hidden>Log out</button>
+</header>
+<main id="main"><p class="muted">Loading…</p></main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/catalog.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

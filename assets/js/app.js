@@ -2,7 +2,8 @@
  * Pullayya Gari Cement Kottu: site logic (no framework, no build step).
  * Reads window.CATALOG (assets/js/catalog.js) and draws every page from it.
  * Routes (hash based, so it works on GitHub Pages and from a file):
- *   #/  #/categories  #/c/:cat  #/brands  #/b/:brand  #/p/:product  #/all  #/quote  #/visit
+ *   #/  #/categories  #/c/:cat  #/brands  #/b/:brand  #/p/:product  #/all  #/quote  #/visit  #/about
+ * Content can come from Supabase (assets/js/remote.js) and is edited in /admin.
  */
 (function () {
   'use strict';
@@ -12,7 +13,9 @@
   if (!C) { app.innerHTML = '<p class="boot">The catalog did not load. Please refresh the page.</p>'; return; }
 
   /* ---------- constants ---------- */
-  var PHONE = '918179951999', PHONE_SHOW = '81799 51999';
+  var S = C.SETTINGS || {};
+  var PHONES = (S.phones && S.phones.length ? S.phones : [{ num: '918179951999', show: '81799 51999', name: 'Perumalla Ramu' }]).filter(function (x) { return x && x.num; });
+  var PHONE = String(S.whatsapp || PHONES[0].num).replace(/\D/g, ''), PHONE_SHOW = PHONES[0].show || PHONES[0].num;
   var REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJYXtqRQDTNzoRZ1EW4Wtk4a8';
   var GEN_URL = 'https://chakravarthiperumalla.github.io/pullayagaricement-googlereview/';
   var MAPS_URL = 'https://maps.google.com/?cid=12673521240897900903';
@@ -27,6 +30,13 @@
   C.CATEGORIES.forEach(function (c) { catById[c.id] = c; });
   var photo = {};
   (C.PHOTOS || []).forEach(function (id) { photo[id] = 'assets/img/products/' + id + '.png'; });
+  C.PRODUCTS.forEach(function (p) { if (p.img) photo[p.id] = p.img; });
+  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1 };
+  function brandLogo(b) { return b.logo || ('assets/img/brands/' + b.id + (SVG_LOGO[b.id] ? '.svg' : '.png')); }
+  function catImg(c) { return c.img || ('assets/img/cats/' + c.id + '.jpg'); }
+  function inStock(p) { return p.in_stock !== false; }
+  function stockTag(p) { return inStock(p) ? '' : '<span class="oos">' + T('Out of stock', 'స్టాక్ లేదు') + '</span>'; }
+  function lines(t) { return esc(t).replace(/\n/g, '<br>'); }
   /* pack photo when we have one, drawn thumbnail otherwise */
   function art(p, big) {
     return photo[p.id] ? '<img src="' + photo[p.id] + '" alt="' + esc(p.name) + ' pack" loading="lazy" decoding="async"' + (big ? ' class="thumb-big"' : '') + '>' : thumb(p.shape, p.tint, big);
@@ -160,7 +170,7 @@
       '<strong class="pcard-name">' + esc(lineName(p)) + '</strong>' +
       '<span class="pcard-te l-te" lang="te">' + esc(p.te) + '</span>' +
       (p.mrp ? '<span class="pcard-mrp">MRP ' + mrpText(p) + '</span>' : '') +
-      '<span class="pcard-chips">' + chips + '</span></span></a>';
+      '<span class="pcard-chips">' + stockTag(p) + chips + '</span></span></a>';
   }
   function crumbs(list) {
     return '<nav class="crumbs" aria-label="Breadcrumb"><ol>' + list.map(function (c, i) {
@@ -180,7 +190,7 @@
       var meta = c.ask ? '<span class="ask">' + T('Ask us', 'మమ్మల్ని అడగండి') + '</span>'
         : '<span class="meta">' + T(plural(nb, 'brand', 'brands') + ', ' + plural(np, 'product', 'products'), nb + ' బ్రాండ్లు, ' + np + ' ఉత్పత్తులు') + '</span>';
       return '<li class="' + (i === 0 ? 'cat-lead' : '') + '"><a class="cat' + (c.ask ? ' cat-ask' : '') + '" href="#/c/' + c.id + '" style="--t:' + hex(c.tint) + ';--s:' + mix(hex(c.tint), '#000000', 0.2) + '">' +
-        '<img class="cat-img" src="assets/img/cats/' + c.id + '.jpg" alt="" loading="lazy" decoding="async">' +
+        '<img class="cat-img" src="' + catImg(c) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' +
         '<span class="cat-name">' + T(c.en, c.te) + '</span>' + meta + '</a></li>';
     }).join('');
     return '<section class="sec" aria-labelledby="h-cats">' +
@@ -188,12 +198,11 @@
       '<ul class="cats">' + tiles + '</ul></section>';
   }
 
-  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1 };
   function secBrands() {
     var rows = C.BRANDS.map(function (b) {
       var cs = catsOf(b.id), n = prodsOf(b.id).length;
       return '<li><a class="wall-row" href="#/b/' + b.id + '">' +
-        '<span class="wall-logo"><img src="assets/img/brands/' + b.id + (SVG_LOGO[b.id] ? '.svg' : '.png') + '" alt="' + esc(b.name) + ' logo" loading="lazy"></span>' +
+        '<span class="wall-logo"><img src="' + brandLogo(b) + '" alt="' + esc(b.name) + ' logo" loading="lazy"></span>' +
         '<span class="wall-name">' + esc(b.name) + '</span>' +
         '<span class="wall-te l-te" lang="te">' + esc(b.te) + '</span>' +
         '<span class="wall-by">' + esc(b.by) + '</span>' +
@@ -268,10 +277,9 @@
     return '<section class="sec sec-visit" aria-labelledby="h-visit">' +
       sectionHead(T('Visit the godown', 'గోడౌన్‌కి రండి'), T('Gunupudi, Bhimavaram. Look for the old VRL Transport premises on Simhadri Appanna Temple Street.', 'గుణుపూడి, భీమవరం. సింహాద్రి అప్పన్న దేవాలయ వీధిలో పాత VRL ట్రాన్స్‌పోర్ట్ ప్రాంగణం కోసం చూడండి.'), 'h-visit') +
       '<div class="visit"><address>' +
-      '<p class="addr">18-10-3, Simhadri Appanna Temple Street,<br>Old VRL Transport Premises,<br>Gunupudi, Bhimavaram 534201</p>' +
-      '<dl><dt>' + T('Open', 'సమయం') + '</dt><dd>7:30 AM – 7:30 PM</dd>' +
-      '<dt>' + T('Phone and WhatsApp', 'ఫోన్, WhatsApp') + '</dt><dd><a href="tel:+' + PHONE + '">' + PHONE_SHOW + '</a></dd>' +
-      '<dt>' + T('Contact', 'సంప్రదించండి') + '</dt><dd>Perumalla Ramu</dd>' +
+      '<p class="addr">' + lines(S.address || '18-10-3, Simhadri Appanna Temple Street,\nOld VRL Transport Premises,\nGunupudi, Bhimavaram 534201') + '</p>' +
+      '<dl><dt>' + T('Open', 'సమయం') + '</dt><dd>' + esc(S.hours || '7:30 AM – 7:30 PM') + '</dd>' +
+      '<dt>' + T('Phone and WhatsApp', 'ఫోన్, WhatsApp') + '</dt><dd>' + PHONES.map(function (x) { return '<a href="tel:+' + x.num + '">' + esc(x.show || x.num) + '</a>' + (x.name ? ' (' + esc(x.name) + ')' : ''); }).join('<br>') + '</dd>' +
       '<dt>Plus code</dt><dd>GGRG+FH Bhimavaram</dd></dl></address>' +
       '<div class="visit-act"><a class="btn btn-pri" href="' + DIR_URL + '" target="_blank" rel="noopener">' + T('Get directions', 'దారి చూపించు') + '</a>' +
       '<a class="btn btn-ghost" href="' + MAPS_URL + '" target="_blank" rel="noopener">' + T('Open in Google Maps', 'Google Mapsలో తెరువు') + '</a>' +
@@ -294,7 +302,7 @@
     var bags = cementBrands.map(function (id) {
       var p = prodsOf(id, 'cement')[0]; if (!p) return null;
       var b = brandById[id];
-      return { name: b.name, line: lineName(p), sub: subLine(p), tint: 'b-' + id, mark: packMark(p), href: '#/b/' + id,
+      return { name: b.name, logo: brandLogo(b), line: lineName(p), sub: subLine(p), tint: 'b-' + id, mark: packMark(p), href: '#/b/' + id,
         label: '<b>' + esc(b.name) + '</b><small>' + T(plural(prodsOf(id).length, 'product', 'products'), prodsOf(id).length + ' ఉత్పత్తులు') + '</small>' };
     }).filter(Boolean);
     var spec = [
@@ -305,9 +313,11 @@
       { id: 'hardware', brand: 'Godrej', line: 'Locks', sub: 'Security', shape: 'padlock', tint: 'b-godrej' },
       { id: 'white', brand: 'Birla White', line: 'WallCare Putty', sub: 'Wall finish', shape: 'sack', tint: 'white' }
     ];
-    var items = spec.map(function (s) {
+    var HERO_BRAND = { chem: 'fosroc', adhesive: 'fevicol', hardware: 'godrej', white: 'birlawhite' };
+    var items = spec.filter(function (s) { return catById[s.id]; }).map(function (s) {
       var c = catById[s.id];
-      return { id: s.id, shape: s.shape, tint: s.tint, brand: s.brand, line: s.line, sub: s.sub, href: '#/c/' + s.id, label: '<b>' + T(c.en, c.te) + '</b><small>' + (c.ask ? T('Ask us', 'అడగండి') : T('Open category', 'కేటగిరీ తెరువు')) + '</small>' };
+      var hb = HERO_BRAND[s.id] && brandById[HERO_BRAND[s.id]];
+      return { id: s.id, logo: hb ? brandLogo(hb) : '', shape: s.shape, tint: s.tint, brand: s.brand, line: s.line, sub: s.sub, href: '#/c/' + s.id, label: '<b>' + T(c.en, c.te) + '</b><small>' + (c.ask ? T('Ask us', 'అడగండి') : T('Open category', 'కేటగిరీ తెరువు')) + '</small>' };
     });
     return { bags: bags, items: items };
   }
@@ -322,8 +332,8 @@
       '<ul class="tags" aria-label="' + esc('Premium quality, High strength, Waterproof protection, Trusted service') + '">' + TAGS.map(function (t, i) {
         return '<li class="tag" style="--i:' + i + '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + t.ic + '</svg><span>' + T(t.en, t.te) + '</span></li>';
       }).join('') + '</ul>' +
-      '<h1 id="hero-h">' + T('A complete building solution', 'సంపూర్ణ నిర్మాణ పరిష్కారం') + '</h1>' +
-      '<p class="lead">' + T(nb + ' brands and ' + np + ' products: cement, white cement, waterproofing, adhesives and locks under one roof in Gunupudi, Bhimavaram.', 'గుణుపూడి, భీమవరంలో ఒకే చోట ' + nb + ' బ్రాండ్లు, ' + np + ' ఉత్పత్తులు: సిమెంట్, వైట్ సిమెంట్, వాటర్‌ప్రూఫింగ్, అడ్హెసివ్స్, తాళాలు.') + '</p>' +
+      '<h1 id="hero-h">' + T(S.heroTitleEn || 'A complete building solution', S.heroTitleTe || 'సంపూర్ణ నిర్మాణ పరిష్కారం') + '</h1>' +
+      '<p class="lead">' + (S.heroLeadEn ? T(S.heroLeadEn, S.heroLeadTe || S.heroLeadEn) : T(nb + ' brands and ' + np + ' products: cement, white cement, waterproofing, adhesives and locks under one roof in Gunupudi, Bhimavaram.', 'గుణుపూడి, భీమవరంలో ఒకే చోట ' + nb + ' బ్రాండ్లు, ' + np + ' ఉత్పత్తులు: సిమెంట్, వైట్ సిమెంట్, వాటర్‌ప్రూఫింగ్, అడ్హెసివ్స్, తాళాలు.')) + '</p>' +
       '<div class="hero-cta"><a class="btn btn-pri" href="#/categories">' + T('Browse by category', 'కేటగిరీల వారీగా చూడండి') + '</a>' +
       '<a class="btn btn-wa" href="' + wa('Hello, I would like a price for building materials.') + '" target="_blank" rel="noopener">' + T('Ask for a price', 'ధర అడగండి') + '</a></div>' +
       '</div>' +
@@ -416,7 +426,7 @@
       '<div class="viewer-ctl"><button type="button" class="chip chip-btn" data-act="turn" data-v="-0.6" aria-label="Turn left">&#8592;</button><span class="viewer-hint">' + T('Drag to turn the product', 'ఉత్పత్తిని లాగి తిప్పండి') + '</span><button type="button" class="chip chip-btn" data-act="turn" data-v="0.6" aria-label="Turn right">&#8594;</button></div>' +
       '<p class="viewer-note">' + T('A model drawn for this page, not the manufacturer’s pack design.', 'ఈ పేజీ కోసం గీసిన నమూనా, తయారీదారు ప్యాక్ డిజైన్ కాదు.') + '</p></div>') +
       '<div class="prod-info"><p class="by"><a href="#/b/' + b.id + '">' + esc(b.name) + '</a></p>' +
-      '<h1 class="ph">' + esc(lineName(p)) + '</h1>' +
+      '<h1 class="ph">' + esc(lineName(p)) + '</h1>' + (inStock(p) ? '<p class="stock in">' + T('In stock', 'స్టాక్ ఉంది') + '</p>' : '<p class="stock out">' + T('Out of stock right now. Ask us when it comes back.', 'ప్రస్తుతం స్టాక్ లేదు. ఎప్పుడు వస్తుందో అడగండి.') + '</p>') +
       '<p class="te-line l-te" lang="te">' + esc(p.te) + '</p>' +
       '<p class="desc">' + esc(p.desc) + '</p>' +
       (p.mrp ? '<div class="mrp"><p class="mrp-n"><span>MRP</span> ' + mrpText(p) + '</p>' +
@@ -474,6 +484,25 @@
   function viewVisit() {
     app.innerHTML = '<div class="page">' + crumbs([homeCrumb, [T('Visit and reviews', 'సందర్శన, రివ్యూలు')]]) + '<h1 class="ph">' + T('Visit and reviews', 'సందర్శన, రివ్యూలు') + '</h1>' + secVisit() + secReviews() + '</div>';
   }
+  function media(m) {
+    var u = esc(m.url), cap = m.caption ? '<figcaption>' + esc(m.caption) + '</figcaption>' : '';
+    if (m.type === 'video') return '<figure class="am am-v"><video src="' + u + '" controls preload="metadata" playsinline></video>' + cap + '</figure>';
+    if (m.type === 'youtube') return '<figure class="am am-v"><iframe src="' + u + '" title="' + esc(m.caption || 'Video') + '" loading="lazy" allowfullscreen></iframe>' + cap + '</figure>';
+    return '<figure class="am"><a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="' + esc(m.caption || '') + '" loading="lazy"></a>' + cap + '</figure>';
+  }
+  function viewAbout() {
+    var A = S.about || {}, posts = (C.ABOUT || []).slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+    app.innerHTML = '<div class="page">' + crumbs([homeCrumb, [T('About us', 'మా గురించి')]]) +
+      '<header class="about-head"><h1 class="ph">' + T(A.titleEn || 'About us', A.titleTe || 'మా గురించి') + '</h1>' +
+      '<p class="intro">' + T(A.introEn || 'Pullayya Gari Cement Kottu in Gunupudi, Bhimavaram: a complete building solution under one roof. Follow our journey: visits, meetings, reviews and milestones.', A.introTe || 'గుణుపూడి, భీమవరంలో పుల్లయ్య గారి సిమెంట్ కొట్టు: ఒకే చోట సంపూర్ణ నిర్మాణ పరిష్కారం. మా ప్రయాణం: పర్యటనలు, సమావేశాలు, రివ్యూలు, మైలురాళ్లు.') + '</p></header>' +
+      (posts.length ? '<ol class="posts">' + posts.map(function (p) {
+        return '<li class="post"><div class="post-meta">' + (p.date ? '<time datetime="' + esc(p.date) + '">' + esc(p.date) + '</time>' : '') + (p.place ? '<span>' + esc(p.place) + '</span>' : '') + (p.tag ? '<span class="chip">' + esc(p.tag) + '</span>' : '') + '</div>' +
+          '<h2>' + T(p.titleEn || '', p.titleTe || p.titleEn || '') + '</h2>' +
+          (p.bodyEn ? '<p class="post-body">' + T(p.bodyEn, p.bodyTe || p.bodyEn) + '</p>' : '') +
+          ((p.media || []).length ? '<div class="post-media">' + p.media.map(media).join('') + '</div>' : '') + '</li>';
+      }).join('') + '</ol>' : '<p class="none">' + T('Photos, videos and milestones are coming soon.', 'ఫోటోలు, వీడియోలు, మైలురాళ్లు త్వరలో.') + '</p>') + '</div>';
+  }
+
   function notFound() {
     app.innerHTML = '<div class="page"><h1 class="ph">' + T('We could not find that page', 'ఆ పేజీ దొరకలేదు') + '</h1><p><a class="btn btn-pri" href="#/">' + T('Go to the home page', 'హోమ్‌కి వెళ్లండి') + '</a></p></div>';
     return 'Page not found';
@@ -496,6 +525,7 @@
       case 'all': viewAll(); title = 'All products'; break;
       case 'quote': viewQuote(); title = 'Your enquiry'; break;
       case 'visit': viewVisit(); title = 'Visit and reviews'; break;
+      case 'about': viewAbout(); title = 'About us'; break;
       default: title = notFound();
     }
     document.title = title ? title + ' | ' + SITE : SITE + ': cement, waterproofing, adhesives and locks';
@@ -543,6 +573,12 @@
     if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t).catch(fb);
     fb(); return Promise.resolve();
   }
+
+  var fp = document.getElementById('foot-phones');
+  if (fp) fp.innerHTML = PHONES.map(function (x) { return '<a href="tel:+' + x.num + '">' + esc(x.show || x.num) + '</a>' + (x.name ? ' (' + esc(x.name) + ')' : ''); }).join('<br>');
+  var fa = document.getElementById('foot-addr'); if (fa && S.address) fa.innerHTML = lines(S.address);
+  $$('a[href^="tel:+918179951999"]').forEach(function (a) { a.href = 'tel:+' + PHONES[0].num; });
+  $$('a[href^="https://wa.me/918179951999"]').forEach(function (a) { a.href = a.href.replace('918179951999', PHONE); });
 
   window.addEventListener('hashchange', route);
   setLang(lang);

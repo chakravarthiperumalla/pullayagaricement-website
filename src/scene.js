@@ -1,5 +1,5 @@
 /*
- * 3D scenes for the site (Three.js). Everything is built in code: no model files, no brand logos.
+ * 3D scenes for the site (Three.js). Everything is built in code: no model files. Hero labels carry the brand logo when one is passed in.
  * Bundled to assets/js/scene.js with:  npm run build
  *
  * PGScene.hero(container, opts)    interactive godown display on the home page
@@ -69,6 +69,24 @@ function speckle(ctx, W, H, amount) {
   }
 }
 
+/* Draw a brand logo (an already-loaded image) centred inside a white panel. */
+function drawLogo(x, img, px, py, pw, ph) {
+  x.fillStyle = '#ffffff'; x.fillRect(px, py, pw, ph);
+  var iw = img.naturalWidth || img.width || 1, ih = img.naturalHeight || img.height || 1;
+  var pad = Math.min(pw, ph) * 0.1, s = Math.min((pw - pad * 2) / iw, (ph - pad * 2) / ih);
+  var w = iw * s, h = ih * s;
+  x.drawImage(img, px + (pw - w) / 2, py + (ph - h) / 2, w, h);
+}
+
+function loadImg(url) {
+  return new Promise(function (res) {
+    if (!url) { res(null); return; }
+    var im = new Image(); im.crossOrigin = 'anonymous';
+    im.onload = function () { res(im); }; im.onerror = function () { res(null); };
+    im.src = url;
+  });
+}
+
 /* Printed label: portrait for bags, wide for tubs and bottles. */
 function labelCanvas(o, wide) {
   var W = wide ? 1024 : 512, H = wide ? 512 : 800;
@@ -82,16 +100,22 @@ function labelCanvas(o, wide) {
   var left = cx - pw / 2;
 
   if (!wide) {
-    x.fillStyle = INK; x.fillRect(0, 0, W, 150);
-    x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle';
-    var bp = fit(x, o.brand, W - 70, 96, 800);
-    x.fillText(o.brand, cx, 78 + 4);
-    x.fillStyle = ORANGE; x.fillRect(0, 150, W, 14);
+    x.textAlign = 'center';
+    var hb = o.logo ? 290 : 150; // a logo gets a big white panel so it reads from a distance
+    if (o.logo) { drawLogo(x, o.logo, 0, 0, W, hb); }
+    else {
+      x.fillStyle = INK; x.fillRect(0, 0, W, 150);
+      x.fillStyle = '#ffffff'; x.textBaseline = 'middle';
+      fit(x, o.brand, W - 70, 96, 800);
+      x.fillText(o.brand, cx, 78 + 4);
+    }
+    x.fillStyle = ORANGE; x.fillRect(0, hb, W, 14);
     x.fillStyle = ink; x.textBaseline = 'alphabetic';
     var np = 78; setFont(x, 800, np);
     var lines = wrap(x, o.name, W - 90);
-    while (lines.length > 3 && np > 40) { np -= 6; setFont(x, 800, np); lines = wrap(x, o.name, W - 90); }
-    var y = 330;
+    var maxL = o.logo ? 2 : 3;
+    while (lines.length > maxL && np > 40) { np -= 6; setFont(x, 800, np); lines = wrap(x, o.name, W - 90); }
+    var y = o.logo ? 400 : 330;
     lines.forEach(function (ln) { x.fillText(ln, cx, y); y += np * 1.05; });
     x.fillStyle = ink; x.globalAlpha = 0.85;
     setFont(x, 500, 34); x.fillText(o.sub || '', cx, y + 18);
@@ -103,9 +127,13 @@ function labelCanvas(o, wide) {
     }
     x.fillStyle = INK; x.fillRect(0, H - 34, W, 34);
   } else {
-    x.fillStyle = INK; x.fillRect(left, 70, pw, 120);
-    x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle';
-    fit(x, o.brand, pw - 50, 84, 800); x.fillText(o.brand, cx, 134);
+    x.textAlign = 'center';
+    if (o.logo) { drawLogo(x, o.logo, left, 40, pw, 150); }
+    else {
+      x.fillStyle = INK; x.fillRect(left, 70, pw, 120);
+      x.fillStyle = '#ffffff'; x.textBaseline = 'middle';
+      fit(x, o.brand, pw - 50, 84, 800); x.fillText(o.brand, cx, 134);
+    }
     x.fillStyle = ORANGE; x.fillRect(left, 190, pw, 10);
     x.fillStyle = ink; x.textBaseline = 'alphabetic';
     var wp = 70; setFont(x, 800, wp);
@@ -154,8 +182,8 @@ function bagModel(o, dims) {
   var d = dims || { w: 1, h: 1.5, d: 0.34 };
   var g = new THREE.Group();
   var base = new THREE.Color(o.tintHex).getStyle();
-  var front = std('#ffffff', 0.88); front.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, mark: o.mark }, false);
-  var back = std('#ffffff', 0.88); back.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, mark: o.mark }, false);
+  var front = std('#ffffff', 0.88); front.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, mark: o.mark, logo: o.logo }, false);
+  var back = std('#ffffff', 0.88); back.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, mark: o.mark, logo: o.logo }, false);
   var side = std(o.tintHex, 0.9);
   var mesh = new THREE.Mesh(bagGeometry(d.w, d.h, d.d), [side, side, side, side, front, back]);
   g.add(mesh);
@@ -168,7 +196,7 @@ function bagModel(o, dims) {
 function tubModel(o, opt) {
   var r = opt.r, h = opt.h, taper = opt.taper;
   var g = new THREE.Group();
-  var side = std('#ffffff', 0.5); side.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub }, true);
+  var side = std('#ffffff', 0.5); side.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, logo: o.logo }, true);
   var body = new THREE.Mesh(new THREE.CylinderGeometry(r, r * taper, h, 64, 1, true, -Math.PI, Math.PI * 2), side);
   body.position.y = h / 2; g.add(body);
   var bottom = new THREE.Mesh(new THREE.CircleGeometry(r * taper, 48), std(o.tintHex, 0.6));
@@ -192,7 +220,7 @@ function bottleModel(o) {
   g.add(body);
   var tip = new THREE.Mesh(new THREE.SphereGeometry(0.055, 16, 12), std('#F2F2EE', 0.4));
   tip.position.y = 1.8; g.add(tip);
-  var lab = std('#ffffff', 0.55); lab.map = labelTexture({ base: '#F4F2EC', brand: o.brand, name: o.name, sub: o.sub }, true);
+  var lab = std('#ffffff', 0.55); lab.map = labelTexture({ base: '#F4F2EC', brand: o.brand, name: o.name, sub: o.sub, logo: o.logo }, true);
   var band = new THREE.Mesh(new THREE.CylinderGeometry(0.486, 0.486, 0.44, 56, 1, true, -Math.PI, Math.PI * 2), lab);
   band.position.y = 0.32; g.add(band);
   return g;
@@ -200,7 +228,7 @@ function bottleModel(o) {
 
 function cartridgeModel(o) {
   var g = new THREE.Group();
-  var side = std('#ffffff', 0.5); side.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub }, true);
+  var side = std('#ffffff', 0.5); side.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, logo: o.logo }, true);
   var body = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 1.35, 48, 1, true, -Math.PI, Math.PI * 2), side);
   body.position.y = 0.8; g.add(body);
   var pts = [[0.3, 1.475], [0.28, 1.5], [0.12, 1.75], [0.07, 2.05]].map(function (p) { return new THREE.Vector2(p[0], p[1]); });
@@ -226,7 +254,7 @@ function padlockModel(o) {
   pts.push(new THREE.Vector3(0.3, 1.1, 0)); pts.push(new THREE.Vector3(0.3, 0.8, 0));
   var shackle = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.1), 80, 0.07, 14, false), std('#DDE1E5', 0.2, 1));
   g.add(shackle);
-  var plate = std('#ffffff', 0.5); plate.map = labelTexture({ base: '#241E20', brand: o.brand, name: '', sub: '' }, true);
+  var plate = std('#ffffff', 0.5); plate.map = labelTexture({ base: '#241E20', brand: o.brand, name: '', sub: '', logo: o.logo }, true);
   var pl = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.35), plate);
   pl.position.set(0, 0.62, 0.205); g.add(pl);
   var hole = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.03, 28), std('#111111', 0.6));
@@ -247,7 +275,7 @@ function leverLockModel(o) {
   var cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.095, 0.095, 0.08, 32), std('#C6A04A', 0.3, 0.9));
   cyl.rotation.x = Math.PI / 2; cyl.position.set(0, 0.42, 0.06); g.add(cyl);
   var slot = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.09, 0.02), std('#111', 0.6)); slot.position.set(0, 0.4, 0.105); g.add(slot);
-  var pl = std('#ffffff', 0.5); pl.map = labelTexture({ base: '#241E20', brand: o.brand, name: '', sub: '' }, true);
+  var pl = std('#ffffff', 0.5); pl.map = labelTexture({ base: '#241E20', brand: o.brand, name: '', sub: '', logo: o.logo }, true);
   var tag = new THREE.Mesh(new THREE.PlaneGeometry(0.46, 0.23), pl); tag.position.set(0, 1.5, 0.034); g.add(tag);
   return g;
 }
@@ -270,7 +298,7 @@ function rollModel(o) {
   var g = new THREE.Group();
   var roll = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 1.3, 48), std('#2B2B2E', 0.85, 0.05));
   roll.rotation.z = Math.PI / 2; roll.position.y = 0.42; g.add(roll);
-  var lab = std('#ffffff', 0.7); lab.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub }, true);
+  var lab = std('#ffffff', 0.7); lab.map = labelTexture({ base: o.tintHex, brand: o.brand, name: o.name, sub: o.sub, logo: o.logo }, true);
   var band = new THREE.Mesh(new THREE.CylinderGeometry(0.425, 0.425, 0.62, 48, 1, true, -Math.PI, Math.PI * 2), lab);
   band.rotation.z = Math.PI / 2; band.position.y = 0.42; g.add(band);
   return g;
@@ -391,7 +419,9 @@ function hero(container, opts) {
   var hitObjs = [], hovered = null, tip = opts.tooltip || null;
   var TINT = opts.tint || {};
 
-  return fontsReady().then(function () {
+  var logos = {};
+  var urls = (opts.bags || []).concat(opts.items || []).map(function (b) { return b.logo; }).filter(Boolean);
+  return Promise.all([fontsReady()].concat(urls.map(function (u) { return loadImg(u).then(function (im) { logos[u] = im; }); }))).then(function () {
     if (disposed) return { dispose: function () {} };
     renderer = makeRenderer(container);
     scene = new THREE.Scene();
@@ -427,7 +457,7 @@ function hero(container, opts) {
     var bags = opts.bags || [];
     bags.forEach(function (b, i) {
       var x = -2.3 + i * 1.15;
-      place('bag', { tintHex: TINT[b.tint] || '#C9A06A', brand: b.name, name: b.line, sub: b.sub }, x, -1.35, 1.7, -x * 0.07, { href: b.href, label: b.label }, true);
+      place('bag', { tintHex: TINT[b.tint] || '#C9A06A', brand: b.name, name: b.line, sub: b.sub, logo: logos[b.logo] }, x, -1.35, 1.7, -x * 0.07, { href: b.href, label: b.label }, true);
     });
     // category objects in front
     var cats = opts.items || [];
@@ -437,7 +467,7 @@ function hero(container, opts) {
     };
     cats.forEach(function (c) {
       var s = spots[c.id]; if (!s) return;
-      var o = { tintHex: TINT[c.tint] || '#C9A06A', brand: c.brand || '', name: c.line || '', sub: c.sub || '' };
+      var o = { tintHex: TINT[c.tint] || '#C9A06A', brand: c.brand || '', name: c.line || '', sub: c.sub || '', logo: logos[c.logo] };
       place(c.shape, o, s[0], s[1], s[2], s[3], { href: c.href, label: c.label }, false);
     });
 

@@ -72,3 +72,17 @@ Settings → Pages → Deploy from a branch → `main` / root. The 3D scenes fal
 - The card address (Simhadri Appanna Temple Street) and the Google listing (Gandhi Nagar) share door number 18-10-3. Confirm the PIN code.
 - Product text is summarised from each manufacturer's site; brand names are used only to say what the shop sells. Pack photos in `assets/img/products/` come from brand sites and online retailers and belong to their brands. Products without a photo fall back to a 3D model drawn for this site.
 - "Help me write it" needs GitHub Pages on for `pullayagaricement-googlereview`.
+
+## Admin panel (`/admin`)
+
+The admin panel edits everything the public site shows: brands (and their logo, colour and text), categories, products (stock on/off, hide, price range, finishes, photo), the home-page cement guide, shop details (phone numbers, WhatsApp, address, hours, hero text) and the **About Us** page (posts with photos, videos and YouTube links). Content is stored in Supabase; the public site reads it through `assets/js/remote.js` and falls back to the built-in `catalog.js` when Supabase is not set up.
+
+One-time setup:
+
+1. Create a free project at supabase.com.
+2. In **SQL Editor**, run `supabase/schema.sql`. Then run the last line with your email: `insert into public.admins (email) values ('you@example.com');`
+3. In **Authentication > Users > Add user**, create that same email with a password. (Optional: turn off "Allow new users to sign up" under Authentication > Sign In / Providers.)
+4. In **Project Settings > API**, copy the Project URL and the `anon` public key into `assets/js/config.js`, then commit and push.
+5. Open `https://<your-site>/admin/`, log in, and press **Import current website** once. From then on, the website shows what you manage in the admin.
+
+Deleting a brand or category also deletes its products. Use **Backup** to download everything as JSON first. Video files can be up to 50 MB each on the free plan; for longer videos, paste a YouTube link.

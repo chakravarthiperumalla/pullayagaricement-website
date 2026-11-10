@@ -14,7 +14,7 @@
 <link rel="preload" href="assets/fonts/anek-telugu-telugu-wdth.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"HardwareStore","name":"Pullayya Gari Cement Kottu","alternateName":"పుల్లయ్య గారి సిమెంట్ కొట్టు","description":"Cement, white cement, waterproofing, adhesives and locks from UltraTech, Ambuja, KCP, Ramco, Nagarjuna, Birla White, Hard Worker, Fosroc, Astral, Fevicol and Godrej.","telephone":"+91 81799 51999","image":"assets/img/logo.png","address":{"@type":"PostalAddress","streetAddress":"18-10-3, Simhadri Appanna Temple Street, Old VRL Transport Premises, Gunupudi","addressLocality":"Bhimavaram","addressRegion":"Andhra Pradesh","postalCode":"534201","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":16.5412239,"longitude":81.5264281},"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"07:30","closes":"19:30"},"hasMap":"https://maps.google.com/?cid=12673521240897900903"}
+{"@context":"https://schema.org","@type":"HardwareStore","name":"Pullayya Gari Cement Kottu","alternateName":"పుల్లయ్య గారి సిమెంట్ కొట్టు","description":"Cement, white cement, waterproofing, adhesives and locks from UltraTech, Ambuja, KCP, Ramco, Nagarjuna, Birla White, Hard Worker, Fosroc, Astral, Fevicol and Godrej.","telephone":["+91 81799 51999","+91 93942 34081"],"image":"assets/img/logo.png","address":{"@type":"PostalAddress","streetAddress":"18-10-3, Simhadri Appanna Temple Street, Old VRL Transport Premises, Gunupudi","addressLocality":"Bhimavaram","addressRegion":"Andhra Pradesh","postalCode":"534201","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":16.5412239,"longitude":81.5264281},"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"07:30","closes":"19:30"},"hasMap":"https://maps.google.com/?cid=12673521240897900903"}
 </script>
 </head>
 <body data-view="home">
@@ -31,6 +31,7 @@
       <a href="#/all" data-nav="all"><span class="l-en" lang="en">All products</span><span class="l-te" lang="te">అన్ని ఉత్పత్తులు</span></a>
       <a href="#/quote" data-nav="quote" class="enq"><span class="l-en" lang="en">Enquiry</span><span class="l-te" lang="te">ఎంక్వైరీ</span><b id="enq-n" hidden>0</b></a>
       <a href="#/visit" data-nav="visit"><span class="l-en" lang="en">Visit</span><span class="l-te" lang="te">సందర్శన</span></a>
+      <a href="#/about" data-nav="about"><span class="l-en" lang="en">About us</span><span class="l-te" lang="te">మా గురించి</span></a>
     </nav>
     <div class="top-act">
       <button type="button" id="lang-btn" data-act="lang" aria-label="Switch to English"><span class="l-en" lang="te">తెలుగు</span><span class="l-te" lang="en">English</span></button>
@@ -47,8 +48,8 @@
     <img src="assets/img/logo.png" width="390" height="315" alt="Pullayya Gari Cement Kottu" loading="lazy">
     <div>
       <h2><span class="l-en" lang="en">Find us</span><span class="l-te" lang="te">చిరునామా</span></h2>
-      <p>18-10-3, Simhadri Appanna Temple Street,<br>Old VRL Transport Premises, Gunupudi,<br>Bhimavaram 534201</p>
-      <p><a href="tel:+918179951999">81799 51999</a> (Perumalla Ramu)</p>
+      <p id="foot-addr">18-10-3, Simhadri Appanna Temple Street,<br>Old VRL Transport Premises, Gunupudi,<br>Bhimavaram 534201</p>
+      <p id="foot-phones"><a href="tel:+918179951999">81799 51999</a> (Perumalla Ramu)<br><a href="tel:+919394234081">93942 34081</a></p>
     </div>
     <div>
       <h2><span class="l-en" lang="en">Browse</span><span class="l-te" lang="te">చూడండి</span></h2>
@@ -57,6 +58,7 @@
         <li><a href="#/brands"><span class="l-en" lang="en">Brands</span><span class="l-te" lang="te">బ్రాండ్లు</span></a></li>
         <li><a href="#/all"><span class="l-en" lang="en">All products</span><span class="l-te" lang="te">అన్ని ఉత్పత్తులు</span></a></li>
         <li><a href="#/visit"><span class="l-en" lang="en">Visit and reviews</span><span class="l-te" lang="te">సందర్శన, రివ్యూలు</span></a></li>
+        <li><a href="#/about"><span class="l-en" lang="en">About us</span><span class="l-te" lang="te">మా గురించి</span></a></li>
       </ul>
     </div>
     <small>All brand names belong to their owners and are used only to say which products we sell. Product details are summarised from each manufacturer&rsquo;s website; the 3D models are drawn for this site and are not manufacturer pack designs. Rates change daily, so please ask for today&rsquo;s price.</small>
@@ -70,8 +72,9 @@
 </nav>
 <div id="toast" role="status" aria-live="polite"></div>
 
+<script defer src="assets/js/config.js"></script>
 <script defer src="assets/js/catalog.js"></script>
 <script defer src="assets/js/scene.js"></script>
-<script defer src="assets/js/app.js"></script>
+<script defer src="assets/js/remote.js"></script>
 </body>
 </html>

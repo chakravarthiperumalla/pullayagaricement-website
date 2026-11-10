@@ -354,3 +354,22 @@ body { padding-bottom: 57px; }
 .mrp-n span { font-size: .85rem; color: var(--mute); letter-spacing: .06em; margin-right: .2rem; }
 .mrp-note { margin-top: .3rem; font-size: .88rem; color: var(--mute); }
 .fins { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+/* stock status */
+.oos { display: inline-block; padding: .05rem .5rem; background: #B4253A; color: #fff; font-weight: 700; font-size: .78rem; border-radius: 2px; }
+.stock { display: inline-block; margin-top: .45rem; padding: .15rem .6rem; font-weight: 700; font-size: .9rem; border-radius: 2px; }
+.stock.in { background: #DDF1E1; color: #1C5B2C; }
+.stock.out { background: #FBE3E6; color: #8E1B2C; }
+
+/* about us */
+.about-head { max-width: 50rem; margin-bottom: 2rem; }
+.posts { display: grid; gap: 2rem; }
+.post { padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+.post-meta { display: flex; flex-wrap: wrap; gap: .5rem .9rem; align-items: center; font-size: .9rem; color: var(--mute); }
+.post h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); margin: .35rem 0 .5rem; }
+.post-body { max-width: 48rem; white-space: pre-line; }
+.post-media { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); margin-top: 1rem; }
+.am { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.am img, .am video, .am iframe { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 0; background: #000; }
+.am-v video, .am-v iframe { aspect-ratio: 16 / 9; object-fit: contain; }
+.am figcaption { padding: .4rem .6rem; font-size: .88rem; color: var(--mute); }
