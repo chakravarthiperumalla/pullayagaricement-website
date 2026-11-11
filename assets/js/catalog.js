@@ -1884,6 +1884,26 @@
     "Waste Bin Holder & Shutter from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. Sizes and options: Holder; Shutter. MRP ₹1,410 – ₹2,230 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
     ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Stainless Steel"], 1410, 2230);
 
+  /* ---------- installation and how-to videos (YouTube), shown after the photo on the product page ---------- */
+  var YT = 'https://www.youtube.com/watch?v=';
+  var VIDEOS = {
+    'godrej-advantis-iot9': ['3PnRTLcJe6E', 'PWJipJn-TGY'],
+    'godrej-advantis-revolution': ['80R-Bzx0Al4'],
+    'godrej-advantis-gsl-d1': ['dpMiKpzBcyk', 'bOuTXyPgk9o'],
+    'godrej-advantis-gsl-d1r': ['yFj1jy-uLSg', 'kS1yxAe6CvU'],
+    'godrej-neo-pro-view': ['6CNVoJdJHKk', '_L0rwN9cHqs'],
+    'godrej-neo-connect': ['6guEBK7xkp4', 'CHuSNPPudZE'],
+    'godrej-neo-prime': ['6guEBK7xkp4', 'Exo5KIDTzto'],
+    'godrej-neo-advantage': ['6guEBK7xkp4', 'Exo5KIDTzto'],
+    'godrej-advantis-rimtronic': ['m0ATlhMWhDs', '9jrUS3lun9c'],
+    'godrej-advantis-rimtronic-rf': ['m0ATlhMWhDs'],
+    'godrej-advantis-rimtronic-verti': ['pB64A53EtuU'],
+    'godrej-astron-digital-cabinet-lock': ['sCvLPiaFg54', 'YXy9AO3IT0M'],
+    'godrej-rion-digital-cabinet-lock': ['sCvLPiaFg54', '1zz7--OJk7s'],
+    'godrej-advantis-video-door-phone-module': ['j0moh3dEd0s', 'Xbe6c4zs7co']
+  };
+  PRODUCTS.forEach(function (p) { if (VIDEOS[p.id]) p.videos = VIDEOS[p.id].map(function (v) { return YT + v; }); });
+
   /* ---------- "which cement for which job" (used on the home page) ---------- */
   var GUIDE = [
     { en: 'Slabs, beams and columns', te: 'స్లాబ్, బీమ్, కాలమ్', pick: 'OPC 53 or a strong PPC', ids: ['ultratech-opc-53', 'kcp-opc-53', 'ramco-supercrete'] },

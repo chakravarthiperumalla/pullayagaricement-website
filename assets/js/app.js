@@ -17,6 +17,7 @@
   var PHONES = (S.phones && S.phones.length ? S.phones : [{ num: '918179951999', show: '81799 51999', name: 'Perumalla Ramu' }]).filter(function (x) { return x && x.num; });
   var PHONE = String(S.whatsapp || PHONES[0].num).replace(/\D/g, ''), PHONE_SHOW = PHONES[0].show || PHONES[0].num;
   var REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJYXtqRQDTNzoRZ1EW4Wtk4a8';
+  var PROFILE_EMBED = 'https://maps.google.com/maps?cid=12673521240897900903&hl=en&output=embed';
   var GEN_URL = 'https://chakravarthiperumalla.github.io/pullayagaricement-googlereview/';
   var MAP_EMBED = 'https://maps.google.com/maps?q=16.5412239,81.5264281&z=17&hl=en&output=embed';
   var SITE = 'Sri Rama Mohana Agencies, Bhimavaram';
@@ -267,9 +268,10 @@
   function secReviews() {
     return '<section class="sec sec-reviews" aria-labelledby="h-rev">' +
       sectionHead(T('Be one of our first Google reviewers', 'మా మొదటి Google రివ్యూ ఇచ్చేవారిలో మీరూ ఒకరు కండి'), T('If we served you well, a short review on Google helps the next customer find us.', 'మా సేవ నచ్చితే, Googleలో చిన్న రివ్యూ ఇస్తే తర్వాతి కస్టమర్ మమ్మల్ని సులభంగా కనుగొంటారు.'), 'h-rev') +
-      '<div class="rv"><label class="fld"><span>' + T('Your review (optional draft)', 'మీ రివ్యూ (డ్రాఫ్ట్, ఐచ్ఛికం)') + '</span><textarea id="rv-text" rows="3" data-ph-en="Write a line or two, we copy it for you" data-ph-te="ఒకటి రెండు లైన్లు రాయండి, మేము కాపీ చేస్తాం"></textarea></label>' +
+      '<div class="rv-wrap"><div class="rv"><label class="fld"><span>' + T('Your review (optional draft)', 'మీ రివ్యూ (డ్రాఫ్ట్, ఐచ్ఛికం)') + '</span><textarea id="rv-text" rows="3" data-ph-en="Write a line or two, we copy it for you" data-ph-te="ఒకటి రెండు లైన్లు రాయండి, మేము కాపీ చేస్తాం"></textarea></label>' +
       '<div class="rv-act"><button type="button" class="btn btn-pri" data-act="review">' + T('Copy and open Google reviews', 'కాపీ చేసి Google రివ్యూ తెరువు') + '</button>' +
-      '<a class="btn btn-ghost" href="' + GEN_URL + '" target="_blank" rel="noopener">' + T('Help me write it', 'రాయడంలో సహాయం చేయండి') + '</a></div></div></section>';
+      '<a class="btn btn-ghost" href="' + GEN_URL + '" target="_blank" rel="noopener">' + T('Help me write it', 'రాయడంలో సహాయం చేయండి') + '</a></div></div>' +
+      '<div class="rv-profile"><iframe src="' + PROFILE_EMBED + '" title="Our Google business profile" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></div></section>';
   }
 
   function secVisit() {
@@ -405,6 +407,30 @@
       chips + groups + '</div>';
   }
 
+  /* ---------- product gallery: photo first, then YouTube videos (swipe, arrows or dots) ---------- */
+  function ytId(u) { var m = String(u || '').match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(u) ? u : ''); }
+  function vids(p) { return (p.videos || []).map(ytId).filter(Boolean); }
+  function gallery(p) {
+    var slides = [], vs = vids(p);
+    if (photo[p.id]) slides.push('<div class="gs"><img src="' + photo[p.id] + '" alt="' + esc(p.name) + ' pack"></div>');
+    vs.forEach(function (v, i) {
+      slides.push('<div class="gs gs-v"><button type="button" class="yt" data-act="yt" data-v="' + v + '" aria-label="Play installation video ' + (i + 1) + '">' +
+        '<img src="https://i.ytimg.com/vi/' + v + '/hqdefault.jpg" alt="" loading="lazy"><span class="yt-play" aria-hidden="true"></span>' +
+        '<span class="yt-cap">' + T('Installation video', 'ఇన్‌స్టాలేషన్ వీడియో') + (vs.length > 1 ? ' ' + (i + 1) : '') + '</span></button></div>');
+    });
+    var many = slides.length > 1;
+    return '<div class="gal"><div class="gal-track" id="gal">' + slides.join('') + '</div>' +
+      (many ? '<button type="button" class="gal-nav prev" data-act="galnav" data-v="-1" aria-label="Previous">&#8249;</button><button type="button" class="gal-nav next" data-act="galnav" data-v="1" aria-label="Next">&#8250;</button>' +
+        '<div class="gal-dots">' + slides.map(function (x, i) { return '<button type="button" data-act="galgo" data-v="' + i + '" aria-label="Slide ' + (i + 1) + '"' + (i ? '' : ' class="on"') + '></button>'; }).join('') + '</div>' : '') + '</div>';
+  }
+  function galSync() {
+    var g = $('#gal'); if (!g) return;
+    g.addEventListener('scroll', function () {
+      var i = Math.round(g.scrollLeft / Math.max(1, g.clientWidth));
+      $$('.gal-dots button').forEach(function (b, k) { b.classList.toggle('on', k === i); });
+    }, { passive: true });
+  }
+
   function viewProduct(id) {
     var p = byId[id]; if (!p) return notFound();
     var b = brandById[p.brand], c = catById[p.cat], on = enquiry.indexOf(id) > -1;
@@ -418,8 +444,8 @@
     var msg = 'Hello, I would like a price for: ' + p.name + ' (' + b.name + ')';
     app.innerHTML = '<div class="page">' + crumbs([homeCrumb, [T(c.en, c.te), '#/c/' + c.id], [esc(b.name), '#/b/' + b.id + '?c=' + c.id], [esc(lineName(p))]]) +
       '<article class="prod" style="--t:' + hex(p.tint) + '">' +
-      (photo[id] ? '<div class="prod-view"><div class="viewer viewer-photo"><img src="' + photo[id] + '" alt="' + esc(p.name) + ' pack"></div>' +
-      '<p class="viewer-note">' + T('Pack photo for reference. Pack designs can change.', 'సూచన కోసం ప్యాక్ ఫోటో. ప్యాక్ డిజైన్ మారవచ్చు.') + '</p></div>' :
+      (photo[id] || vids(p).length ? '<div class="prod-view">' + gallery(p) +
+      '<p class="viewer-note">' + (vids(p).length ? T('Swipe or use the arrows to watch the installation videos.', 'ఇన్‌స్టాలేషన్ వీడియోలు చూడటానికి స్వైప్ చేయండి లేదా బాణాలు నొక్కండి.') + ' ' : '') + T('Pack photo for reference. Pack designs can change.', 'సూచన కోసం ప్యాక్ ఫోటో. ప్యాక్ డిజైన్ మారవచ్చు.') + '</p></div>' :
       '<div class="prod-view"><div class="viewer" id="viewer"><div class="viewer-fb">' + thumb(p.shape, p.tint, true) + '</div></div>' +
       '<div class="viewer-ctl"><button type="button" class="chip chip-btn" data-act="turn" data-v="-0.6" aria-label="Turn left">&#8592;</button><span class="viewer-hint">' + T('Drag to turn the product', 'ఉత్పత్తిని లాగి తిప్పండి') + '</span><button type="button" class="chip chip-btn" data-act="turn" data-v="0.6" aria-label="Turn right">&#8594;</button></div>' +
       '<p class="viewer-note">' + T('A model drawn for this page, not the manufacturer’s pack design.', 'ఈ పేజీ కోసం గీసిన నమూనా, తయారీదారు ప్యాక్ డిజైన్ కాదు.') + '</p></div>') +
@@ -439,6 +465,7 @@
       '</div></article>' +
       (related.length ? '<section class="sec sec-tight"><h2 class="mini">' + T('More from ' + b.name, b.te + ' నుండి మరిన్ని') + '</h2><div class="pgrid">' + related.map(pcard).join('') + '</div></section>' : '') + '</div>';
 
+    galSync();
     var viewer = $('#viewer');
     if (viewer && window.PGScene && PGScene.supported()) {
       live = PGScene.product(viewer, {
@@ -555,6 +582,16 @@
       $$('.pgroup').forEach(function (g) { g.hidden = !!v && g.getAttribute('data-cat') !== v; });
       $$('.filters .chip').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-v') === v); });
     } else if (act === 'sf') { search.cat = v; runSearch(); }
+    else if (act === 'yt') {
+      var fr = document.createElement('iframe');
+      fr.src = 'https://www.youtube-nocookie.com/embed/' + v + '?autoplay=1&rel=0'; fr.title = 'Installation video';
+      fr.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'; fr.allowFullscreen = true;
+      t.replaceWith(fr);
+    } else if (act === 'galnav' || act === 'galgo') {
+      var g = $('#gal'); if (!g) return;
+      var idx = act === 'galgo' ? +v : Math.round(g.scrollLeft / g.clientWidth) + (+v);
+      g.scrollTo({ left: Math.max(0, idx) * g.clientWidth, behavior: REDUCED ? 'auto' : 'smooth' });
+    }
     else if (act === 'turn') { if (live) live.then(function (h) { if (h && h.turn) h.turn(parseFloat(v)); }); }
     else if (act === 'review') {
       var ta = $('#rv-text'), txt = ta ? ta.value.trim() : '';

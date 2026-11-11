@@ -194,6 +194,7 @@
       '<label class="f"><span>MRP to (₹)</span><input type="number" min="0" name="mrp1" value="' + esc(p.mrp ? p.mrp[1] : '') + '"></label></div>' +
       '<label class="f"><span>Finishes / colours <small>(one per line)</small></span><textarea name="finishes">' + esc((p.finishes || []).join('\n')) + '</textarea></label>' +
       '<h2>Picture</h2>' + imgField('img', 'Pack photo', imgOf('product', p)) +
+      '<h2>Videos</h2><label class="f"><span>YouTube video links <small>(one link per line; shown after the photo on the product page, e.g. installation videos)</small></span><textarea name="videos" rows="3" placeholder="https://www.youtube.com/watch?v=...">' + esc((p.videos || []).join('\n')) + '</textarea></label>' +
       '<div class="grid2"><label class="f"><span>3D shape when there is no photo</span><select name="shape">' + SHAPES.map(function (s) { return '<option' + (s === p.shape ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select></label>' +
       '<label class="f"><span>Colour</span><select name="tint">' + Object.keys(TINT).map(function (t) { return '<option' + (t === p.tint ? ' selected' : '') + '>' + t + '</option>'; }).join('') + '</select></label>' +
       '<label class="f"><span>Order <small>(smaller shows first)</small></span><input type="number" name="sort" value="' + esc(p.sort || 0) + '"></label></div>' +
@@ -211,6 +212,10 @@
     if (m0 || m1) o.mrp = [Number(m0 || m1), Number(m1 || m0)]; else delete o.mrp;
     var fins = lines(f.elements.finishes.value); if (fins.length) o.finishes = fins; else delete o.finishes;
     var img = val(f, 'img'); if (img) o.img = img; else delete o.img;
+    var vids = lines(f.elements.videos.value).map(function (u) {
+      var m = u.match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{11})/); return m ? 'https://www.youtube.com/watch?v=' + m[1] : '';
+    }).filter(Boolean);
+    if (vids.length) o.videos = vids; else delete o.videos;
     o.shape = val(f, 'shape'); o.tint = val(f, 'tint'); o.sort = Number(val(f, 'sort')) || 0;
     return o;
   }
@@ -375,7 +380,7 @@
   /* ---------- backup ---------- */
   function viewData() {
     return '<h1>Backup</h1><div class="card"><p>Download everything (brands, categories, products, guide, About Us, shop details) as one JSON file. Uploaded photos and videos stay in Supabase storage.</p><button class="pri" data-act="export">Download backup</button></div>' +
-      '<div class="card"><h2 style="margin-top:0">Update one brand from the built-in catalog</h2><p>Replaces every product of the chosen brand with the list built into the website (for example, after a new Godrej price list), and adds or updates the categories those products use. Other brands, your stock switches on other brands, About Us and shop details are not touched.</p>' +
+      '<div class="card"><h2 style="margin-top:0">Update one brand from the built-in catalog</h2><p>Replaces every product of the chosen brand with the list built into the website (for example, after a new Godrej price list or new videos), and adds or updates the categories those products use. Stock switches, hidden products and photos or videos you set in the admin are kept. Other brands, About Us and shop details are not touched.</p>' +
       '<div class="row"><select id="sync-brand">' + (STATIC.BRANDS || []).map(function (b) { return '<option value="' + esc(b.id) + '"' + (b.id === 'godrej' ? ' selected' : '') + '>' + esc(b.name) + ' (' + (STATIC.PRODUCTS || []).filter(function (p) { return p.brand === b.id; }).length + ' built-in products)</option>'; }).join('') + '</select>' +
       '<button class="pri" data-act="syncbrand">Replace this brand\'s products</button></div></div>' +
       '<div class="card"><p>Copy the whole built-in website catalog into Supabase again. Items with the same id are overwritten (this also resets stock switches); items you added stay.</p><button data-act="import">Re-import built-in catalog</button></div>';
@@ -396,7 +401,16 @@
       if (!d.img) delete d.img;
       rows.push({ kind: 'category', id: c.id, sort: sort, data: d });
     });
-    prods.forEach(function (p, i) { var d = Object.assign({ in_stock: true }, p, { sort: 5000 + i }); rows.push({ kind: 'product', id: p.id, sort: d.sort, data: d }); });
+    prods.forEach(function (p, i) {
+      var d = Object.assign({ in_stock: true }, p, { sort: 5000 + i }), cur = byId('product', p.id);
+      if (cur) { // keep what was set in the admin: stock switch, hidden, own photo, own videos
+        if (cur.in_stock === false) d.in_stock = false;
+        if (cur.hidden) d.hidden = true;
+        if (cur.img) d.img = cur.img;
+        if (cur.videos && cur.videos.length) d.videos = cur.videos;
+      }
+      rows.push({ kind: 'product', id: p.id, sort: d.sort, data: d });
+    });
     remove('product', old.map(function (p) { return p.id; })).then(function () {
       var chunks = []; for (var i = 0; i < rows.length; i += 200) chunks.push(rows.slice(i, i + 200));
       return chunks.reduce(function (pr, ch) { return pr.then(function () { return sb.from('content').upsert(ch).then(function (r) { if (r.error) throw r.error; }); }); }, Promise.resolve());

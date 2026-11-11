@@ -389,3 +389,30 @@ body { padding-bottom: 57px; }
 .foot-word { display: grid; justify-items: start; gap: .3rem; }
 .foot-word img { width: 110px; height: auto; display: block; }
 .foot-word b { font-size: 1.15rem; }
+
+/* product gallery: photo, then installation videos */
+.gal { position: relative; }
+.gal-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 4px; background: #fff; aspect-ratio: 1 / 1; max-height: 560px; }
+.gal-track::-webkit-scrollbar { display: none; }
+.gs { flex: 0 0 100%; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; }
+.gs > img { max-width: 86%; max-height: 86%; object-fit: contain; }
+.gs-v { background: #111; }
+.gs-v iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; }
+.yt { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.yt img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.yt-play { position: absolute; left: 50%; top: 50%; width: 68px; height: 48px; margin: -24px 0 0 -34px; background: #f00; border-radius: 12px; }
+.yt-play::after { content: ""; position: absolute; left: 27px; top: 14px; border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff; }
+.yt:hover .yt-play, .yt:focus-visible .yt-play { background: #c00; }
+.yt-cap { position: absolute; left: .6rem; bottom: .6rem; padding: .15rem .55rem; background: rgba(0, 0, 0, .72); color: #fff; font-size: .85rem; font-weight: 700; border-radius: 2px; }
+.gal-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; border: 0; background: rgba(36, 30, 32, .78); color: #fff; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+.gal-nav.prev { left: .5rem; }
+.gal-nav.next { right: .5rem; }
+.gal-dots { display: flex; justify-content: center; gap: .45rem; margin-top: .55rem; }
+.gal-dots button { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 0; background: #c9c3bd; cursor: pointer; }
+.gal-dots button.on { background: var(--orange); }
+
+/* reviews: draft box + Google business profile side by side */
+.rv-wrap { display: grid; gap: 1.2rem; }
+.rv-profile { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--card); }
+.rv-profile iframe { display: block; width: 100%; height: 340px; border: 0; }
+@media (min-width: 900px) { .rv-wrap { grid-template-columns: 1fr 1fr; align-items: start; } .rv { max-width: none; } }
