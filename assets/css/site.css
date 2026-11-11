@@ -1,4 +1,4 @@
-/* Pullayya Gari Cement Kottu: site styles.
+/* Sri Rama Mohana Agencies: site styles.
    Look: a godown. Charcoal wall, cement-grey floor, kraft hang-tags, orange for the one thing to press. */
 
 @font-face { font-family: 'Archivo'; src: url(../fonts/archivo-latin-wdth.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
@@ -373,3 +373,19 @@ body { padding-bottom: 57px; }
 .am img, .am video, .am iframe { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 0; background: #000; }
 .am-v video, .am-v iframe { aspect-ratio: 16 / 9; object-fit: contain; }
 .am figcaption { padding: .4rem .6rem; font-size: .88rem; color: var(--mute); }
+
+/* visit: address on the left, Google map on the right */
+.visit-info { display: grid; gap: 1.2rem; align-content: start; }
+.visit-map { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--card); min-height: 300px; }
+.visit-map iframe { display: block; width: 100%; height: 100%; min-height: 300px; border: 0; }
+@media (min-width: 900px) { .visit { align-items: stretch !important; } .visit-map, .visit-map iframe { min-height: 380px; } }
+
+/* name lockup: emblem + business name as text */
+.hero-word { flex: 0 1 auto; min-width: 0; display: grid; justify-items: start; gap: .2rem; }
+.hero-word img { width: min(130px, 30vw); height: auto; display: block; }
+.hw-name { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800; font-stretch: 80%; line-height: 1.05; color: #fff; }
+.hw-name .l-en { color: var(--orange); }
+.hw-tag { font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: #CFC6C2; }
+.foot-word { display: grid; justify-items: start; gap: .3rem; }
+.foot-word img { width: 110px; height: auto; display: block; }
+.foot-word b { font-size: 1.15rem; }

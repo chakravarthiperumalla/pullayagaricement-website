@@ -1,5 +1,5 @@
 /*
- * Pullayya Gari Cement Kottu: site logic (no framework, no build step).
+ * Sri Rama Mohana Agencies: site logic (no framework, no build step).
  * Reads window.CATALOG (assets/js/catalog.js) and draws every page from it.
  * Routes (hash based, so it works on GitHub Pages and from a file):
  *   #/  #/categories  #/c/:cat  #/brands  #/b/:brand  #/p/:product  #/all  #/quote  #/visit  #/about
@@ -18,9 +18,8 @@
   var PHONE = String(S.whatsapp || PHONES[0].num).replace(/\D/g, ''), PHONE_SHOW = PHONES[0].show || PHONES[0].num;
   var REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJYXtqRQDTNzoRZ1EW4Wtk4a8';
   var GEN_URL = 'https://chakravarthiperumalla.github.io/pullayagaricement-googlereview/';
-  var MAPS_URL = 'https://maps.google.com/?cid=12673521240897900903';
-  var DIR_URL = 'https://www.google.com/maps/dir/?api=1&destination=16.5412239,81.5264281';
-  var SITE = 'Pullayya Gari Cement Kottu, Bhimavaram';
+  var MAP_EMBED = 'https://maps.google.com/maps?q=16.5412239,81.5264281&z=17&hl=en&output=embed';
+  var SITE = 'Sri Rama Mohana Agencies, Bhimavaram';
   var REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   /* ---------- lookups ---------- */
@@ -275,15 +274,14 @@
 
   function secVisit() {
     return '<section class="sec sec-visit" aria-labelledby="h-visit">' +
-      sectionHead(T('Visit the godown', 'గోడౌన్‌కి రండి'), T('Gunupudi, Bhimavaram. Look for the old VRL Transport premises on Simhadri Appanna Temple Street.', 'గుణుపూడి, భీమవరం. సింహాద్రి అప్పన్న దేవాలయ వీధిలో పాత VRL ట్రాన్స్‌పోర్ట్ ప్రాంగణం కోసం చూడండి.'), 'h-visit') +
-      '<div class="visit"><address>' +
+      sectionHead(T('Visit the godown', 'గోడౌన్‌కి రండి'), '', 'h-visit') +
+      '<div class="visit"><div class="visit-info"><address>' +
       '<p class="addr">' + lines(S.address || '18-10-3, Simhadri Appanna Temple Street,\nOld VRL Transport Premises,\nGunupudi, Bhimavaram 534201') + '</p>' +
       '<dl><dt>' + T('Open', 'సమయం') + '</dt><dd>' + esc(S.hours || '7:30 AM – 7:30 PM') + '</dd>' +
       '<dt>' + T('Phone and WhatsApp', 'ఫోన్, WhatsApp') + '</dt><dd>' + PHONES.map(function (x) { return '<a href="tel:+' + x.num + '">' + esc(x.show || x.num) + '</a>' + (x.name ? ' (' + esc(x.name) + ')' : ''); }).join('<br>') + '</dd>' +
       '<dt>Plus code</dt><dd>GGRG+FH Bhimavaram</dd></dl></address>' +
-      '<div class="visit-act"><a class="btn btn-pri" href="' + DIR_URL + '" target="_blank" rel="noopener">' + T('Get directions', 'దారి చూపించు') + '</a>' +
-      '<a class="btn btn-ghost" href="' + MAPS_URL + '" target="_blank" rel="noopener">' + T('Open in Google Maps', 'Google Mapsలో తెరువు') + '</a>' +
-      '<a class="btn btn-ghost" href="tel:+' + PHONE + '">' + T('Call now', 'ఇప్పుడే కాల్ చేయండి') + '</a></div></div></section>';
+      '<div class="visit-act"><a class="btn btn-pri" href="tel:+' + PHONES[0].num + '">' + T('Call now', 'ఇప్పుడే కాల్ చేయండి') + '</a></div></div>' +
+      '<div class="visit-map"><iframe src="' + MAP_EMBED + '" title="Sri Rama Mohana Agencies on Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></div></section>';
   }
 
   /* ---------- views ---------- */
@@ -327,8 +325,8 @@
     app.innerHTML =
       '<section class="hero" aria-labelledby="hero-h"><div class="hero-in">' +
       '<div class="hero-copy">' +
-      '<div class="hero-brand"><img class="hero-logo" src="assets/img/logo.png" width="390" height="315" alt="Pullayya Gari Cement Kottu">' +
-      '<a class="hero-poster" href="assets/img/poster.jpg" target="_blank" rel="noopener"><img src="assets/img/poster.jpg" width="1000" height="1000" alt="Pullayya Gari Cement Kottu poster: Mee Ramu, all leading brands, Bhimavaram"></a></div>' +
+      '<div class="hero-brand"><div class="hero-word"><img src="assets/img/logo-mark.png" width="240" height="200" alt=""><p class="hw-name">' + T('Sri Rama Mohana Agencies', 'శ్రీ రామ మోహన ఏజెన్సీస్') + '</p><p class="hw-tag">' + T('Your trusted store for cement, paint and hardware', 'సిమెంట్, పెయింట్, హార్డ్‌వేర్ కోసం మీ నమ్మకమైన స్టోర్') + '</p></div>' +
+      '<a class="hero-poster" href="assets/img/poster.jpg" target="_blank" rel="noopener"><img src="assets/img/poster.jpg" width="1000" height="1000" alt="Sri Rama Mohana Agencies poster: Mee Ramu, all leading brands, Bhimavaram"></a></div>' +
       '<ul class="tags" aria-label="' + esc('Premium quality, High strength, Waterproof protection, Trusted service') + '">' + TAGS.map(function (t, i) {
         return '<li class="tag" style="--i:' + i + '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + t.ic + '</svg><span>' + T(t.en, t.te) + '</span></li>';
       }).join('') + '</ul>' +
@@ -494,7 +492,7 @@
     var A = S.about || {}, posts = (C.ABOUT || []).slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
     app.innerHTML = '<div class="page">' + crumbs([homeCrumb, [T('About us', 'మా గురించి')]]) +
       '<header class="about-head"><h1 class="ph">' + T(A.titleEn || 'About us', A.titleTe || 'మా గురించి') + '</h1>' +
-      '<p class="intro">' + T(A.introEn || 'Pullayya Gari Cement Kottu in Gunupudi, Bhimavaram: a complete building solution under one roof. Follow our journey: visits, meetings, reviews and milestones.', A.introTe || 'గుణుపూడి, భీమవరంలో పుల్లయ్య గారి సిమెంట్ కొట్టు: ఒకే చోట సంపూర్ణ నిర్మాణ పరిష్కారం. మా ప్రయాణం: పర్యటనలు, సమావేశాలు, రివ్యూలు, మైలురాళ్లు.') + '</p></header>' +
+      '<p class="intro">' + T(A.introEn || 'Sri Rama Mohana Agencies in Gunupudi, Bhimavaram: a complete building solution under one roof. Follow our journey: visits, meetings, reviews and milestones.', A.introTe || 'గుణుపూడి, భీమవరంలో శ్రీ రామ మోహన ఏజెన్సీస్: ఒకే చోట సంపూర్ణ నిర్మాణ పరిష్కారం. మా ప్రయాణం: పర్యటనలు, సమావేశాలు, రివ్యూలు, మైలురాళ్లు.') + '</p></header>' +
       (posts.length ? '<ol class="posts">' + posts.map(function (p) {
         return '<li class="post"><div class="post-meta">' + (p.date ? '<time datetime="' + esc(p.date) + '">' + esc(p.date) + '</time>' : '') + (p.place ? '<span>' + esc(p.place) + '</span>' : '') + (p.tag ? '<span class="chip">' + esc(p.tag) + '</span>' : '') + '</div>' +
           '<h2>' + T(p.titleEn || '', p.titleTe || p.titleEn || '') + '</h2>' +

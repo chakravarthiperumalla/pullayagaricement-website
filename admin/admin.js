@@ -1,5 +1,5 @@
 /*
- * Admin panel for Pullayya Gari Cement Kottu.
+ * Admin panel for Sri Rama Mohana Agencies.
  * Everything the public site shows is stored in Supabase table `content` (see supabase/schema.sql):
  *   { kind, id, sort, data }  kind = brand | category | product | guide | about | settings
  * Uploads (logos, product photos, About Us photos and videos) go to the public storage bucket `media`.
@@ -375,7 +375,33 @@
   /* ---------- backup ---------- */
   function viewData() {
     return '<h1>Backup</h1><div class="card"><p>Download everything (brands, categories, products, guide, About Us, shop details) as one JSON file. Uploaded photos and videos stay in Supabase storage.</p><button class="pri" data-act="export">Download backup</button></div>' +
-      '<div class="card"><p>Copy the built-in website catalog into Supabase again. Items with the same id are overwritten; items you added stay.</p><button data-act="import">Re-import built-in catalog</button></div>';
+      '<div class="card"><h2 style="margin-top:0">Update one brand from the built-in catalog</h2><p>Replaces every product of the chosen brand with the list built into the website (for example, after a new Godrej price list), and adds or updates the categories those products use. Other brands, your stock switches on other brands, About Us and shop details are not touched.</p>' +
+      '<div class="row"><select id="sync-brand">' + (STATIC.BRANDS || []).map(function (b) { return '<option value="' + esc(b.id) + '"' + (b.id === 'godrej' ? ' selected' : '') + '>' + esc(b.name) + ' (' + (STATIC.PRODUCTS || []).filter(function (p) { return p.brand === b.id; }).length + ' built-in products)</option>'; }).join('') + '</select>' +
+      '<button class="pri" data-act="syncbrand">Replace this brand\'s products</button></div></div>' +
+      '<div class="card"><p>Copy the whole built-in website catalog into Supabase again. Items with the same id are overwritten (this also resets stock switches); items you added stay.</p><button data-act="import">Re-import built-in catalog</button></div>';
+  }
+  function syncBrand(btn) {
+    var bid = $('#sync-brand').value, brand = (STATIC.BRANDS || []).filter(function (b) { return b.id === bid; })[0];
+    var prods = (STATIC.PRODUCTS || []).filter(function (p) { return p.brand === bid; });
+    var catIds = prods.map(function (p) { return p.cat; }).filter(function (c, i, a) { return a.indexOf(c) === i; });
+    var cats = (STATIC.CATEGORIES || []).filter(function (c) { return catIds.indexOf(c.id) > -1; });
+    var old = db.product.filter(function (p) { return p.brand === bid; });
+    if (!confirm('Replace ' + old.length + ' ' + brand.name + ' products in the admin with the ' + prods.length + ' built-in ones? Download a backup first if unsure.')) return;
+    btn.disabled = true; btn.textContent = 'Updating…';
+    var rows = [];
+    if (!byId('brand', bid)) rows.push({ kind: 'brand', id: bid, sort: 999, data: Object.assign({ sort: 999 }, brand) });
+    cats.forEach(function (c) {
+      var cur = byId('category', c.id), sort = cur ? cur.sort : (STATIC.CATEGORIES.indexOf(c) * 10);
+      var d = Object.assign({}, cur || {}, c, { sort: sort, img: cur && cur.img ? cur.img : c.img });
+      if (!d.img) delete d.img;
+      rows.push({ kind: 'category', id: c.id, sort: sort, data: d });
+    });
+    prods.forEach(function (p, i) { var d = Object.assign({ in_stock: true }, p, { sort: 5000 + i }); rows.push({ kind: 'product', id: p.id, sort: d.sort, data: d }); });
+    remove('product', old.map(function (p) { return p.id; })).then(function () {
+      var chunks = []; for (var i = 0; i < rows.length; i += 200) chunks.push(rows.slice(i, i + 200));
+      return chunks.reduce(function (pr, ch) { return pr.then(function () { return sb.from('content').upsert(ch).then(function (r) { if (r.error) throw r.error; }); }); }, Promise.resolve());
+    }).then(load).then(function () { toast(brand.name + ': ' + prods.length + ' products are live now.'); render(); })
+      .catch(function (e) { btn.disabled = false; btn.textContent = 'Replace this brand\'s products'; fail(e); });
   }
 
   /* ---------- forms: open, save, delete ---------- */
@@ -428,9 +454,10 @@
     else if (act === 'del') del(kind, id);
     else if (act === 'cancel') render();
     else if (act === 'import') doImport(t);
+    else if (act === 'syncbrand') syncBrand(t);
     else if (act === 'export') {
       var blob = new Blob([JSON.stringify(db, null, 1)], { type: 'application/json' });
-      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'pullayya-backup-' + new Date().toISOString().slice(0, 10) + '.json'; a.click();
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'sri-rama-mohana-agencies-backup-' + new Date().toISOString().slice(0, 10) + '.json'; a.click();
     } else if (act === 'addphone') $('#phones').insertAdjacentHTML('beforeend', phoneRow());
     else if (act === 'rmphone') t.closest('.phone-row').remove();
     else if (act === 'addyt') {

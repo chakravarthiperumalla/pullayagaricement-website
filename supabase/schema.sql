@@ -1,4 +1,4 @@
--- Pullayya Gari Cement Kottu: Supabase setup for the admin panel.
+-- Sri Rama Mohana Agencies: Supabase setup for the admin panel.
 -- Run once in Supabase: Dashboard > SQL Editor > New query > paste > Run.
 -- Then add your admin email at the bottom and run that line too.
 

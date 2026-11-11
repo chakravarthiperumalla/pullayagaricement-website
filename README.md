@@ -1,6 +1,6 @@
-# Pullayya Gari Cement Kottu · Website
+# Sri Rama Mohana Agencies · Website
 
-A static, bilingual (Telugu / English) catalog website for **పుల్లయ్య గారి సిమెంట్ కొట్టు**, a cement, waterproofing, adhesives and hardware shop in Gunupudi, Bhimavaram, Andhra Pradesh.
+A static, bilingual (Telugu / English) catalog website for **శ్రీ రామ మోహన ఏజెన్సీస్**, a cement, waterproofing, adhesives and hardware shop in Gunupudi, Bhimavaram, Andhra Pradesh.
 
 Live site (after GitHub Pages is on): https://chakravarthiperumalla.github.io/pullayagaricement-website/
 Companion repository: `pullayagaricement-googlereview` (the Google review helper page).

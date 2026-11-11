@@ -1,5 +1,5 @@
 /*
- * Product catalog for Pullayya Gari Cement Kottu (static data, no server).
+ * Product catalog for Sri Rama Mohana Agencies (static data, no server).
  *
  * How to edit:
  *  - Add a brand to BRANDS, then add its products with p(...) at the bottom.
@@ -9,7 +9,7 @@
  *
  * Product facts were summarised from each manufacturer's own website (see `site` on every brand).
  * Cement has no prices on purpose: rates change daily, customers ask on WhatsApp.
- * Godrej models carry the MRP range from the Godrej price list (w.e.f. 1 July 2026); the shop negotiates below MRP.
+ * Godrej: every model from the Godrej price list (w.e.f. 1 July 2026) with its finishes and MRP range; prices are negotiable.
  */
 (function () {
   'use strict';
@@ -93,9 +93,15 @@
     { id: 'adhesive', shape: 'bottle', tint: 'mustard', en: 'Adhesives & sealants', te: 'అడ్హెసివ్స్ & సీలెంట్స్',
       introEn: 'Glues for wood, laminates, glass and metal, plus sealants for joints and gaps.',
       introTe: 'చెక్క, లామినేట్, గాజు, మెటల్ కోసం జిగురులు; జాయింట్లకు సీలెంట్లు.' },
-    { id: 'hardware', shape: 'padlock', tint: 'ink', en: 'Locks & hardware', te: 'లాక్స్ & హార్డ్‌వేర్',
-      introEn: 'Godrej padlocks, door and digital locks, handles, door fittings, and wardrobe, bed and kitchen fittings, with MRP ranges and every finish.',
+    { id: 'hardware', shape: 'padlock', tint: 'ink', en: 'Locks', te: 'లాక్స్',
+      introEn: 'Godrej digital, mortise, rim and cylindrical locks, padlocks and furniture locks: every model from the Godrej price list, with its finishes and MRP range.',
       introTe: 'ఇళ్లు, షాపులు, గోడౌన్ల కోసం తాళాలు, డోర్ లాక్స్, డిజిటల్ లాక్స్, హ్యాండిల్స్.' },
+    { id: 'doorfit', shape: 'mortise', tint: 'orange', en: 'Door handles & fittings', te: 'డోర్ హ్యాండిల్స్ & ఫిట్టింగ్స్',
+      introEn: 'Godrej home decor handles (HDH, NEH and designer rose and plate handles), pull handles, door closers, hinges, aldrops, tower bolts and door stoppers, with every finish and the MRP range.',
+      introTe: 'గోద్రెజ్ డోర్ హ్యాండిల్స్, పుల్ హ్యాండిల్స్, డోర్ క్లోజర్లు, హింజెస్, ఆల్డ్రాప్స్, టవర్ బోల్ట్స్: ప్రతి మోడల్, ఫినిష్‌లు, MRP రేంజ్‌తో.' },
+    { id: 'kitchen', shape: 'block', tint: 'grey', en: 'Kitchen, wardrobe & furniture fittings', te: 'కిచెన్, వార్డ్‌రోబ్ & ఫర్నిచర్ ఫిట్టింగ్స్',
+      introEn: 'Godrej kitchen baskets and SKIDO systems, Slim Ergo drawers, aluminium Gola profiles, HIKIDO sliding systems, Neulift bed fittings, cabinet hinges and drawer channels.',
+      introTe: 'గోద్రెజ్ కిచెన్ బాస్కెట్లు, స్కిడో, స్లిమ్ ఎర్గో డ్రాయర్లు, అల్యూమినియం ప్రొఫైల్స్, హికిడో, న్యూలిఫ్ట్ బెడ్ ఫిట్టింగ్స్, క్యాబినెట్ హింజెస్.' },
     { id: 'paint', shape: 'can', tint: 'orange', en: 'Paints', te: 'పెయింట్స్', ask: true,
       introEn: 'Interior and exterior paints for new houses and repaints. Brand list coming soon.',
       introTe: 'కొత్త ఇళ్లకు, రీపెయింట్‌కు ఇంటీరియర్, ఎక్స్‌టీరియర్ పెయింట్స్. బ్రాండ్ల జాబితా త్వరలో.' },
@@ -727,136 +733,1156 @@
     ['OPC and PPC variants'], ['rcc', 'plaster', 'masonry'], { type: 'OPC / PPC', pack: BAG });
 
   /* Godrej model: finishes[] and the MRP range (₹, incl. taxes) from the price list */
-  function gm(id, name, shape, tint, te, desc, feats, apps, specs, finishes, min, max) {
-    p(id, 'godrej', 'hardware', name, shape, tint, te, desc, feats, apps, specs);
+  function gm(id, name, shape, tint, cat, te, desc, feats, apps, specs, finishes, min, max) {
+    p(id, 'godrej', cat, name, shape, tint, te, desc, feats, apps, specs);
     var x = PRODUCTS[PRODUCTS.length - 1]; x.finishes = finishes; x.mrp = [min, max];
   }
 
-  /* ===== Godrej: one model per family, from the Godrej price list (w.e.f. 1 July 2026) ===== */
-  gm("godrej-advantis-iot9", "Godrej Advantis IoT9 Digital Lock", "mortise", "ink",
-    "అడ్వాంటిస్ IoT9: వైఫై, యాప్‌తో పనిచేసే స్మార్ట్ డిజిటల్ మోర్టైజ్ లాక్.",
-    "Connected digital door lock for main doors. Opens by fingerprint, PIN, RFID card, mechanical key and the mobile app, and is made in India. The top Godrej digital lock in this price list. Available in 7 finishes: Titanium Grey, Gunmetal Black, Roman Silver, Vegas Gold, Rose Gold, Oak Wood, Walnut.",
-    ["Wi-Fi and app control", "Fingerprint, PIN, card and key", "Seven designer finishes"], ["smart", "door"], {"type": "Digital mortise lock", "variants": "7 variants in the price list"}, ["Titanium Grey", "Gunmetal Black", "Roman Silver", "Vegas Gold", "Rose Gold", "Oak Wood", "Walnut"], 69999, 70999);
-  gm("godrej-neo-connect", "Godrej Neo Series Digital Locks", "mortise", "ink",
-    "నియో సిరీస్: కనెక్ట్, ప్రైమ్, ప్రో-వ్యూ, అడ్వాంటేజ్ డిజిటల్ లాక్స్.",
-    "Everyday digital door locks: Neo Connect, Neo Prime, Neo Pro-View (with a camera view) and Neo Advantage. Keyless entry by fingerprint, PIN or card, with a key for back-up. Available in 3 finishes: Black, Rose Gold, Titanium Grey.",
-    ["Four models in one series", "Keyless entry with key back-up", "Pro-View has a camera view"], ["smart", "door"], {"type": "Digital lock", "variants": "6 variants in the price list"}, ["Black", "Rose Gold", "Titanium Grey"], 10999, 29999);
-  gm("godrej-advantis-rimtronic", "Godrej Advantis Rimtronic Digital Rim Lock", "mortise", "ink",
-    "అడ్వాంటిస్ రిమ్‌ట్రానిక్: పాత తలుపుకే పెట్టుకునే డిజిటల్ రిమ్ లాక్.",
-    "Digital rim lock that fits on the inside face of the door, so existing doors can go digital without cutting a mortise. Available as Rimtronic, Rimtronic RF and Rimtronic Verti. Available in 1 finish: Black.",
-    ["Fits existing doors", "Three variants", "For 40-50 mm doors"], ["smart", "door"], {"type": "Digital rim lock", "variants": "3 variants in the price list"}, ["Black"], 17440, 34350);
-  gm("godrej-neh-21", "Godrej NEH 21 Mortise Handle Set", "mortise", "kraft",
-    "NEH 21: మెయిన్ డోర్‌కు మోర్టైజ్ హ్యాండిల్ సెట్, 4 ఫినిష్‌లు.",
-    "Popular mortise door handle set with a matching lock body and cylinder. Comes as 240 mm and 200 mm sets, with one or two cylinders and as a combipack. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper.",
-    ["Handle, lock body and cylinder", "Several sizes and cylinder options", "Four finishes"], ["door", "indoor"], {"type": "Mortise handle set", "variants": "28 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2260, 4150);
-  gm("godrej-gloria", "Godrej Gloria Mortise Handle Set", "mortise", "grey",
-    "గ్లోరియా: ప్రీమియం మోర్టైజ్ హ్యాండిల్ సెట్, 5 ఫినిష్‌లు.",
-    "Premium mortise handle set in five finishes, also sold with the Victor cylinder for extra key security. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper, Matte Black Nickel.",
-    ["Premium design", "Option with Victor cylinder", "Five finishes"], ["door", "indoor"], {"type": "Mortise handle set", "variants": "33 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper", "Matte Black Nickel"], 2620, 5620);
-  gm("godrej-essential-mortise", "Godrej Essential Mortise (EM 01 to EM 05)", "mortise", "grey",
-    "ఎసెన్షియల్ మోర్టైజ్ EM 01-05: తక్కువ ధరలో మోర్టైజ్ సెట్లు.",
-    "Five value mortise handle designs, EM 01 to EM 05, each with the lock body and cylinder. A good choice for room doors and rental homes. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black.",
-    ["Five designs", "Value range", "Three finishes"], ["indoor", "door"], {"type": "Mortise handle set", "variants": "102 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1390, 2730);
-  gm("godrej-6-lever-mortise", "Godrej 6 Lever Mortise Lock Combipack (ELC)", "mortise", "kraft",
-    "6 లివర్ మోర్టైజ్ లాక్ కాంబిప్యాక్ (ELC సిరీస్).",
-    "Lever mortise lock sold as a combipack with handles. ELC 01, 02, 09, 10 and 19 designs, plus Stella and Gloria handle options. Available in 6 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black, Matte Black Nickel, Matte Black Rose.",
-    ["Six-lever security", "Lock and handles in one pack", "Several designs"], ["door", "indoor"], {"type": "Lever mortise lock", "variants": "23 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black", "Matte Black Nickel", "Matte Black Rose"], 2080, 2590);
-  gm("godrej-ulturo-cylinder", "Godrej Ulturo Ultra XL+ Euro Cylinder", "mortise", "grey",
-    "అల్టురో అల్ట్రా XL+: డూప్లికేట్ చేయలేని కీతో యూరో సిలిండర్.",
-    "High-security euro-profile cylinder for mortise locks, with the Ultra XL+ key. Sold in 60, 70 and 80 mm lengths, with one cylinder and knob (1CK) or two cylinders (2C). Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel.",
-    ["Ultra XL+ key security", "60, 70 and 80 mm", "Four finishes"], ["door"], {"type": "Euro cylinder", "variants": "24 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel"], 1650, 2050);
-  gm("godrej-centaur-rim-lock", "Godrej Centaur Ultra XL+ Rim Lock", "mortise", "slate",
-    "సెంటార్ అల్ట్రా XL+: మెయిన్ డోర్‌కు రిమ్ లాక్.",
-    "Rim lock for main doors with the Ultra XL+ key mechanism. Latchbolt and deadbolt versions, with one or two cylinders, and a double-door model. Available in 3 finishes: Satin Nickel, Antique Brass, Antique Copper.",
-    ["Latchbolt and deadbolt versions", "Double-door model", "Ultra XL+ key"], ["door"], {"type": "Rim lock", "variants": "13 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Antique Copper"], 5820, 6650);
-  gm("godrej-tribolt-ultra-xl", "Godrej Tribolt Ultra XL+ Rim Lock", "mortise", "slate",
-    "ట్రైబోల్ట్ అల్ట్రా XL+: మూడు బోల్ట్‌ల బలమైన రిమ్ లాక్.",
-    "Rim lock that throws three bolts for extra strength on the main door, with the Ultra XL+ key. Available in 4 finishes: Satin Nickel, Antique Brass, Matte Black Nickel, Rose Gold.",
-    ["Three bolts", "Ultra XL+ key", "Four finishes"], ["door"], {"type": "Rim lock", "variants": "18 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Matte Black Nickel", "Rose Gold"], 4310, 7140);
-  gm("godrej-pentabolt-aries", "Godrej Pentabolt Aries 3KS", "mortise", "slate",
-    "పెంటాబోల్ట్ ఏరీస్: ఐదు బోల్ట్‌ల ప్రీమియం మెయిన్ డోర్ లాక్.",
-    "Premium main-door lock with five bolts, the strongest rim lock in the Godrej price list. Available in 2 finishes: Roman Silver, Vegas Gold.",
-    ["Five bolts", "Premium finishes", "For main doors"], ["door"], {"type": "Rim lock", "variants": "6 variants in the price list"}, ["Roman Silver", "Vegas Gold"], 14400, 15230);
-  gm("godrej-cylindrical-locks", "Godrej Classic Cylindrical Locks", "mortise", "grey",
-    "క్లాసిక్ సిలిండ్రికల్ లాక్స్: గది, బాత్‌రూమ్ తలుపులకు నాబ్ లాక్స్.",
-    "Knob locks for room doors. Keyed (entrance) and keyless (bathroom and privacy) versions. Available in 6 finishes: Brass, Stainless Steel, Wooden, Antique Brass, Rose Gold, Matte Black.",
-    ["Keyed and keyless versions", "Easy to fit", "Six finishes"], ["indoor"], {"type": "Cylindrical lock", "variants": "17 variants in the price list"}, ["Brass", "Stainless Steel", "Wooden", "Antique Brass", "Rose Gold", "Matte Black"], 1130, 1570);
-  gm("godrej-navtal-ultra-xl", "Godrej NavTal Ultra XL+ Padlock", "padlock", "ink",
-    "నవ్‌తాల్ అల్ట్రా XL+: ఇత్తడి బాడీ, గట్టి స్టీల్ షాకిల్ ఉన్న ప్యాడ్‌లాక్.",
-    "Padlock with a solid brass body and a hardened steel shackle that resists hacksaw and crowbar attacks. The Ultra XL+ key mechanism makes duplication very difficult. Comes with 4 keys. Available in 1 finish: Brass.",
-    ["Brass body", "Hacksaw-resistant shackle", "Hard-to-copy key"], ["door", "shop", "box"], {"type": "Padlock", "variants": "3 variants in the price list"}, ["Brass"], 1330, 2500);
-  gm("godrej-no1-padlock", "Godrej No.1 Solid Brass Padlock", "padlock", "mustard",
-    "గోద్రెజ్ నంబర్ 1: ఇత్తడి పిన్ సిలిండర్ ప్యాడ్‌లాక్.",
-    "Classic solid brass pin-cylinder padlock in several sizes. Godrej says its padlocks have been made since 1897. Available in 1 finish: Brass.",
-    ["Solid brass", "Several sizes", "Pin cylinder"], ["door", "shop", "box"], {"type": "Padlock", "variants": "5 variants in the price list"}, ["Brass"], 670, 1510);
-  gm("godrej-duralock", "Godrej Duralock Ultra XL+ Padlock", "padlock", "grey",
-    "డ్యూరాలాక్ అల్ట్రా XL+: స్టెయిన్‌లెస్ స్టీల్ డిస్క్ ప్యాడ్‌లాక్.",
-    "Round stainless steel padlock with a shielded shackle and the Ultra XL+ key, for shutters, gates and godowns. Available in 1 finish: Stainless Steel.",
-    ["Stainless steel", "Shielded shackle", "Ultra XL+ key"], ["shop", "door"], {"type": "Padlock", "variants": "6 variants in the price list"}, ["Stainless Steel"], 1030, 5720);
-  gm("godrej-shutter-lock", "Godrej Shutter Lock Ultra", "padlock", "ink",
-    "షట్టర్ లాక్ అల్ట్రా: షాప్ షట్టర్లకు సెంటర్ లాక్.",
-    "Centre lock for rolling shutters, so the shop can be locked without padlocks at the sides. Available in 1 finish: Black.",
-    ["Made for rolling shutters", "Ultra key"], ["shop"], {"type": "Shutter lock", "variants": "4 variants in the price list"}, ["Black"], 2420, 4570);
-  gm("godrej-furniture-locks", "Godrej Nuvo Drawer Lock", "mortise", "kraft",
-    "నువో: డ్రాయర్, అల్మారాకు పిన్ సిలిండర్ లాక్.",
-    "Pin-cylinder lock for drawers and cupboards, in four finishes to match the furniture. Available in 4 finishes: Satin Steel, Textured Brown, Textured Black, Cool Ivory.",
-    ["Pin cylinder", "Four finishes"], ["cup", "box"], {"type": "Furniture lock", "variants": "16 variants in the price list"}, ["Satin Steel", "Textured Brown", "Textured Black", "Cool Ivory"], 315, 570);
-  gm("godrej-curvo", "Godrej Curvo Duo Wardrobe Lock", "mortise", "grey",
-    "కర్వో డ్యుయో: SS 304 వార్డ్‌రోబ్ లాక్.",
-    "SS 304 stainless steel wardrobe lock for two-door wardrobes. Available in 1 finish: Stainless Steel.",
-    ["SS 304 stainless steel", "For two-door wardrobes"], ["cup"], {"type": "Furniture lock", "variants": "6 variants in the price list"}, ["Stainless Steel"], 540, 770);
-  gm("godrej-home-handles", "Godrej Home Decor Rose Handles (HDH)", "mortise", "orange",
-    "హోమ్ డెకర్ రోజ్ హ్యాండిల్స్: నాలుగు థీమ్‌లలో డిజైనర్ హ్యాండిల్స్.",
-    "Designer rose handles in four themes: Euro Modern, Urban Chic, Neo Luxury and Smart Ethnic. There are many designs, including HDH 01 to HDH 23, Ugo, Cameo, Udaan and Kalasam. Available in 10 finishes: Antique Brass, Antique Copper, Satin Steel, Matte Black, Matte Black Nickel, PVD Rose Gold, Satin Matte, Matte Antique Brass, Antique Brass Walnut, Matte Black Rose.",
-    ["Four design themes", "Many designs", "Ten finishes"], ["door", "indoor"], {"type": "Door handle", "variants": "100 variants in the price list"}, ["Antique Brass", "Antique Copper", "Satin Steel", "Matte Black", "Matte Black Nickel", "PVD Rose Gold", "Satin Matte", "Matte Antique Brass", "Antique Brass Walnut", "Matte Black Rose"], 3760, 19140);
-  gm("godrej-pull-handles", "Godrej Pull Handles (Anoushka, Tibo, Marin)", "mortise", "orange",
-    "పుల్ హ్యాండిల్స్: అనౌష్క, టిబో, మారిన్.",
-    "Long pull handles for main doors and glass or wooden double doors, in three designs. Available in 6 finishes: Brass, Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, Rose Gold.",
-    ["Three designs", "240 to 300 mm", "Six finishes"], ["door"], {"type": "Pull handle", "variants": "30 variants in the price list"}, ["Brass", "Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "Rose Gold"], 1390, 2630);
-  gm("godrej-door-closer", "Godrej Cerus Door Closer", "block", "grey",
-    "సెరస్ డోర్ క్లోజర్: తలుపు దానంతట అదే నెమ్మదిగా మూసుకుంటుంది.",
-    "Door closer that shuts the door gently by itself. Surface-mounted Cerus universal models and an 85 kg concealed closer. Available in 3 finishes: Silver, Matte Black, Gold.",
-    ["Surface-mounted and concealed", "Gentle closing", "Three finishes"], ["door"], {"type": "Door closer", "variants": "8 variants in the price list"}, ["Silver", "Matte Black", "Gold"], 2100, 7040);
-  gm("godrej-ss-hinges", "Godrej Stainless Steel Door Hinges", "block", "grey",
-    "స్టెయిన్‌లెస్ స్టీల్ డోర్ హింజెస్: ప్లెయిన్, కట్, బాల్ బేరింగ్.",
-    "Door hinges in plain-joint, cut and ball-bearing types, in stainless steel and SS 304. Also sold in Antique Brass and Matte Black. Available in 2 finishes: Stainless Steel, SS 304.",
-    ["Plain, cut and ball-bearing", "SS and SS 304", "Many sizes"], ["door", "indoor", "cup"], {"type": "Door hinge", "variants": "17 variants in the price list"}, ["Stainless Steel", "SS 304"], 55, 455);
-  gm("godrej-aldrop", "Godrej Aldrops", "block", "grey",
-    "ఆల్డ్రాప్స్: తలుపులకు బయటి, లోపలి గడియలు.",
-    "Aldrops (door latches) for main and room doors, in stainless steel, brass, matte black and antique brass, plus inner aldrops. Available in 3 finishes: Stainless Steel, Matte Black, Antique Brass.",
-    ["Outer and inner aldrops", "Steel and brass", "Three finishes"], ["door", "shop"], {"type": "Aldrop", "variants": "11 variants in the price list"}, ["Stainless Steel", "Matte Black", "Antique Brass"], 420, 2300);
-  gm("godrej-tower-bolt", "Godrej Tower Bolts", "block", "kraft",
-    "టవర్ బోల్ట్స్: రెగ్యులర్, డిజైనర్.",
-    "Regular stainless steel tower bolts and designer tower bolts in several lengths. Available in 4 finishes: Stainless Steel, Aluminium, Antique Brass, Matte Black.",
-    ["Regular and designer", "Several lengths", "Four finishes"], ["door", "indoor"], {"type": "Tower bolt", "variants": "26 variants in the price list"}, ["Stainless Steel", "Aluminium", "Antique Brass", "Matte Black"], 125, 970);
-  gm("godrej-hikido", "Godrej HIKIDO Sliding Door Systems", "block", "grey",
-    "హికిడో: వార్డ్‌రోబ్ స్లైడింగ్ డోర్ సిస్టమ్స్, సాఫ్ట్ క్లోజ్.",
-    "Sliding systems for wardrobes and cabinets: HIKIDO Inline, Topper, Inset and Cabinet, with soft-close rollers, dampers and tracks. Available in 2 finishes: Aluminium, Anthracite.",
-    ["Soft close", "Inline, Topper, Inset and Cabinet", "Up to 80 kg doors"], ["cup"], {"type": "Wardrobe fitting", "variants": "17 variants in the price list"}, ["Aluminium", "Anthracite"], 1720, 126220);
-  gm("godrej-neulift", "Godrej Neulift Bed Fittings", "block", "ink",
-    "న్యూలిఫ్ట్: స్టోరేజ్ బెడ్ లిఫ్ట్ ఫిట్టింగ్స్, మర్ఫీ బెడ్.",
-    "Lift-up bed fittings for storage beds: bed arms, gas springs, cross bars, bed frames with slats and a vertical Murphy bed. Available in 2 finishes: Anthracite, Nickel Plated.",
-    ["Storage-bed lift", "Gas springs up to 50 kg", "Murphy bed option"], ["cup", "wood"], {"type": "Bed fitting", "variants": "28 variants in the price list"}, ["Anthracite", "Nickel Plated"], 280, 14090);
-  gm("godrej-cabinet-hinges", "Godrej Soft Close Cabinet Hinges", "block", "grey",
-    "సాఫ్ట్ క్లోజ్ క్యాబినెట్ హింజెస్: కిచెన్, వార్డ్‌రోబ్ షట్టర్లకు.",
-    "Soft-close cabinet hinges for kitchen and wardrobe shutters: slip-on, clip-on, 3D and SS 304 types, in 2-hole and 4-hole versions. Available in 1 finish: Nickel Plated.",
-    ["Soft close", "Slip-on, clip-on and 3D", "SS 304 option"], ["cup", "wood"], {"type": "Cabinet hinge", "variants": "20 variants in the price list"}, ["Nickel Plated"], 225, 1005);
-  gm("godrej-drawer-channels", "Godrej Drawer Channels", "block", "grey",
-    "డ్రాయర్ ఛానల్స్: 35, 45 కిలోలు, సాఫ్ట్ క్లోజ్.",
-    "Telescopic drawer channels in 35 kg and 45 kg load ratings, soft-close and SS 304 versions, in many lengths. Available in 2 finishes: Zinc, Black.",
-    ["35 and 45 kg ratings", "Soft-close option", "Zinc and black"], ["cup", "wood"], {"type": "Drawer channel", "variants": "44 variants in the price list"}, ["Zinc", "Black"], 285, 3070);
-  gm("godrej-slim-ergo", "Godrej Slim Ergo Drawer System", "block", "ink",
-    "స్లిమ్ ఎర్గో: కిచెన్ డ్రాయర్ సిస్టమ్, 4, 6, 8 అంగుళాలు.",
-    "Slim-wall kitchen drawer systems, Slim Ergo and Super Slim Ergo, in 4, 6 and 8 inch heights, with rails and front fascia parts. Available in 2 finishes: Anthracite, Black.",
-    ["Slim and Super Slim", "4, 6 and 8 inch heights", "Two finishes"], ["cup"], {"type": "Kitchen drawer", "variants": "78 variants in the price list"}, ["Anthracite", "Black"], 2170, 5170);
-  gm("godrej-super-skido", "Godrej Super SKIDO Kitchen Systems", "block", "ink",
-    "సూపర్ స్కిడో: పాంట్రీ, కార్నర్, సింక్ కింద కిచెన్ సొల్యూషన్స్.",
-    "Modular kitchen units: slide-out pantry, corner solutions, swing corner, under-sink storage and grain storage. Available in 1 finish: Anthracite.",
-    ["Pantry, corner and under-sink units", "Anthracite finish"], ["cup"], {"type": "Kitchen fitting", "variants": "9 variants in the price list"}, ["Anthracite"], 5659, 32520);
-  gm("godrej-ss-baskets", "Godrej Stainless Steel Kitchen Baskets", "block", "grey",
-    "స్టెయిన్‌లెస్ స్టీల్ కిచెన్ బాస్కెట్లు: ప్లెయిన్, కప్ & సాసర్, థాలీ, కట్లరీ.",
-    "Kitchen wire baskets in stainless steel and SS 304: plain, cup and saucer, thali and perforated cutlery baskets, in many sizes. Available in 2 finishes: Stainless Steel, SS 304.",
-    ["Many sizes", "SS and SS 304", "Plain, thali, cup and cutlery"], ["cup"], {"type": "Kitchen basket", "variants": "192 variants in the price list"}, ["Stainless Steel", "SS 304"], 1300, 7940);
+  /* ===== Godrej: every model from the Godrej price list (w.e.f. 1 July 2026). Finishes and sizes are in each description. ===== */
+  gm("godrej-advantis-iot9", "Godrej Advantis IoT9", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis IoT9: డిజిటల్ లాక్, 7 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis IoT9 from the Godrej digital locks range. Available in 7 finishes: Titanium Grey, Gunmetal Black, Roman Silver, Vegas Gold, Rose Gold, Oak Wood, Walnut. MRP ₹69,999 – ₹70,999 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["7 finishes available", "7 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "7 variants in the price list"}, ["Titanium Grey", "Gunmetal Black", "Roman Silver", "Vegas Gold", "Rose Gold", "Oak Wood", "Walnut"], 69999, 70999);
+  gm("godrej-advantis-revolution", "Godrej Advantis Revolution", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Revolution: డిజిటల్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis Revolution from the Godrej digital locks range. Available in 2 finishes: Black, Gold. MRP ₹61,200 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "2 variants in the price list"}, ["Black", "Gold"], 61200, 61200);
+  gm("godrej-advantis-gsl-d1", "Godrej Advantis GSL D1", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis GSL D1: డిజిటల్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis GSL D1 from the Godrej digital locks range. Available in 2 finishes: Black, Rose Gold. MRP ₹22,999 – ₹23,999 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "2 variants in the price list"}, ["Black", "Rose Gold"], 22999, 23999);
+  gm("godrej-advantis-gsl-d1r", "Godrej Advantis GSL D1R", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis GSL D1R: డిజిటల్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis GSL D1R from the Godrej digital locks range. Available in 2 finishes: Black, Silver. Sizes and options: Black; Silver. MRP ₹16,699 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "8 variants in the price list"}, ["Black", "Silver"], 16699, 16699);
+  gm("godrej-neo-pro-view", "Godrej Neo Pro-View", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Neo Pro-View: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neo Pro-View from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹29,999 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 29999, 29999);
+  gm("godrej-neo-connect", "Godrej Neo Connect", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Neo Connect: డిజిటల్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neo Connect from the Godrej digital locks range. Available in 2 finishes: Black, Rose Gold. MRP ₹15,499 – ₹15,999 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "2 variants in the price list"}, ["Black", "Rose Gold"], 15499, 15999);
+  gm("godrej-neo-prime", "Godrej Neo Prime", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Neo Prime: డిజిటల్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neo Prime from the Godrej digital locks range. Available in 2 finishes: Rose Gold, Titanium Grey. MRP ₹12,999 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "2 variants in the price list"}, ["Rose Gold", "Titanium Grey"], 12999, 12999);
+  gm("godrej-neo-advantage", "Godrej Neo Advantage", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Neo Advantage: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neo Advantage from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹10,999 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 10999, 10999);
+  gm("godrej-advantis-rimtronic", "Godrej Advantis Rimtronic", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Rimtronic: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis Rimtronic from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹34,350 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 34350, 34350);
+  gm("godrej-advantis-rimtronic-rf", "Godrej Advantis Rimtronic RF", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Rimtronic RF: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis Rimtronic RF from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹17,440 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 17440, 17440);
+  gm("godrej-advantis-rimtronic-verti", "Godrej Advantis Rimtronic Verti", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Rimtronic Verti: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis Rimtronic Verti from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹20,010 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 20010, 20010);
+  gm("godrej-advantis-cabinet-lock", "Godrej Advantis Cabinet Lock", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Cabinet Lock: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Advantis Cabinet Lock from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹9,410 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 9410, 9410);
+  gm("godrej-astron-digital-cabinet-lock", "Godrej Astron Digital Cabinet Lock", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Astron Digital Cabinet Lock: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Astron Digital Cabinet Lock from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹3,799 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 3799, 3799);
+  gm("godrej-rion-digital-cabinet-lock", "Godrej Rion Digital Cabinet Lock", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Rion Digital Cabinet Lock: డిజిటల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Rion Digital Cabinet Lock from the Godrej digital locks range. Available in 1 finish: Black. MRP ₹4,299 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, ["Black"], 4299, 4299);
+  gm("godrej-advantis-remote-accessory", "Godrej Advantis Remote (accessory)", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Remote (accessory): డిజిటల్ లాక్.",
+    "Advantis Remote (accessory) from the Godrej digital locks range. MRP ₹4,099 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "1 variants in the price list"}, [], 4099, 4099);
+  gm("godrej-advantis-video-door-phone-module", "Godrej Advantis Video Door Phone Module", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Video Door Phone Module: డిజిటల్ లాక్.",
+    "Advantis Video Door Phone Module from the Godrej digital locks range. MRP ₹4,200 – ₹7,350 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "3 variants in the price list"}, [], 4200, 7350);
+  gm("godrej-advantis-rimtronic-pcb-accessory", "Godrej Advantis Rimtronic PCB (accessory)", "mortise", "ink", "hardware",
+    "గోద్రెజ్ Advantis Rimtronic PCB (accessory): డిజిటల్ లాక్.",
+    "Advantis Rimtronic PCB (accessory) from the Godrej digital locks range. MRP ₹5,099 – ₹5,789 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["smart", "door"], {"type": "Digital lock", "variants": "2 variants in the price list"}, [], 5099, 5789);
+  gm("godrej-neh-06-mortise-handle-set", "Godrej NEH 06 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 06 Mortise Handle Set: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 06 Mortise Handle Set from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Matte Black Rose, Black Antique Copper, Matte Black Nickel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Baby Latch with Handle Set. MRP ₹3,050 – ₹6,240 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "20 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "20 variants in the price list"}, ["Satin Steel", "Matte Black Rose", "Black Antique Copper", "Matte Black Nickel"], 3050, 6240);
+  gm("godrej-neh-07-mortise-handle-set", "Godrej NEH 07 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 07 Mortise Handle Set: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 07 Mortise Handle Set from the Godrej mortise locks range. Available in 1 finish: Satin Steel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Baby Latch with Handle Set. MRP ₹2,640 – ₹5,020 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel"], 2640, 5020);
+  gm("godrej-neh-15-low-height-design", "Godrej NEH 15 (Low Height Design)", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 15 (Low Height Design): మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 15 (Low Height Design) from the Godrej mortise locks range. Available in 1 finish: Satin Steel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; 200 mm Door Handle Set 1CK; Baby Latch with Handle Set. MRP ₹2,250 – ₹4,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel"], 2250, 4220);
+  gm("godrej-neh-16-mortise-handle-set", "Godrej NEH 16 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 16 Mortise Handle Set: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 16 Mortise Handle Set from the Godrej mortise locks range. Available in 1 finish: Satin Steel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; 200 mm Door Handle Set 1CK; Baby Latch with Handle Set. MRP ₹2,250 – ₹4,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel"], 2250, 4220);
+  gm("godrej-neh-17-mortise-handle-set", "Godrej NEH 17 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 17 Mortise Handle Set: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 17 Mortise Handle Set from the Godrej mortise locks range. Available in 2 finishes: Satin Steel, Antique Brass. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 1CK (70 mm Cylinder); Baby Latch with Handle Set. MRP ₹2,080 – ₹4,120 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "12 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "12 variants in the price list"}, ["Satin Steel", "Antique Brass"], 2080, 4120);
+  gm("godrej-neh-19-mortise-handle-set", "Godrej NEH 19 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 19 Mortise Handle Set: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 19 Mortise Handle Set from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper, Matte Black Nickel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 1CK (70 mm Cylinder); Baby Latch with Handle Set. MRP ₹2,290 – ₹4,300 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "32 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "32 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper", "Matte Black Nickel"], 2290, 4300);
+  gm("godrej-neh-20-mortise-handle-set", "Godrej NEH 20 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 20 Mortise Handle Set: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 20 Mortise Handle Set from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black, Antique Copper, Matte Black Nickel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; (70 mm Cylinder). MRP ₹2,290 – ₹4,300 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "32 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "32 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Antique Copper", "Matte Black Nickel"], 2290, 4300);
+  gm("godrej-neh-21-mortise-handle-set", "Godrej NEH 21 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 21 Mortise Handle Set: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 21 Mortise Handle Set from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Baby Latch; Rosette; 200 mm Door Handle Set 1CK; Door Handle Set 1CK. MRP ₹2,260 – ₹4,150 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "28 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "28 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2260, 4150);
+  gm("godrej-neh-22-mortise-handle-set", "Godrej NEH 22 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 22 Mortise Handle Set: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 22 Mortise Handle Set from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper. Sizes and options: 240 mm Door Handle Set 2C; Baby Latch; Rosette; (70 mm Cylinder); Door Handle Set 2C 200 mm. MRP ₹2,260 – ₹4,150 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "28 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "28 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2260, 4150);
+  gm("godrej-neh-23-mortise-handle-set", "Godrej NEH 23 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 23 Mortise Handle Set: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 23 Mortise Handle Set from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper. Sizes and options: 240 mm Door Handle Set 2C; Baby Latch; 240 mm Rosette 1CK. MRP ₹2,210 – ₹4,100 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "28 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "28 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2210, 4100);
+  gm("godrej-neh-24-mortise-handle-set", "Godrej NEH 24 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ NEH 24 Mortise Handle Set: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 24 Mortise Handle Set from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper. Sizes and options: 240 mm Door Handle Set 2C; Baby Latch; 240 mm Rosette 1CK; (70 mm Cylinder); 200 mm Door Handle Set 1CK (70 mm Cylinder). MRP ₹2,210 – ₹4,100 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "28 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "28 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2210, 4100);
+  gm("godrej-gloria-mortise-handle-set", "Godrej Gloria Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Gloria Mortise Handle Set: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "Gloria Mortise Handle Set from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper, Matte Black Nickel. Sizes and options: 240 mm Door Handle Set 2C; 240 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; 200 mm Door Handle Set 1CK; Baby Latch with Handle Set. MRP ₹2,620 – ₹5,620 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "25 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "25 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper", "Matte Black Nickel"], 2620, 5620);
+  gm("godrej-gloria-mortise-handle-set-with-victor-cylinder", "Godrej Gloria Mortise Handle Set with Victor Cylinder", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Gloria Mortise Handle Set with Victor Cylinder: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Gloria Mortise Handle Set with Victor Cylinder from the Godrej mortise locks range. Available in 2 finishes: Satin Steel, Antique Brass. Sizes and options: Gloria 240 mm Door Handle Set 2C; Gloria 240 mm Door Handle Set 1CK; Gloria 200 mm Door Handle Set 2C; Gloria 200 mm Door Handle Set 1CK. MRP ₹4,840 – ₹5,560 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "8 variants in the price list"}, ["Satin Steel", "Antique Brass"], 4840, 5560);
+  gm("godrej-bm-01-mortise-handle-set", "Godrej BM 01 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ BM 01 Mortise Handle Set: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "BM 01 Mortise Handle Set from the Godrej mortise locks range. Available in 2 finishes: Satin Steel, Antique Brass. Sizes and options: 175 mm Door Handle Set 1CK; 175 mm Door Handle Set 2C. MRP ₹2,720 – ₹2,960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass"], 2720, 2960);
+  gm("godrej-bm-02-mortise-handle-set", "Godrej BM 02 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ BM 02 Mortise Handle Set: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "BM 02 Mortise Handle Set from the Godrej mortise locks range. Available in 2 finishes: Satin Steel, Antique Brass. Sizes and options: 175 mm Door Handle Set 1CK; 175 mm Door Handle Set 2C. MRP ₹2,720 – ₹2,960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass"], 2720, 2960);
+  gm("godrej-bm-09-mortise-handle-set", "Godrej BM 09 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ BM 09 Mortise Handle Set: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "BM 09 Mortise Handle Set from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black Nickel, Matte Black. Sizes and options: 175 mm Door Handle Set 1CK; 175 mm Door Handle Set 2C. MRP ₹2,610 – ₹2,910 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "10 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "10 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black Nickel", "Matte Black"], 2610, 2910);
+  gm("godrej-bm-10-mortise-handle-set", "Godrej BM 10 Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ BM 10 Mortise Handle Set: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "BM 10 Mortise Handle Set from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black Nickel, Matte Black. Sizes and options: 175 mm Door Handle Set 1CK; 175 mm Door Handle Set 2C. MRP ₹2,610 – ₹2,910 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "10 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "10 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black Nickel", "Matte Black"], 2610, 2910);
+  gm("godrej-ss-d-type-tube-lever-combi-set", "Godrej SS D Type Tube Lever Combi Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ SS D Type Tube Lever Combi Set: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS D Type Tube Lever Combi Set from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹3,570 – ₹3,780 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "2 variants in the price list"}, ["Satin Steel"], 3570, 3780);
+  gm("godrej-em-01-essential-mortise-handle-set", "Godrej EM 01 Essential Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ EM 01 Essential Mortise Handle Set: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "EM 01 Essential Mortise Handle Set from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. Sizes and options: 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Coverplate Baby Latch; Rosette Door Handle Set 1CK; Rosette Door Handle Set 2C; Rosette Baby Latch; 200 mm Keyless Combi Set. MRP ₹1,390 – ₹2,560 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "21 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "21 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1390, 2560);
+  gm("godrej-em-02-essential-mortise-handle-set", "Godrej EM 02 Essential Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ EM 02 Essential Mortise Handle Set: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "EM 02 Essential Mortise Handle Set from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. Sizes and options: 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Coverplate Baby Latch; Rosette Door Handle Set 1CK; Rosette Door Handle Set 2C; Rosette Baby Latch; 200 mm Keyless Combi Set. MRP ₹1,390 – ₹2,560 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "21 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "21 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1390, 2560);
+  gm("godrej-em-03-essential-mortise-handle-set", "Godrej EM 03 Essential Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ EM 03 Essential Mortise Handle Set: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "EM 03 Essential Mortise Handle Set from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. Sizes and options: 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Rosette Door Handle Set 1CK; Rosette Door Handle Set 2C; Rosette Baby Latch; 200 mm Keyless Combi Set. MRP ₹1,740 – ₹2,730 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "21 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "21 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1740, 2730);
+  gm("godrej-em-04-essential-mortise-handle-set", "Godrej EM 04 Essential Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ EM 04 Essential Mortise Handle Set: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "EM 04 Essential Mortise Handle Set from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. Sizes and options: 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Rosette Door Handle Set 1CK; Rosette Door Handle Set 2C; Rosette Baby Latch; 200 mm Keyless Combi Set. MRP ₹1,740 – ₹2,730 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "21 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "21 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1740, 2730);
+  gm("godrej-em-05-essential-mortise-handle-set", "Godrej EM 05 Essential Mortise Handle Set", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ EM 05 Essential Mortise Handle Set: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "EM 05 Essential Mortise Handle Set from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. Sizes and options: 200 mm Door Handle Set 1CK; 200 mm Door Handle Set 2C; Rosette Door Handle Set 1CK; Rosette Door Handle Set 2C; Rosette Baby Latch; 200 mm Keyless Combi Set. MRP ₹1,740 – ₹2,730 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "18 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "18 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1740, 2730);
+  gm("godrej-sec-01-240-mm-euro-mortise-combipack", "Godrej SEC 01 240 mm Euro Mortise Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ SEC 01 240 mm Euro Mortise Combipack: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "SEC 01 240 mm Euro Mortise Combipack from the Godrej mortise locks range. Available in 2 finishes: Antique Brass, Satin Steel & Gold. MRP ₹8,860 – ₹10,380 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "2 variants in the price list"}, ["Antique Brass", "Satin Steel & Gold"], 8860, 10380);
+  gm("godrej-sec-02-240-mm-euro-mortise-combipack", "Godrej SEC 02 240 mm Euro Mortise Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ SEC 02 240 mm Euro Mortise Combipack: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "SEC 02 240 mm Euro Mortise Combipack from the Godrej mortise locks range. Available in 2 finishes: Antique Brass, Gold. MRP ₹7,210 – ₹8,880 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "2 variants in the price list"}, ["Antique Brass", "Gold"], 7210, 8880);
+  gm("godrej-sec-03-240-mm-euro-mortise-combipack", "Godrej SEC 03 240 mm Euro Mortise Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ SEC 03 240 mm Euro Mortise Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SEC 03 240 mm Euro Mortise Combipack from the Godrej mortise locks range. Available in 1 finish: Antique Brass. MRP ₹7,210 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Antique Brass"], 7210, 7210);
+  gm("godrej-aura-240-mm-euro-mortise-combipack", "Godrej Aura 240 mm Euro Mortise Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Aura 240 mm Euro Mortise Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Aura 240 mm Euro Mortise Combipack from the Godrej mortise locks range. Available in 1 finish: Brass. MRP ₹6,670 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Brass"], 6670, 6670);
+  gm("godrej-stella-6-lever-mortise-lock-combipack", "Godrej Stella 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Stella 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Stella 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹2,320 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2320, 2320);
+  gm("godrej-d-cor-6-lever-mortise-lock-combipack", "Godrej Décor 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Décor 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Décor 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Brass. MRP ₹2,940 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Brass"], 2940, 2940);
+  gm("godrej-venus-6-lever-mortise-lock-combipack", "Godrej Venus 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Venus 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Venus 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Brass. MRP ₹2,840 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Brass"], 2840, 2840);
+  gm("godrej-elc-01-6-lever-mortise-lock-combipack", "Godrej ELC 01 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 01 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 01 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black, Matte Black Nickel. MRP ₹2,080 – ₹2,250 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black", "Matte Black Nickel"], 2080, 2250);
+  gm("godrej-elc-02-6-lever-mortise-lock-combipack", "Godrej ELC 02 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 02 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 02 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black, Matte Black Nickel. MRP ₹2,080 – ₹2,250 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black", "Matte Black Nickel"], 2080, 2250);
+  gm("godrej-elc-09-6-lever-mortise-lock-combipack", "Godrej ELC 09 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 09 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 09 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black, Matte Black Nickel. MRP ₹2,140 – ₹2,310 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black", "Matte Black Nickel"], 2140, 2310);
+  gm("godrej-elc-10-6-lever-mortise-lock-combipack", "Godrej ELC 10 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 10 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 10 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 5 finishes: Satin Steel, Antique Brass, Rose Gold, Matte Black, Matte Black Nickel. MRP ₹2,140 – ₹2,310 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Rose Gold", "Matte Black", "Matte Black Nickel"], 2140, 2310);
+  gm("godrej-elc-19-6-lever-mortise-lock-combipack", "Godrej ELC 19 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 19 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 19 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black Rose. MRP ₹2,460 – ₹2,590 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "3 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose"], 2460, 2590);
+  gm("godrej-elc-03-6-lever-mortise-lock-combipack", "Godrej ELC 03 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 03 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 03 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹2,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2080, 2080);
+  gm("godrej-elc-04-6-lever-mortise-lock-combipack", "Godrej ELC 04 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 04 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 04 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹2,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2080, 2080);
+  gm("godrej-elc-05-6-lever-mortise-lock-combipack", "Godrej ELC 05 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 05 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 05 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹2,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2080, 2080);
+  gm("godrej-elc-06-6-lever-mortise-lock-combipack", "Godrej ELC 06 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 06 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 06 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹2,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2080, 2080);
+  gm("godrej-elc-07-6-lever-mortise-lock-combipack", "Godrej ELC 07 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ ELC 07 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "ELC 07 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹2,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2080, 2080);
+  gm("godrej-gloria-6-lever-mortise-lock-combipack", "Godrej Gloria 6 Lever Mortise Lock Combipack", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Gloria 6 Lever Mortise Lock Combipack: మోర్టైజ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Gloria 6 Lever Mortise Lock Combipack from the Godrej mortise locks range. Available in 2 finishes: Satin Steel, Antique Brass. MRP ₹2,660 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "2 variants in the price list"}, ["Satin Steel", "Antique Brass"], 2660, 2660);
+  gm("godrej-lever-mortise-baby-latch", "Godrej Lever Mortise Baby Latch", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Lever Mortise Baby Latch: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Lever Mortise Baby Latch from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹1,550 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "2 variants in the price list"}, ["Satin Steel"], 1550, 1550);
+  gm("godrej-4-lever-narrow-stile-mortise-lock", "Godrej 4 Lever Narrow Stile Mortise Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ 4 Lever Narrow Stile Mortise Lock: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "4 Lever Narrow Stile Mortise Lock from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹830 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 830, 830);
+  gm("godrej-4-lever-hookbolt", "Godrej 4 Lever Hookbolt", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ 4 Lever Hookbolt: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "4 Lever Hookbolt from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹870 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 870, 870);
+  gm("godrej-6-lever-mortise-2-way-deadlock", "Godrej 6 Lever Mortise 2 Way Deadlock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ 6 Lever Mortise 2 Way Deadlock: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "6 Lever Mortise 2 Way Deadlock from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹730 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 730, 730);
+  gm("godrej-7-lever-mortise-2-way-deadlock", "Godrej 7 Lever Mortise 2 Way Deadlock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ 7 Lever Mortise 2 Way Deadlock: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "7 Lever Mortise 2 Way Deadlock from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹1,240 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 1240, 1240);
+  gm("godrej-europrofile-mortise-lock-bodies", "Godrej Europrofile Mortise Lock Bodies", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Mortise Lock Bodies: మోర్టైజ్ లాక్, 9 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Mortise Lock Bodies from the Godrej mortise locks range. Available in 9 finishes: Chrome, Antique Brass, Satin Steel, Matte Black, Sunset Rose Gold, Rose Gold, Matte Black Nickel, Glossy Black, Antique Copper. Sizes and options: NEH Series Keyless Latch; 176 mm Lock Body; 240 mm Lock Body; 240 mm Lock Body 60 mm BS; 180 mm Euro Narrow Stile Hookbolt; 240 mm Euro Narrow Stile Lock Body; 240 mm Eco Lock Body; 240 mm Roller Lock Body (50 mm). MRP ₹800 – ₹2,090 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["9 finishes available", "24 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "24 variants in the price list"}, ["Chrome", "Antique Brass", "Satin Steel", "Matte Black", "Sunset Rose Gold", "Rose Gold", "Matte Black Nickel", "Glossy Black", "Antique Copper"], 800, 2090);
+  gm("godrej-europrofile-pin-cylinder-60-mm", "Godrej Europrofile Pin Cylinder 60 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Pin Cylinder 60 mm: మోర్టైజ్ లాక్, 8 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Pin Cylinder 60 mm from the Godrej mortise locks range. Available in 8 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, Rose Gold, Antique Copper, Brass, PVD Rose Gold. Sizes and options: 60 mm Eco Pin Cylinder 1CK; 60 mm Pin Cylinder 1CK; 60 mm Eco Pin Cylinder 2C; 60 mm Pin Cylinder 2C; 60 mm Pin Cylinder Keyless; 60mm KYL Eco Cylinder. MRP ₹890 – ₹2,000 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["8 finishes available", "26 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "26 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "Rose Gold", "Antique Copper", "Brass", "PVD Rose Gold"], 890, 2000);
+  gm("godrej-europrofile-pin-cylinder-70-mm", "Godrej Europrofile Pin Cylinder 70 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Pin Cylinder 70 mm: మోర్టైజ్ లాక్, 7 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Pin Cylinder 70 mm from the Godrej mortise locks range. Available in 7 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, Rose Gold, Antique Copper, PVD Rose Gold. Sizes and options: 70 mm Eco Pin Cylinder 1CK; 70 mm Pin Cylinder 1CK; 70 mm Eco Pin Cylinder 2C; 70 mm Pin Cylinder 2C; 70 mm Pin Cylinder Keyless; 70mm KYL Eco Cylinder. MRP ₹990 – ₹2,140 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["7 finishes available", "25 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "25 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "Rose Gold", "Antique Copper", "PVD Rose Gold"], 990, 2140);
+  gm("godrej-europrofile-pin-cylinder-80-mm", "Godrej Europrofile Pin Cylinder 80 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Pin Cylinder 80 mm: మోర్టైజ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Pin Cylinder 80 mm from the Godrej mortise locks range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. Sizes and options: 80 mm Pin Cylinder 1CK; 80 mm Pin Cylinder 2C; 80 mm Pin Cylinder Keyless; 80mm Cylinder AB; 80mm Cylinder MB. MRP ₹1,420 – ₹1,900 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 1420, 1900);
+  gm("godrej-europrofile-pin-cylinder-90-mm", "Godrej Europrofile Pin Cylinder 90 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Pin Cylinder 90 mm: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Pin Cylinder 90 mm from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹1,970 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 1970, 1970);
+  gm("godrej-europrofile-pin-cylinder-100-mm", "Godrej Europrofile Pin Cylinder 100 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Pin Cylinder 100 mm: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Pin Cylinder 100 mm from the Godrej mortise locks range. Available in 1 finish: Satin Steel. MRP ₹1,750 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 1750, 1750);
+  gm("godrej-europrofile-pin-cylinder-40-mm", "Godrej Europrofile Pin Cylinder 40 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Europrofile Pin Cylinder 40 mm: మోర్టైజ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Europrofile Pin Cylinder 40 mm from the Godrej mortise locks range. Available in 1 finish: Satin Steel. Sizes and options: 40 mm 1C Half Pin Cylinder; 40 mm 1K Half Pin Cylinder. MRP ₹1,270 – ₹1,330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "2 variants in the price list"}, ["Satin Steel"], 1270, 1330);
+  gm("godrej-ulturo-ultra-xl-euro-cylinder-60-mm", "Godrej Ulturo Ultra XL+ Euro Cylinder 60 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Ulturo Ultra XL+ Euro Cylinder 60 mm: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ulturo Ultra XL+ Euro Cylinder 60 mm from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel. Sizes and options: 60 mm Ulturo Cylinder 1CK; 60 mm Ulturo Cylinder 2C. MRP ₹1,650 – ₹1,850 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "8 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel"], 1650, 1850);
+  gm("godrej-ulturo-ultra-xl-euro-cylinder-70-mm", "Godrej Ulturo Ultra XL+ Euro Cylinder 70 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Ulturo Ultra XL+ Euro Cylinder 70 mm: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ulturo Ultra XL+ Euro Cylinder 70 mm from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel. Sizes and options: 70 mm Ulturo Cylinder 1CK; 70 mm Ulturo Cylinder 2C. MRP ₹1,820 – ₹1,960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "8 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel"], 1820, 1960);
+  gm("godrej-ulturo-ultra-xl-euro-cylinder-80-mm", "Godrej Ulturo Ultra XL+ Euro Cylinder 80 mm", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Ulturo Ultra XL+ Euro Cylinder 80 mm: మోర్టైజ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ulturo Ultra XL+ Euro Cylinder 80 mm from the Godrej mortise locks range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel. Sizes and options: 80 mm Ulturo Cylinder 1CK; 80 mm Ulturo Cylinder 2C. MRP ₹1,950 – ₹2,050 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Mortise lock & handle", "variants": "8 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel"], 1950, 2050);
+  gm("godrej-pentabolt-aries-3ks", "Godrej Pentabolt Aries 3KS", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Pentabolt Aries 3KS: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pentabolt Aries 3KS from the Godrej rim locks range. Available in 2 finishes: Roman Silver, Vegas Gold. MRP ₹14,400 – ₹15,230 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "6 variants in the price list"}, ["Roman Silver", "Vegas Gold"], 14400, 15230);
+  gm("godrej-pentabolt-exs", "Godrej Pentabolt EXS+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Pentabolt EXS+: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pentabolt EXS+ from the Godrej rim locks range. Available in 2 finishes: Satin Nickel, Antique Brass. Sizes and options: 1CK 60 mm; 1CK Deadbolt 60 mm; 60 mm Pentabolt EXS+ 2C Deadbolt. MRP ₹8,250 – ₹9,140 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "7 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "7 variants in the price list"}, ["Satin Nickel", "Antique Brass"], 8250, 9140);
+  gm("godrej-centaur-exs", "Godrej Centaur EXS+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Centaur EXS+: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Centaur EXS+ from the Godrej rim locks range. Available in 2 finishes: Satin Nickel, Antique Brass. Sizes and options: 1CK Latchbolt 60 mm; 1CK Deadbolt 60 mm; 2C Deadbolt 60 mm. MRP ₹8,550 – ₹9,300 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "6 variants in the price list"}, ["Satin Nickel", "Antique Brass"], 8550, 9300);
+  gm("godrej-centaur-ultra-xl", "Godrej Centaur Ultra XL+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Centaur Ultra XL+: రిమ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Centaur Ultra XL+ from the Godrej rim locks range. Available in 3 finishes: Satin Nickel, Antique Brass, Antique Copper. Sizes and options: 1CK Latchbolt 60 mm; 1CK Deadbolt 60 mm; 2C Deadbolt 60 mm. MRP ₹5,820 – ₹6,650 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "9 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Antique Copper"], 5820, 6650);
+  gm("godrej-centaur-ultra-xl-double-door", "Godrej Centaur Ultra XL+ Double Door", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Centaur Ultra XL+ Double Door: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Centaur Ultra XL+ Double Door from the Godrej rim locks range. Available in 2 finishes: Satin Nickel, Antique Brass. Sizes and options: XL+ 1CK Deadbolt 60 mm; XL+ 2C Deadbolt 60 mm. MRP ₹5,820 – ₹6,570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "4 variants in the price list"}, ["Satin Nickel", "Antique Brass"], 5820, 6570);
+  gm("godrej-tribolt-ultra-xl", "Godrej Tribolt Ultra XL+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Tribolt Ultra XL+: రిమ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Tribolt Ultra XL+ from the Godrej rim locks range. Available in 4 finishes: Satin Nickel, Antique Brass, Matte Black Nickel, Rose Gold. Sizes and options: 1CK Latchbolt 60 mm; 1CK Deadbolt 60 mm; 2C Deadbolt 60 mm; 1CK 60 mm; Ultra XL+ 2C Deadbolt 60 mm; Combipack 60 mm. MRP ₹4,310 – ₹7,140 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "18 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "18 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Matte Black Nickel", "Rose Gold"], 4310, 7140);
+  gm("godrej-tribolt-ultra", "Godrej Tribolt Ultra", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Tribolt Ultra: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Tribolt Ultra from the Godrej rim locks range. Available in 2 finishes: Satin Nickel, Antique Brass. Sizes and options: 1CK Latchbolt 69 mm; 1CK Deadbolt 69 mm; 2C (Inside Opening) 69 mm; 2C Deadbolt 69 mm. MRP ₹4,430 – ₹5,120 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "8 variants in the price list"}, ["Satin Nickel", "Antique Brass"], 4430, 5120);
+  gm("godrej-twinbolt-ultra-xl", "Godrej Twinbolt Ultra XL+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Twinbolt Ultra XL+: రిమ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Twinbolt Ultra XL+ from the Godrej rim locks range. Available in 4 finishes: Satin Nickel, Antique Brass, Matte Black Nickel, Rose Gold. Sizes and options: 1CK Lachbolt 60 mm; 1CK Deadbolt 60 mm; 1CK Latchbolt 60 mm; 2C Deadbolt 60 mm. MRP ₹2,670 – ₹3,350 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "14 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "14 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Matte Black Nickel", "Rose Gold"], 2670, 3350);
+  gm("godrej-trishaft-ultra", "Godrej Trishaft Ultra", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Trishaft Ultra: రిమ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Trishaft Ultra from the Godrej rim locks range. Available in 3 finishes: Satin Nickel, Antique Brass, Cool Ivory. Sizes and options: 1CK Deadbolt 60 mm; 2C Deadbolt 60 mm; Combipack 60 mm. MRP ₹3,330 – ₹6,960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "8 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Cool Ivory"], 3330, 6960);
+  gm("godrej-vertibolt-ultra-xl", "Godrej Vertibolt Ultra XL+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Vertibolt Ultra XL+: రిమ్ లాక్, 6 ఫినిష్‌లలో లభిస్తుంది.",
+    "Vertibolt Ultra XL+ from the Godrej rim locks range. Available in 6 finishes: Satin Nickel, Antique Brass, Rose Gold, Matte Black Nickel, Textured Brown, Satin Steel. Sizes and options: 63 mm Vertibolt Ultra XL+ 1CK; 63 mm Vertibolt Ultra XL+ 2C. MRP ₹2,860 – ₹6,450 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["6 finishes available", "14 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "14 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Rose Gold", "Matte Black Nickel", "Textured Brown", "Satin Steel"], 2860, 6450);
+  gm("godrej-vertibolt-ultra", "Godrej Vertibolt Ultra", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Vertibolt Ultra: రిమ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Vertibolt Ultra from the Godrej rim locks range. Available in 4 finishes: Satin Nickel, Antique Brass, Textured Brown, Cool Ivory. Sizes and options: 63 mm Vertibolt Ultra 1CK; 63 mm Vertibolt Ultra 2C. MRP ₹2,510 – ₹3,210 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "8 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Textured Brown", "Cool Ivory"], 2510, 3210);
+  gm("godrej-rim-deadbolt-ultra-xl", "Godrej Rim Deadbolt Ultra XL+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Rim Deadbolt Ultra XL+: రిమ్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Rim Deadbolt Ultra XL+ from the Godrej rim locks range. Available in 4 finishes: Satin Nickel, Antique Brass, Matte Black Nickel, Rose Gold. Sizes and options: 1CK 60 mm; 2C 60 mm. MRP ₹2,370 – ₹2,820 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "8 variants in the price list"}, ["Satin Nickel", "Antique Brass", "Matte Black Nickel", "Rose Gold"], 2370, 2820);
+  gm("godrej-rim-deadbolt-reversible", "Godrej Rim Deadbolt Reversible", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Rim Deadbolt Reversible: రిమ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Rim Deadbolt Reversible from the Godrej rim locks range. Available in 1 finish: Cool Ivory. MRP ₹1,730 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "1 variants in the price list"}, ["Cool Ivory"], 1730, 1730);
+  gm("godrej-deadbolt-compact", "Godrej Deadbolt Compact", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Deadbolt Compact: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Deadbolt Compact from the Godrej rim locks range. Available in 2 finishes: Textured Black, Textured Brown. MRP ₹1,190 – ₹1,240 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "4 variants in the price list"}, ["Textured Black", "Textured Brown"], 1190, 1240);
+  gm("godrej-twinbolt-compact", "Godrej Twinbolt Compact", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Twinbolt Compact: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Twinbolt Compact from the Godrej rim locks range. Available in 2 finishes: Textured Black, Textured Brown. MRP ₹1,430 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "4 variants in the price list"}, ["Textured Black", "Textured Brown"], 1430, 1430);
+  gm("godrej-tribolt-compact", "Godrej Tribolt Compact", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Tribolt Compact: రిమ్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Tribolt Compact from the Godrej rim locks range. Available in 3 finishes: Textured Black, Textured Brown, Cool Ivory. MRP ₹1,780 – ₹1,850 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "9 variants in the price list"}, ["Textured Black", "Textured Brown", "Cool Ivory"], 1780, 1850);
+  gm("godrej-pin-cylinder-premium-night-latch", "Godrej Pin Cylinder Premium Night Latch", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Pin Cylinder Premium Night Latch: రిమ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pin Cylinder Premium Night Latch from the Godrej rim locks range. Available in 1 finish: Brushed Steel. MRP ₹1,970 – ₹1,990 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "2 variants in the price list"}, ["Brushed Steel"], 1970, 1990);
+  gm("godrej-7-lever-super-night-latch", "Godrej 7 Lever Super Night Latch", "mortise", "slate", "hardware",
+    "గోద్రెజ్ 7 Lever Super Night Latch: రిమ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "7 Lever Super Night Latch from the Godrej rim locks range. Available in 1 finish: Textured Brown. MRP ₹1,870 – ₹1,880 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "2 variants in the price list"}, ["Textured Brown"], 1870, 1880);
+  gm("godrej-7-lever-night-latch", "Godrej 7 Lever Night Latch", "mortise", "slate", "hardware",
+    "గోద్రెజ్ 7 Lever Night Latch: రిమ్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "7 Lever Night Latch from the Godrej rim locks range. Available in 1 finish: Textured Brown. MRP ₹1,860 – ₹1,870 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "2 variants in the price list"}, ["Textured Brown"], 1860, 1870);
+  gm("godrej-pin-cylinder-rim-lock", "Godrej Pin Cylinder Rim Lock", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Pin Cylinder Rim Lock: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pin Cylinder Rim Lock from the Godrej rim locks range. Available in 2 finishes: Beige Brown, Metallic Satin. MRP ₹2,220 – ₹2,570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "4 variants in the price list"}, ["Beige Brown", "Metallic Satin"], 2220, 2570);
+  gm("godrej-khatakhat-lock-ultra-xl", "Godrej Khatakhat Lock Ultra XL+", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Khatakhat Lock Ultra XL+: రిమ్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Khatakhat Lock Ultra XL+ from the Godrej rim locks range. Available in 2 finishes: Cherry Brown, Silver Grey. MRP ₹2,240 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "2 variants in the price list"}, ["Cherry Brown", "Silver Grey"], 2240, 2240);
+  gm("godrej-ultra-retrofit-adaptor", "Godrej Ultra Retrofit Adaptor", "mortise", "slate", "hardware",
+    "గోద్రెజ్ Ultra Retrofit Adaptor: రిమ్ లాక్.",
+    "Ultra Retrofit Adaptor from the Godrej rim locks range. Sizes and options: Type A; Type B; Type C. MRP ₹300 – ₹320 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Rim lock", "variants": "3 variants in the price list"}, [], 300, 320);
+  gm("godrej-premium-cylindrical-locks-keyed-entrance", "Godrej Premium Cylindrical Locks - Keyed (Entrance)", "mortise", "grey", "hardware",
+    "గోద్రెజ్ Premium Cylindrical Locks - Keyed (Entrance): సిలిండ్రికల్ లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Premium Cylindrical Locks - Keyed (Entrance) from the Godrej cylindrical locks range. Available in 2 finishes: Polished Brass, Stainless Steel. MRP ₹1,630 – ₹1,800 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["indoor"], {"type": "Cylindrical lock", "variants": "2 variants in the price list"}, ["Polished Brass", "Stainless Steel"], 1630, 1800);
+  gm("godrej-classic-cylindrical-locks-keyed-entrance", "Godrej Classic Cylindrical Locks - Keyed (Entrance)", "mortise", "grey", "hardware",
+    "గోద్రెజ్ Classic Cylindrical Locks - Keyed (Entrance): సిలిండ్రికల్ లాక్, 6 ఫినిష్‌లలో లభిస్తుంది.",
+    "Classic Cylindrical Locks - Keyed (Entrance) from the Godrej cylindrical locks range. Available in 6 finishes: Brass, Stainless Steel, Wooden, Antique Brass, Rose Gold, Matte Black. Sizes and options: Lock Pin 60 mm; Lock Pin 70 mm. MRP ₹1,270 – ₹1,570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["6 finishes available", "9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["indoor"], {"type": "Cylindrical lock", "variants": "9 variants in the price list"}, ["Brass", "Stainless Steel", "Wooden", "Antique Brass", "Rose Gold", "Matte Black"], 1270, 1570);
+  gm("godrej-premium-cylindrical-locks-keyless-bathroom", "Godrej Premium Cylindrical Locks - Keyless (Bathroom)", "mortise", "grey", "hardware",
+    "గోద్రెజ్ Premium Cylindrical Locks - Keyless (Bathroom): సిలిండ్రికల్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Premium Cylindrical Locks - Keyless (Bathroom) from the Godrej cylindrical locks range. Available in 1 finish: Stainless Steel. MRP ₹1,430 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["indoor"], {"type": "Cylindrical lock", "variants": "1 variants in the price list"}, ["Stainless Steel"], 1430, 1430);
+  gm("godrej-classic-cylindrical-locks-keyless-bathroom", "Godrej Classic Cylindrical Locks - Keyless (Bathroom)", "mortise", "grey", "hardware",
+    "గోద్రెజ్ Classic Cylindrical Locks - Keyless (Bathroom): సిలిండ్రికల్ లాక్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "Classic Cylindrical Locks - Keyless (Bathroom) from the Godrej cylindrical locks range. Available in 5 finishes: Brass, Stainless Steel, Antique Brass, Rose Gold, Matte Black. Sizes and options: Lock Pin 60 mm Cylinder - Keyless; Lock Pin 70 mm Cylinder - Keyless. MRP ₹1,130 – ₹1,400 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["indoor"], {"type": "Cylindrical lock", "variants": "8 variants in the price list"}, ["Brass", "Stainless Steel", "Antique Brass", "Rose Gold", "Matte Black"], 1130, 1400);
+  gm("godrej-navtal-ultra-xl-padlock", "Godrej NavTal Ultra XL+ Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ NavTal Ultra XL+ Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NavTal Ultra XL+ Padlock from the Godrej padlocks range. Available in 1 finish: Brass. Sizes and options: (4 Keys); (4 Keys - Blister); (4 Keys - Pack of 2). MRP ₹1,330 – ₹2,500 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "3 variants in the price list"}, ["Brass"], 1330, 2500);
+  gm("godrej-navtal-padlock", "Godrej NavTal Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ NavTal Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NavTal Padlock from the Godrej padlocks range. Available in 1 finish: Brass. Sizes and options: 5 Lever (2 keys); 5 Lever (3 keys); 6 Lever (2 keys); 6 Lever (3 keys); 6 Lever (3 Keys - Blister); 6 Lever Long Shackle (3 keys); 6 Lever Pack of 2 with; 6 Lever Pack of 4 with; 7 Lever Hardened (2 keys); 7 Lever Hardened (4 keys); 7 Lever Shut Height 30 mm; 7 Lever Shut Height 50 mm; 7 Lever Pack of 2 with; 7 Lever Pack of 4 with; and more. MRP ₹490 – ₹3,750 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "17 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "17 variants in the price list"}, ["Brass"], 490, 3750);
+  gm("godrej-no-1-solid-brass-padlock", "Godrej No. 1 Solid Brass Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ No. 1 Solid Brass Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "No. 1 Solid Brass Padlock from the Godrej padlocks range. Available in 1 finish: Brass. MRP ₹670 – ₹1,510 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "5 variants in the price list"}, ["Brass"], 670, 1510);
+  gm("godrej-sherlock-solid-brass-padlock", "Godrej Sherlock Solid Brass Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Sherlock Solid Brass Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Sherlock Solid Brass Padlock from the Godrej padlocks range. Available in 1 finish: Brass. MRP ₹3,170 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "1 variants in the price list"}, ["Brass"], 3170, 3170);
+  gm("godrej-duralock-ultra-xl-padlock", "Godrej Duralock Ultra XL+ Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Duralock Ultra XL+ Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Duralock Ultra XL+ Padlock from the Godrej padlocks range. Available in 1 finish: Stainless Steel. Sizes and options: 70 mm (3 Keys); 90 mm (3 Keys). MRP ₹1,030 – ₹5,720 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "6 variants in the price list"}, ["Stainless Steel"], 1030, 5720);
+  gm("godrej-shutter-locks-ultra", "Godrej Shutter Locks Ultra", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Shutter Locks Ultra: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Shutter Locks Ultra from the Godrej padlocks range. Available in 1 finish: Black. Sizes and options: Shutter Centre Lock Ultra; Shutter Side Lock Ultra; Shutter Side Lock Ultra 1CK. MRP ₹2,420 – ₹4,570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "4 variants in the price list"}, ["Black"], 2420, 4570);
+  gm("godrej-scorpio-ultra-padlock", "Godrej Scorpio Ultra Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Scorpio Ultra Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Scorpio Ultra Padlock from the Godrej padlocks range. Available in 1 finish: Satin Steel. MRP ₹2,160 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "1 variants in the price list"}, ["Satin Steel"], 2160, 2160);
+  gm("godrej-herculoc-plus-3ks-padlock", "Godrej Herculoc Plus 3KS Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Herculoc Plus 3KS Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Herculoc Plus 3KS Padlock from the Godrej padlocks range. Available in 1 finish: Satin Steel. MRP ₹8,960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "1 variants in the price list"}, ["Satin Steel"], 8960, 8960);
+  gm("godrej-ace-pro-ss-304-padlock", "Godrej Ace Pro SS 304 Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Ace Pro SS 304 Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ace Pro SS 304 Padlock from the Godrej padlocks range. Available in 1 finish: Satin Steel. Sizes and options: 5 Levers SS 304 (3 Keys); 6 Levers SS 304 (3 Keys); 7 Levers SS 304 (3 Keys). MRP ₹305 – ₹600 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "3 variants in the price list"}, ["Satin Steel"], 305, 600);
+  gm("godrej-round-padlock", "Godrej Round Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Round Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Round Padlock from the Godrej padlocks range. Available in 1 finish: Satin Steel. Sizes and options: 5 Levers (3 Keys); 6 Levers (3 Keys); 7 Levers (3 Keys); 10 Levers (3 Keys). MRP ₹265 – ₹870 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "4 variants in the price list"}, ["Satin Steel"], 265, 870);
+  gm("godrej-square-padlock", "Godrej Square Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Square Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Square Padlock from the Godrej padlocks range. Available in 1 finish: Satin Steel. Sizes and options: 6 Levers (4 Keys); 7 Levers (4 Keys); 8 Levers (4 Keys). MRP ₹475 – ₹905 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "3 variants in the price list"}, ["Satin Steel"], 475, 905);
+  gm("godrej-freedom-padlock", "Godrej Freedom Padlock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Freedom Padlock: ప్యాడ్‌లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Freedom Padlock from the Godrej padlocks range. Available in 1 finish: Matte Steel. Sizes and options: 5 Levers (2 keys); 6 Levers (2 keys); 7 Levers (3 keys). MRP ₹340 – ₹570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "3 variants in the price list"}, ["Matte Steel"], 340, 570);
+  gm("godrej-kaditala-6-lever-lock", "Godrej Kaditala 6 Lever Lock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ Kaditala 6 Lever Lock: ప్యాడ్‌లాక్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Kaditala 6 Lever Lock from the Godrej padlocks range. Available in 2 finishes: Textured Brown, Chrome plated. Sizes and options: Levers 200 mm (3 Keys); Levers 275 mm (3 Keys). MRP ₹1,320 – ₹1,620 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "4 variants in the price list"}, ["Textured Brown", "Chrome plated"], 1320, 1620);
+  gm("godrej-mylock-candy-luggage-lock", "Godrej MyLock Candy Luggage Lock", "padlock", "ink", "hardware",
+    "గోద్రెజ్ MyLock Candy Luggage Lock: ప్యాడ్‌లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "MyLock Candy Luggage Lock from the Godrej padlocks range. Available in 4 finishes: Turmeric Yellow, Citrus Green, Tangerine Tango, Blue Grey. MRP ₹245 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "shop", "box"], {"type": "Padlock", "variants": "1 variants in the price list"}, ["Turmeric Yellow", "Citrus Green", "Tangerine Tango", "Blue Grey"], 245, 245);
+  gm("godrej-curvo-duo-ss-304-furniture-lock", "Godrej Curvo Duo SS 304 Furniture Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Curvo Duo SS 304 Furniture Lock: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Curvo Duo SS 304 Furniture Lock from the Godrej furniture locks range. Available in 1 finish: Stainless Steel. Sizes and options: SS 304 Wardrobe Lock 25 mm; SS 304 Wardrobe Lock 32 mm; SS 304 Drawer Lock 20 mm; SS 304 Drawer Lock 25 mm. MRP ₹540 – ₹770 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "6 variants in the price list"}, ["Stainless Steel"], 540, 770);
+  gm("godrej-nuvo-pin-cylinder-furniture-lock", "Godrej Nuvo Pin Cylinder Furniture Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Nuvo Pin Cylinder Furniture Lock: ఫర్నిచర్ లాక్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Nuvo Pin Cylinder Furniture Lock from the Godrej furniture locks range. Available in 4 finishes: Satin Steel, Textured Brown, Textured Black, Cool Ivory. Sizes and options: Cylinder Drawer Lock 20 mm; Cylinder Drawer Lock 25 mm; Cylinder Wardrobe Lock 25 mm; Cylinder Wardrobe Lock 32 mm. MRP ₹315 – ₹570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "16 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "16 variants in the price list"}, ["Satin Steel", "Textured Brown", "Textured Black", "Cool Ivory"], 315, 570);
+  gm("godrej-supernova-ultra-wardrobe-lock", "Godrej Supernova Ultra Wardrobe Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Supernova Ultra Wardrobe Lock: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Supernova Ultra Wardrobe Lock from the Godrej furniture locks range. Available in 1 finish: Satin Steel. Sizes and options: 9 Pins Up to 35 mm Wardrobe lock; 9 Pins Up to 35 mm Wardrobe lock with Common Key. MRP ₹765 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "2 variants in the price list"}, ["Satin Steel"], 765, 765);
+  gm("godrej-wardrobe-lock-for-sliding-door", "Godrej Wardrobe Lock for Sliding Door", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Wardrobe Lock for Sliding Door: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Wardrobe Lock for Sliding Door from the Godrej furniture locks range. Available in 1 finish: Black Finish. Sizes and options: 25 mm; 32 mm; 19 mm. MRP ₹555 – ₹1,670 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "7 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "7 variants in the price list"}, ["Black Finish"], 555, 1670);
+  gm("godrej-almirah-lock", "Godrej Almirah Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Almirah Lock: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Almirah Lock from the Godrej furniture locks range. Available in 1 finish: Nickel plated. MRP ₹630 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "1 variants in the price list"}, ["Nickel plated"], 630, 630);
+  gm("godrej-10-lever-push-button-lock", "Godrej 10 Lever Push Button Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ 10 Lever Push Button Lock: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "10 Lever Push Button Lock from the Godrej furniture locks range. Available in 1 finish: Nickel plated. MRP ₹980 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "1 variants in the price list"}, ["Nickel plated"], 980, 980);
+  gm("godrej-cam-lock", "Godrej Cam Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Cam Lock: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cam Lock from the Godrej furniture locks range. Available in 1 finish: Nickel plated. Sizes and options: 5 Lever 12 mm; 10 Lever Pedestal 12 mm; 10 Lever Straight 12 mm; 10 Lever Long 12 mm. MRP ₹315 – ₹430 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "4 variants in the price list"}, ["Nickel plated"], 315, 430);
+  gm("godrej-wafer-tumbler-multipurpose-lock", "Godrej Wafer Tumbler Multipurpose Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ Wafer Tumbler Multipurpose Lock: ఫర్నిచర్ లాక్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Wafer Tumbler Multipurpose Lock from the Godrej furniture locks range. Available in 3 finishes: Nickel plated, Textured Black, Chrome plated. Sizes and options: Popular 20 mm; 32 mm Popular 32 mm; New Multipurpose 25 mm; Multipurpose 25 mm; Multipurpose 21 mm. MRP ₹160 – ₹330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "6 variants in the price list"}, ["Nickel plated", "Textured Black", "Chrome plated"], 160, 330);
+  gm("godrej-6-lever-universal-drawer-lock", "Godrej 6 Lever Universal Drawer Lock", "mortise", "kraft", "hardware",
+    "గోద్రెజ్ 6 Lever Universal Drawer Lock: ఫర్నిచర్ లాక్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "6 Lever Universal Drawer Lock from the Godrej furniture locks range. Available in 1 finish: Nickel plated. MRP ₹540 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "box"], {"type": "Furniture lock", "variants": "1 variants in the price list"}, ["Nickel plated"], 540, 540);
+  gm("godrej-cameo-rose-handle", "Godrej Cameo Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Cameo Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cameo Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹4,530 – ₹4,890 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 4530, 4890);
+  gm("godrej-cameo-plate-handle", "Godrej Cameo Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Cameo Plate Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cameo Plate Handle from the Godrej home decor handles range. Available in 3 finishes: Satin Steel, Antique Brass, Sunset Rose Gold. MRP ₹5,470 – ₹5,790 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold"], 5470, 5790);
+  gm("godrej-ugo-rose-handle", "Godrej Ugo Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Ugo Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ugo Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹4,530 – ₹4,890 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 4530, 4890);
+  gm("godrej-ugo-plate-handle", "Godrej Ugo Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Ugo Plate Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ugo Plate Handle from the Godrej home decor handles range. Available in 3 finishes: Satin Steel, Antique Brass, Sunset Rose Gold. MRP ₹5,470 – ₹5,620 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold"], 5470, 5620);
+  gm("godrej-twist-rose-handle", "Godrej Twist Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Twist Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Twist Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹5,360 – ₹5,710 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 5360, 5710);
+  gm("godrej-ecstacy-rose-handle", "Godrej Ecstacy Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Ecstacy Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Ecstacy Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹4,410 – ₹4,760 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 4410, 4760);
+  gm("godrej-orso-rose-handle", "Godrej Orso Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Orso Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Orso Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹4,890 – ₹5,230 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 4890, 5230);
+  gm("godrej-remo-rose-handle", "Godrej Remo Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Remo Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Remo Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹3,940 – ₹4,290 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 3940, 4290);
+  gm("godrej-smooth-rose-handle", "Godrej Smooth Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Smooth Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Smooth Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Sunset Rose Gold, Matte Black Nickel. MRP ₹4,640 – ₹5,000 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Sunset Rose Gold", "Matte Black Nickel"], 4640, 5000);
+  gm("godrej-calla-rose-handle", "Godrej Calla Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Calla Rose Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Calla Rose Handle from the Godrej home decor handles range. Available in 3 finishes: Satin Steel, Sunset Rose Gold, Matte Black Nickel. MRP ₹4,290 – ₹4,640 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Satin Steel", "Sunset Rose Gold", "Matte Black Nickel"], 4290, 4640);
+  gm("godrej-alpine-rose-handle", "Godrej Alpine Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Alpine Rose Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Alpine Rose Handle from the Godrej home decor handles range. Available in 2 finishes: Satin Steel, Antique Brass. MRP ₹4,040 – ₹4,170 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Satin Steel", "Antique Brass"], 4040, 4170);
+  gm("godrej-chris-rose-handle", "Godrej Chris Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Chris Rose Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Chris Rose Handle from the Godrej home decor handles range. Available in 2 finishes: Satin Steel, Antique Brass. MRP ₹4,290 – ₹4,410 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Satin Steel", "Antique Brass"], 4290, 4410);
+  gm("godrej-evolve-rose-handle", "Godrej Evolve Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Evolve Rose Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Evolve Rose Handle from the Godrej home decor handles range. Available in 2 finishes: Satin Steel, Antique Brass. MRP ₹5,110 – ₹5,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Satin Steel", "Antique Brass"], 5110, 5220);
+  gm("godrej-seh-03-plate-handle", "Godrej SEH 03 - Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ SEH 03 - Plate Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SEH 03 - Plate Handle from the Godrej home decor handles range. Available in 1 finish: Antique Brass. MRP ₹5,360 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Antique Brass"], 5360, 5360);
+  gm("godrej-udaan-rose-handle", "Godrej Udaan Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Udaan Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Udaan Rose Handle from the Godrej home decor handles range. Available in 1 finish: Antique Brass. MRP ₹13,560 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Antique Brass"], 13560, 13560);
+  gm("godrej-udaan-plate-handle", "Godrej Udaan Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Udaan Plate Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Udaan Plate Handle from the Godrej home decor handles range. Available in 2 finishes: Antique Brass, Antique Copper. MRP ₹21,060 – ₹21,500 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Antique Brass", "Antique Copper"], 21060, 21500);
+  gm("godrej-kalasam-rose-handle", "Godrej Kalasam Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Kalasam Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Kalasam Rose Handle from the Godrej home decor handles range. Available in 1 finish: Antique Brass. MRP ₹12,310 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Antique Brass"], 12310, 12310);
+  gm("godrej-kalasam-plate-handle", "Godrej Kalasam Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Kalasam Plate Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Kalasam Plate Handle from the Godrej home decor handles range. Available in 2 finishes: Antique Brass, Antique Copper. MRP ₹22,080 – ₹22,270 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Antique Brass", "Antique Copper"], 22080, 22270);
+  gm("godrej-bel-rose-handle", "Godrej Bel Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Bel Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Bel Rose Handle from the Godrej home decor handles range. Available in 1 finish: Antique Brass. MRP ₹12,310 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Antique Brass"], 12310, 12310);
+  gm("godrej-bel-plate-handle", "Godrej Bel Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Bel Plate Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Bel Plate Handle from the Godrej home decor handles range. Available in 2 finishes: Antique Brass, Antique Copper. MRP ₹17,150 – ₹18,090 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Antique Brass", "Antique Copper"], 17150, 18090);
+  gm("godrej-mor-rose-handle", "Godrej Mor Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Mor Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Mor Rose Handle from the Godrej home decor handles range. Available in 1 finish: Antique Brass. MRP ₹12,310 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Antique Brass"], 12310, 12310);
+  gm("godrej-mor-plate-handle", "Godrej Mor Plate Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Mor Plate Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Mor Plate Handle from the Godrej home decor handles range. Available in 2 finishes: Antique Brass, Antique Copper. MRP ₹19,120 – ₹19,140 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Antique Brass", "Antique Copper"], 19120, 19140);
+  gm("godrej-hdh-01-rose-handle", "Godrej HDH 01 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 01 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 01 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹4,890 – ₹6,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 4890, 6080);
+  gm("godrej-hdh-02-rose-handle", "Godrej HDH 02 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 02 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 02 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹4,290 – ₹5,480 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 4290, 5480);
+  gm("godrej-hdh-03-rose-handle", "Godrej HDH 03 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 03 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 03 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹4,530 – ₹5,710 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 4530, 5710);
+  gm("godrej-hdh-04-rose-handle", "Godrej HDH 04 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 04 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 04 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹4,290 – ₹5,480 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 4290, 5480);
+  gm("godrej-hdh-05-rose-handle", "Godrej HDH 05 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 05 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 05 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Matte, Matte Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹3,760 – ₹4,940 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Matte", "Matte Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 3760, 4940);
+  gm("godrej-hdh-06-rose-handle", "Godrej HDH 06 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 06 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 06 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Antique Brass Walnut, Matte Black Rose, Matte Black Nickel, PVD Rose Gold. MRP ₹4,340 – ₹5,410 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Antique Brass Walnut", "Matte Black Rose", "Matte Black Nickel", "PVD Rose Gold"], 4340, 5410);
+  gm("godrej-hdh-07-rose-handle", "Godrej HDH 07 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 07 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 07 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Antique Brass Walnut, Matte Black Rose, Matte Black Nickel, PVD Rose Gold. MRP ₹4,340 – ₹5,410 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Antique Brass Walnut", "Matte Black Rose", "Matte Black Nickel", "PVD Rose Gold"], 4340, 5410);
+  gm("godrej-hdh-08-rose-handle", "Godrej HDH 08 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 08 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 08 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Matte, Matte Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹4,740 – ₹5,930 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Matte", "Matte Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 4740, 5930);
+  gm("godrej-hdh-09-rose-handle", "Godrej HDH 09 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 09 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 09 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Matte, Matte Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹6,730 – ₹7,990 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Matte", "Matte Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 6730, 7990);
+  gm("godrej-hdh-10-rose-handle", "Godrej HDH 10 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 10 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 10 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Matte Antique Brass, Matte Black, Matte Black Nickel, PVD Rose Gold. MRP ₹7,740 – ₹8,810 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Matte Antique Brass", "Matte Black", "Matte Black Nickel", "PVD Rose Gold"], 7740, 8810);
+  gm("godrej-hdh-11-rose-handle", "Godrej HDH 11 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 11 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 11 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Matte, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹6,290 – ₹7,550 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Matte", "Antique Brass", "Matte Black", "PVD Rose Gold"], 6290, 7550);
+  gm("godrej-hdh-12-rose-handle", "Godrej HDH 12 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 12 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 12 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Matte, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹6,290 – ₹7,550 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Matte", "Antique Brass", "Matte Black", "PVD Rose Gold"], 6290, 7550);
+  gm("godrej-hdh-13-rose-handle", "Godrej HDH 13 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 13 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 13 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Matte, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹5,660 – ₹6,920 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Matte", "Antique Brass", "Matte Black", "PVD Rose Gold"], 5660, 6920);
+  gm("godrej-hdh-14-rose-handle", "Godrej HDH 14 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 14 Rose Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 14 Rose Handle from the Godrej home decor handles range. Available in 3 finishes: Antique Brass Walnut, Matte Black Rose, PVD Rose Gold. MRP ₹4,470 – ₹5,540 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Antique Brass Walnut", "Matte Black Rose", "PVD Rose Gold"], 4470, 5540);
+  gm("godrej-hdh-15-rose-handle", "Godrej HDH 15 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 15 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 15 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹6,290 – ₹7,550 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "PVD Rose Gold"], 6290, 7550);
+  gm("godrej-hdh-16-rose-handle", "Godrej HDH 16 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 16 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 16 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹6,290 – ₹7,550 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "PVD Rose Gold"], 6290, 7550);
+  gm("godrej-hdh-17-rose-handle", "Godrej HDH 17 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 17 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 17 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹5,800 – ₹7,050 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "PVD Rose Gold"], 5800, 7050);
+  gm("godrej-hdh-18-rose-handle", "Godrej HDH 18 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 18 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 18 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black, PVD Rose Gold. MRP ₹6,290 – ₹7,550 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "PVD Rose Gold"], 6290, 7550);
+  gm("godrej-hdh-19-rose-handle", "Godrej HDH 19 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 19 Rose Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 19 Rose Handle from the Godrej home decor handles range. Available in 3 finishes: Antique Brass Walnut, Matte Black Rose, PVD Rose Gold. MRP ₹4,640 – ₹5,830 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Antique Brass Walnut", "Matte Black Rose", "PVD Rose Gold"], 4640, 5830);
+  gm("godrej-hdh-20-rose-handle", "Godrej HDH 20 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 20 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 20 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass Walnut, Matte Black Rose, PVD Rose Gold. MRP ₹6,920 – ₹8,190 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass Walnut", "Matte Black Rose", "PVD Rose Gold"], 6920, 8190);
+  gm("godrej-hdh-21-rose-handle", "Godrej HDH 21 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 21 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 21 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass Walnut, Matte Black Rose, PVD Rose Gold. MRP ₹6,160 – ₹7,430 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass Walnut", "Matte Black Rose", "PVD Rose Gold"], 6160, 7430);
+  gm("godrej-hdh-22-rose-handle", "Godrej HDH 22 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 22 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 22 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass Walnut, Matte Black Rose, PVD Rose Gold. MRP ₹6,550 – ₹7,800 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass Walnut", "Matte Black Rose", "PVD Rose Gold"], 6550, 7800);
+  gm("godrej-hdh-23-rose-handle", "Godrej HDH 23 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ HDH 23 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "HDH 23 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass Walnut, Matte Black Rose, PVD Rose Gold. MRP ₹6,160 – ₹7,430 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass Walnut", "Matte Black Rose", "PVD Rose Gold"], 6160, 7430);
+  gm("godrej-neh-19-rose-handle", "Godrej NEH 19 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 19 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 19 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper, Matte Black Nickel. MRP ₹2,330 – ₹2,530 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper", "Matte Black Nickel"], 2330, 2530);
+  gm("godrej-neh-20-rose-handle", "Godrej NEH 20 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 20 Rose Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 20 Rose Handle from the Godrej home decor handles range. Available in 5 finishes: Satin Steel, Antique Brass, Matte Black, Antique Copper, Matte Black Nickel. MRP ₹2,330 – ₹2,530 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "5 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black", "Antique Copper", "Matte Black Nickel"], 2330, 2530);
+  gm("godrej-neh-21-rose-handle", "Godrej NEH 21 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 21 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 21 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper. MRP ₹2,160 – ₹2,330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2160, 2330);
+  gm("godrej-neh-22-rose-handle", "Godrej NEH 22 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 22 Rose Handle: డోర్ హ్యాండిల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 22 Rose Handle from the Godrej home decor handles range. Available in 4 finishes: Satin Steel, Antique Brass, Matte Black Rose, Black Antique Copper. MRP ₹2,160 – ₹2,330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "4 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose", "Black Antique Copper"], 2160, 2330);
+  gm("godrej-gloria-rose-handle", "Godrej Gloria Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Gloria Rose Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Gloria Rose Handle from the Godrej home decor handles range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black Rose. MRP ₹2,960 – ₹3,160 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black Rose"], 2960, 3160);
+  gm("godrej-neh-06-rose-handle", "Godrej NEH 06 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 06 Rose Handle: డోర్ హ్యాండిల్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 06 Rose Handle from the Godrej home decor handles range. Available in 3 finishes: Satin Steel, Matte Black Rose, Matte Black Nickel. MRP ₹3,110 – ₹3,160 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "3 variants in the price list"}, ["Satin Steel", "Matte Black Rose", "Matte Black Nickel"], 3110, 3160);
+  gm("godrej-neh-17-rose-handle", "Godrej NEH 17 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 17 Rose Handle: డోర్ హ్యాండిల్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 17 Rose Handle from the Godrej home decor handles range. Available in 2 finishes: Satin Steel, Antique Brass. MRP ₹2,110 – ₹2,300 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "2 variants in the price list"}, ["Satin Steel", "Antique Brass"], 2110, 2300);
+  gm("godrej-neh-07-rose-handle", "Godrej NEH 07 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 07 Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 07 Rose Handle from the Godrej home decor handles range. Available in 1 finish: Satin Steel. MRP ₹2,710 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2710, 2710);
+  gm("godrej-neh-16-rose-handle", "Godrej NEH 16 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 16 Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 16 Rose Handle from the Godrej home decor handles range. Available in 1 finish: Satin Steel. MRP ₹2,270 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2270, 2270);
+  gm("godrej-neh-15-rose-handle", "Godrej NEH 15 Rose Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ NEH 15 Rose Handle: డోర్ హ్యాండిల్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "NEH 15 Rose Handle from the Godrej home decor handles range. Available in 1 finish: Satin Steel. MRP ₹2,270 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "1 variants in the price list"}, ["Satin Steel"], 2270, 2270);
+  gm("godrej-anoushka-pull-handle", "Godrej Anoushka Pull Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Anoushka Pull Handle: డోర్ హ్యాండిల్, 6 ఫినిష్‌లలో లభిస్తుంది.",
+    "Anoushka Pull Handle from the Godrej home decor handles range. Available in 6 finishes: Brass, Satin Steel, Antique Brass, Matte Black, Matte Black Nickel, Rose Gold. Sizes and options: 250 mm; Anoushka Mini Pull Handle 200 mm. MRP ₹1,390 – ₹1,580 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["6 finishes available", "11 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "11 variants in the price list"}, ["Brass", "Satin Steel", "Antique Brass", "Matte Black", "Matte Black Nickel", "Rose Gold"], 1390, 1580);
+  gm("godrej-tibo-pull-handle", "Godrej Tibo Pull Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Tibo Pull Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "Tibo Pull Handle from the Godrej home decor handles range. Available in 5 finishes: Antique Brass, Satin Steel, Matte Black, Matte Black Nickel, Rose Gold. Sizes and options: 300 mm; 240 mm. MRP ₹2,180 – ₹2,630 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "9 variants in the price list"}, ["Antique Brass", "Satin Steel", "Matte Black", "Matte Black Nickel", "Rose Gold"], 2180, 2630);
+  gm("godrej-marin-pull-handle", "Godrej Marin Pull Handle", "mortise", "orange", "doorfit",
+    "గోద్రెజ్ Marin Pull Handle: డోర్ హ్యాండిల్, 5 ఫినిష్‌లలో లభిస్తుంది.",
+    "Marin Pull Handle from the Godrej home decor handles range. Available in 5 finishes: Antique Brass, Satin Steel, Matte Black, Matte Black Nickel, Rose Gold. Sizes and options: 240 mm; Marin Mini Pull Handle 200 mm. MRP ₹1,630 – ₹1,840 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["5 finishes available", "10 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door handle", "variants": "10 variants in the price list"}, ["Antique Brass", "Satin Steel", "Matte Black", "Matte Black Nickel", "Rose Gold"], 1630, 1840);
+  gm("godrej-cerus-universal-door-closer", "Godrej Cerus Universal Door Closer", "block", "grey", "doorfit",
+    "గోద్రెజ్ Cerus Universal Door Closer: డోర్ క్లోజర్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cerus Universal Door Closer from the Godrej door controls range. Available in 3 finishes: Silver, Matte Black, Gold. Sizes and options: Door Closer; Cerus Pelmet Arm Universal. MRP ₹2,420 – ₹3,660 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Door closer", "variants": "4 variants in the price list"}, ["Silver", "Matte Black", "Gold"], 2420, 3660);
+  gm("godrej-hercules-door-closer", "Godrej Hercules Door Closer", "block", "grey", "doorfit",
+    "గోద్రెజ్ Hercules Door Closer: డోర్ క్లోజర్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Hercules Door Closer from the Godrej door controls range. Available in 3 finishes: Silver, Matte Black, Gold. Sizes and options: Closer; Hercules Incrust. MRP ₹2,100 – ₹2,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Door closer", "variants": "3 variants in the price list"}, ["Silver", "Matte Black", "Gold"], 2100, 2220);
+  gm("godrej-concealed-door-closer-85-kg", "Godrej Concealed Door Closer 85 kg", "block", "grey", "doorfit",
+    "గోద్రెజ్ Concealed Door Closer 85 kg: డోర్ క్లోజర్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Concealed Door Closer 85 kg from the Godrej door controls range. Available in 1 finish: Silver. MRP ₹7,040 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["door"], {"type": "Door closer", "variants": "1 variants in the price list"}, ["Silver"], 7040, 7040);
+  gm("godrej-ss-plain-joint-hinges", "Godrej SS Plain Joint Hinges", "block", "grey", "doorfit",
+    "గోద్రెజ్ SS Plain Joint Hinges: డోర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS Plain Joint Hinges from the Godrej door fittings range. Available in 1 finish: Stainless Steel. Sizes and options: Door Hinge Plain Joint (3 x 16); Door Hinge Plain Joint (3 x 14); Door Hinge Plain Joint (4 x 14); Door Hinge Plain Joint (5 x 14); Door Hinge Plain Joint (3 x 12); Door Hinge Plain Joint (4 x 12); Door Hinge Plain Joint (5 x 12); Door Hinge Plain Joint (6 x 12). MRP ₹55 – ₹255 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "8 variants in the price list"}, ["Stainless Steel"], 55, 255);
+  gm("godrej-ss-cut-hinges", "Godrej SS Cut Hinges", "block", "grey", "doorfit",
+    "గోద్రెజ్ SS Cut Hinges: డోర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS Cut Hinges from the Godrej door fittings range. Available in 1 finish: Stainless Steel. Sizes and options: Door Hinge Cut Hinge (3 x 1/2 x 3/4); Door Hinge Cut Hinge (3 x 3/8 x 1). MRP ₹60 – ₹67 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "2 variants in the price list"}, ["Stainless Steel"], 60, 67);
+  gm("godrej-ss-ball-bearing-hinges", "Godrej SS Ball Bearing Hinges", "block", "grey", "doorfit",
+    "గోద్రెజ్ SS Ball Bearing Hinges: డోర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS Ball Bearing Hinges from the Godrej door fittings range. Available in 1 finish: SS 304. Sizes and options: Door Hinge 2 Ball Bearing (5 x 10); Door Hinge 2 Ball Bearing (4 x 10); Door Hinge 2 Ball Bearing (5 x 12). MRP ₹355 – ₹455 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "4 variants in the price list"}, ["SS 304"], 355, 455);
+  gm("godrej-ss-304-plain-joint-hinges", "Godrej SS 304 Plain Joint Hinges", "block", "grey", "doorfit",
+    "గోద్రెజ్ SS 304 Plain Joint Hinges: డోర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS 304 Plain Joint Hinges from the Godrej door fittings range. Available in 1 finish: SS 304. Sizes and options: Door Hinge Plain Joint (5 x 10); Door Hinge Plain Joint (4 x 10); Door Hinge Plain Joint (5 x 12). MRP ₹360 – ₹410 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "3 variants in the price list"}, ["SS 304"], 360, 410);
+  gm("godrej-incrust-plain-joint-hinges", "Godrej Incrust Plain Joint Hinges", "block", "grey", "doorfit",
+    "గోద్రెజ్ Incrust Plain Joint Hinges: డోర్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Incrust Plain Joint Hinges from the Godrej door fittings range. Available in 2 finishes: Antique Brass, Matte Black. Sizes and options: Door Hinge Plain Joint (3 x 16); Door Hinge Plain Joint (3 x 14); Door Hinge Plain Joint (4 x 14); Door Hinge Plain Joint (5 x 14); Door Hinge Plain Joint (3 x 12); Door Hinge Plain Joint (4 x 12); Door Hinge Plain Joint (5 x 12); Door Hinge Plain Joint (6 x 12); Door Hinge 2 Ball Bearing (5 x 10); Door Hinge 2 Ball Bearing (4 x 10); Door Hinge 2 Ball Bearing (5 x 12). MRP ₹80 – ₹440 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "24 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "24 variants in the price list"}, ["Antique Brass", "Matte Black"], 80, 440);
+  gm("godrej-aldrop", "Godrej Aldrop", "block", "grey", "doorfit",
+    "గోద్రెజ్ Aldrop: డోర్ ఫిట్టింగ్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Aldrop from the Godrej door fittings range. Available in 3 finishes: Stainless Steel, Matte Black, Antique Brass. MRP ₹590 – ₹680 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "6 variants in the price list"}, ["Stainless Steel", "Matte Black", "Antique Brass"], 590, 680);
+  gm("godrej-inner-aldrop", "Godrej Inner Aldrop", "block", "grey", "doorfit",
+    "గోద్రెజ్ Inner Aldrop: డోర్ ఫిట్టింగ్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Inner Aldrop from the Godrej door fittings range. Available in 3 finishes: Stainless Steel, Matte Black, Antique Brass. MRP ₹420 – ₹460 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "3 variants in the price list"}, ["Stainless Steel", "Matte Black", "Antique Brass"], 420, 460);
+  gm("godrej-aldrop-brass", "Godrej Aldrop Brass", "block", "grey", "doorfit",
+    "గోద్రెజ్ Aldrop Brass: డోర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Aldrop Brass from the Godrej door fittings range. Available in 1 finish: Stainless Steel. MRP ₹1,390 – ₹2,300 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "2 variants in the price list"}, ["Stainless Steel"], 1390, 2300);
+  gm("godrej-door-stopper", "Godrej Door Stopper", "block", "grey", "doorfit",
+    "గోద్రెజ్ Door Stopper: డోర్ ఫిట్టింగ్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Door Stopper from the Godrej door fittings range. Available in 3 finishes: Satin Steel, Antique Brass, Matte Black. MRP ₹145 – ₹175 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "3 variants in the price list"}, ["Satin Steel", "Antique Brass", "Matte Black"], 145, 175);
+  gm("godrej-tower-bolt-regular", "Godrej Tower Bolt - Regular", "block", "grey", "doorfit",
+    "గోద్రెజ్ Tower Bolt - Regular: డోర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Tower Bolt - Regular from the Godrej door fittings range. Available in 1 finish: Stainless Steel. MRP ₹125 – ₹330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "5 variants in the price list"}, ["Stainless Steel"], 125, 330);
+  gm("godrej-tower-bolt-designer", "Godrej Tower Bolt - Designer", "block", "grey", "doorfit",
+    "గోద్రెజ్ Tower Bolt - Designer: డోర్ ఫిట్టింగ్, 3 ఫినిష్‌లలో లభిస్తుంది.",
+    "Tower Bolt - Designer from the Godrej door fittings range. Available in 3 finishes: Aluminium, Antique Brass, Matte Black. MRP ₹185 – ₹970 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["3 finishes available", "21 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["door", "indoor"], {"type": "Door fitting", "variants": "21 variants in the price list"}, ["Aluminium", "Antique Brass", "Matte Black"], 185, 970);
+  gm("godrej-hikido-inline", "Godrej HIKIDO Inline", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Inline: వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Inline from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. Sizes and options: 1750 mm; 1950 mm; 2150 mm; 2350 mm; 2950 mm. MRP ₹97,900 – ₹1,26,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "5 variants in the price list"}, ["Aluminium"], 97900, 126220);
+  gm("godrej-hikido-topper-rollers-dampers", "Godrej HIKIDO Topper (Rollers & Dampers)", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Topper (Rollers & Dampers): వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Topper (Rollers & Dampers) from the Godrej wardrobe fittings range. Available in 1 finish: Anthracite. Sizes and options: 2 Door 80 Kg Soft Close (Rollers + Dampers Set); 3 Door 80 Kg Soft Close (Rollers + Dampers Set). MRP ₹10,580 – ₹13,320 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 10580, 13320);
+  gm("godrej-hikido-topper-track-top-bottom", "Godrej HIKIDO Topper Track (Top & Bottom)", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Topper Track (Top & Bottom): వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Topper Track (Top & Bottom) from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. MRP ₹5,240 – ₹8,290 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "2 variants in the price list"}, ["Aluminium"], 5240, 8290);
+  gm("godrej-hikido-inset-rollers-dampers", "Godrej HIKIDO Inset Rollers & Dampers", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Inset Rollers & Dampers: వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Inset Rollers & Dampers from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. MRP ₹3,790 – ₹5,060 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "2 variants in the price list"}, ["Aluminium"], 3790, 5060);
+  gm("godrej-hikido-inset-track-recess", "Godrej HIKIDO Inset Track - Recess", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Inset Track - Recess: వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Inset Track - Recess from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. MRP ₹2,700 – ₹4,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "2 variants in the price list"}, ["Aluminium"], 2700, 4220);
+  gm("godrej-hikido-inset-track-surface-mounted", "Godrej HIKIDO Inset Track - Surface Mounted", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Inset Track - Surface Mounted: వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Inset Track - Surface Mounted from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. MRP ₹3,230 – ₹4,850 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "2 variants in the price list"}, ["Aluminium"], 3230, 4850);
+  gm("godrej-hikido-cabinet-rollers-dampers", "Godrej HIKIDO Cabinet Rollers & Dampers", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Cabinet Rollers & Dampers: వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Cabinet Rollers & Dampers from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. MRP ₹2,910 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "1 variants in the price list"}, ["Aluminium"], 2910, 2910);
+  gm("godrej-hikido-cabinet-track", "Godrej HIKIDO Cabinet Track", "block", "grey", "kitchen",
+    "గోద్రెజ్ HIKIDO Cabinet Track: వార్డ్‌రోబ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "HIKIDO Cabinet Track from the Godrej wardrobe fittings range. Available in 1 finish: Aluminium. MRP ₹1,720 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Wardrobe fitting", "variants": "1 variants in the price list"}, ["Aluminium"], 1720, 1720);
+  gm("godrej-neulift-bed-arms", "Godrej Neulift Bed Arms", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Bed Arms: బెడ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neulift Bed Arms from the Godrej bed fittings range. Available in 1 finish: Anthracite. Sizes and options: Neulift Normal Arm - 500 mm; Neulift Regular Bed Arm -1100 mm; Neulift Extended Arm - 1500 mm; Neulift Heavy Duty. MRP ₹1,960 – ₹3,900 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "8 variants in the price list"}, ["Anthracite"], 1960, 3900);
+  gm("godrej-neulift-vertical-murphy-bed", "Godrej Neulift Vertical Murphy Bed", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Vertical Murphy Bed: బెడ్ ఫిట్టింగ్.",
+    "Neulift Vertical Murphy Bed from the Godrej bed fittings range. MRP ₹3,770 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "1 variants in the price list"}, [], 3770, 3770);
+  gm("godrej-neulift-horizontal-murphy-bed", "Godrej Neulift Horizontal Murphy Bed", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Horizontal Murphy Bed: బెడ్ ఫిట్టింగ్.",
+    "Neulift Horizontal Murphy Bed from the Godrej bed fittings range. MRP ₹4,190 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "1 variants in the price list"}, [], 4190, 4190);
+  gm("godrej-neulift-murphy-bed-folding-leg", "Godrej Neulift Murphy Bed Folding Leg", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Murphy Bed Folding Leg: బెడ్ ఫిట్టింగ్.",
+    "Neulift Murphy Bed Folding Leg from the Godrej bed fittings range. MRP ₹380 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "1 variants in the price list"}, [], 380, 380);
+  gm("godrej-neulift-flat-bed", "Godrej Neulift Flat Bed", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Flat Bed: బెడ్ ఫిట్టింగ్.",
+    "Neulift Flat Bed from the Godrej bed fittings range. MRP ₹8,650 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "1 variants in the price list"}, [], 8650, 8650);
+  gm("godrej-neulift-digital-bed", "Godrej Neulift Digital Bed", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Digital Bed: బెడ్ ఫిట్టింగ్.",
+    "Neulift Digital Bed from the Godrej bed fittings range. MRP ₹19,980 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "1 variants in the price list"}, [], 19980, 19980);
+  gm("godrej-neulift-bed-frames", "Godrej Neulift Bed Frames", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Bed Frames: బెడ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neulift Bed Frames from the Godrej bed fittings range. Available in 1 finish: Anthracite. MRP ₹12,460 – ₹14,090 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 12460, 14090);
+  gm("godrej-neulift-telescopic-cross-bar", "Godrej Neulift Telescopic Cross Bar", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Telescopic Cross Bar: బెడ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neulift Telescopic Cross Bar from the Godrej bed fittings range. Available in 1 finish: Anthracite. MRP ₹1,240 – ₹2,020 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 1240, 2020);
+  gm("godrej-neulift-cross-bar-clamps", "Godrej Neulift Cross Bar Clamps", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Cross Bar Clamps: బెడ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neulift Cross Bar Clamps from the Godrej bed fittings range. Available in 1 finish: Nickel Plated. MRP ₹280 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "1 variants in the price list"}, ["Nickel Plated"], 280, 280);
+  gm("godrej-neulift-gas-spring", "Godrej Neulift Gas Spring", "block", "ink", "kitchen",
+    "గోద్రెజ్ Neulift Gas Spring: బెడ్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Neulift Gas Spring from the Godrej bed fittings range. Available in 1 finish: Anthracite. Sizes and options: 500N (50 kg); 750N (75 kg); 1000N (100 kg); 1200N (120 kg); 1500N (150 kg); 1750N (175 kg); 2000N (200 kg); 2250N (225 kg); 2500N (250 kg). MRP ₹910 – ₹1,430 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "15 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Bed fitting", "variants": "15 variants in the price list"}, ["Anthracite"], 910, 1430);
+  gm("godrej-slip-on-cabinet-hinges-regular", "Godrej Slip On Cabinet Hinges Regular", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slip On Cabinet Hinges Regular: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slip On Cabinet Hinges Regular from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹110 – ₹130 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "6 variants in the price list"}, ["Nickel Plated"], 110, 130);
+  gm("godrej-clip-on-cabinet-hinges-regular", "Godrej Clip On Cabinet Hinges Regular", "block", "grey", "kitchen",
+    "గోద్రెజ్ Clip On Cabinet Hinges Regular: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Clip On Cabinet Hinges Regular from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹140 – ₹150 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "3 variants in the price list"}, ["Nickel Plated"], 140, 150);
+  gm("godrej-special-cabinet-hinges-regular-2-hole", "Godrej Special Cabinet Hinges - Regular - 2 Hole", "block", "grey", "kitchen",
+    "గోద్రెజ్ Special Cabinet Hinges - Regular - 2 Hole: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Special Cabinet Hinges - Regular - 2 Hole from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹355 – ₹650 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "3 variants in the price list"}, ["Nickel Plated"], 355, 650);
+  gm("godrej-slip-on-cabinet-hinges-soft-close", "Godrej Slip On Cabinet Hinges Soft Close", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slip On Cabinet Hinges Soft Close: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slip On Cabinet Hinges Soft Close from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹225 – ₹235 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "6 variants in the price list"}, ["Nickel Plated"], 225, 235);
+  gm("godrej-clip-on-cabinet-hinges-soft-close", "Godrej Clip On Cabinet Hinges Soft Close", "block", "grey", "kitchen",
+    "గోద్రెజ్ Clip On Cabinet Hinges Soft Close: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Clip On Cabinet Hinges Soft Close from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹285 – ₹325 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "6 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "6 variants in the price list"}, ["Nickel Plated"], 285, 325);
+  gm("godrej-ss-304-clip-on-cabinet-hinges-soft-close-4-hole", "Godrej SS 304 Clip On Cabinet Hinges - Soft Close - 4 Hole", "block", "grey", "kitchen",
+    "గోద్రెజ్ SS 304 Clip On Cabinet Hinges - Soft Close - 4 Hole: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS 304 Clip On Cabinet Hinges - Soft Close - 4 Hole from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹540 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "3 variants in the price list"}, ["Nickel Plated"], 540, 540);
+  gm("godrej-3d-cabinet-hinges-soft-close-4-hole", "Godrej 3D Cabinet Hinges - Soft Close - 4 Hole", "block", "grey", "kitchen",
+    "గోద్రెజ్ 3D Cabinet Hinges - Soft Close - 4 Hole: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "3D Cabinet Hinges - Soft Close - 4 Hole from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. MRP ₹370 – ₹390 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "3 variants in the price list"}, ["Nickel Plated"], 370, 390);
+  gm("godrej-special-cabinet-hinges-soft-close", "Godrej Special Cabinet Hinges - Soft Close", "block", "grey", "kitchen",
+    "గోద్రెజ్ Special Cabinet Hinges - Soft Close: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Special Cabinet Hinges - Soft Close from the Godrej furniture fittings range. Available in 1 finish: Nickel Plated. Sizes and options: Hinge 165°; Hinge Zero Protrusion. MRP ₹670 – ₹1,005 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "2 variants in the price list"}, ["Nickel Plated"], 670, 1005);
+  gm("godrej-regular-drawer-channels-35-kg", "Godrej Regular Drawer Channels 35 kg", "block", "grey", "kitchen",
+    "గోద్రెజ్ Regular Drawer Channels 35 kg: ఫర్నిచర్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Regular Drawer Channels 35 kg from the Godrej furniture fittings range. Available in 2 finishes: Zinc, Black. Sizes and options: 35 kg Drawer Channel - 250 mm; 35 kg Drawer Channel - 300 mm; 35 kg Drawer Channel - 350 mm; 35 kg Drawer Channel - 400 mm; 35 kg Drawer Channel - 450 mm; 35 kg Drawer Channel - 500 mm; 35 kg Drawer Channel - 550 mm; 35 kg Drawer Channel - 600 mm. MRP ₹285 – ₹680 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "16 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "16 variants in the price list"}, ["Zinc", "Black"], 285, 680);
+  gm("godrej-regular-drawer-channels-45-kg", "Godrej Regular Drawer Channels 45 kg", "block", "grey", "kitchen",
+    "గోద్రెజ్ Regular Drawer Channels 45 kg: ఫర్నిచర్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Regular Drawer Channels 45 kg from the Godrej furniture fittings range. Available in 2 finishes: Zinc, Black. MRP ₹340 – ₹795 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "16 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "16 variants in the price list"}, ["Zinc", "Black"], 340, 795);
+  gm("godrej-ss-304-regular-drawer-channel-45-kg-zinc-finish", "Godrej SS 304 Regular Drawer Channel 45 kg Zinc Finish", "block", "grey", "kitchen",
+    "గోద్రెజ్ SS 304 Regular Drawer Channel 45 kg Zinc Finish: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SS 304 Regular Drawer Channel 45 kg Zinc Finish from the Godrej furniture fittings range. Available in 1 finish: Zinc. MRP ₹2,285 – ₹3,070 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "5 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "5 variants in the price list"}, ["Zinc"], 2285, 3070);
+  gm("godrej-soft-close-drawer-channels", "Godrej Soft Close Drawer Channels", "block", "grey", "kitchen",
+    "గోద్రెజ్ Soft Close Drawer Channels: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Soft Close Drawer Channels from the Godrej furniture fittings range. Available in 1 finish: Zinc. Sizes and options: 35 kg Drawer Channel; 35 kg Drawer Channel Soft Close - 500 mm; 35 kg Drawer Channel Soft Close - 550 mm; 35 kg Drawer Channel Soft Close - 600 mm. MRP ₹870 – ₹1,370 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "7 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "7 variants in the price list"}, ["Zinc"], 870, 1370);
+  gm("godrej-minifix-connectors", "Godrej MiniFix Connectors", "block", "grey", "kitchen",
+    "గోద్రెజ్ MiniFix Connectors: ఫర్నిచర్ ఫిట్టింగ్.",
+    "MiniFix Connectors from the Godrej furniture fittings range. Sizes and options: MiniFix Zinc Plated Solid Connector; MiniFix Rotor Connector; MiniFix Eco Connector; MiniFix Cam Housing; MiniFix Wooden Dowel; MiniFix Plastic Dowel; MiniFix Cam Housing 16 mm. MRP ₹243 – ₹1,778 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "9 variants in the price list"}, [], 243, 1778);
+  gm("godrej-minifix-folding-table-bracket", "Godrej MiniFix Folding Table Bracket", "block", "grey", "kitchen",
+    "గోద్రెజ్ MiniFix Folding Table Bracket: ఫర్నిచర్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "MiniFix Folding Table Bracket from the Godrej furniture fittings range. Available in 1 finish: Anthracite. Sizes and options: 300 mm; 400 mm; 500 mm; 600 mm. MRP ₹840 – ₹1,740 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup", "wood"], {"type": "Furniture fitting", "variants": "4 variants in the price list"}, ["Anthracite"], 840, 1740);
+  gm("godrej-45-mm-frame-aluminium-profile", "Godrej 45 mm Frame Aluminium Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ 45 mm Frame Aluminium Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "45 mm Frame Aluminium Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. MRP ₹1,742 – ₹2,925 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "8 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 1742, 2925);
+  gm("godrej-glass-shutter-slimline-profile", "Godrej Glass Shutter Slimline Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ Glass Shutter Slimline Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Glass Shutter Slimline Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. Sizes and options: Slimline; Slimline Aluminium. MRP ₹2,360 – ₹3,725 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "8 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 2360, 3725);
+  gm("godrej-stick-on-frame-aluminium-profile", "Godrej Stick On Frame Aluminium Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ Stick On Frame Aluminium Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Stick On Frame Aluminium Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. MRP ₹1,410 – ₹1,630 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "4 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 1410, 1630);
+  gm("godrej-stick-on-g-handle-profile", "Godrej Stick On G Handle Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ Stick On G Handle Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Stick On G Handle Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. MRP ₹1,865 – ₹2,225 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "4 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 1865, 2225);
+  gm("godrej-j-gola-aluminium-profile", "Godrej J Gola Aluminium Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ J Gola Aluminium Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "J Gola Aluminium Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. Sizes and options: L Connector’ 76 X 76 X 16mm; Gola Aluminium Profiles J Type; Aluminium; Profile End Cap. Accessories: J Gola Aluminium, J Gola Profile End Cap, L Connector’ 76 X 76 X 16mm. MRP ₹1,280 – ₹1,480 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "9 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 1280, 1480);
+  gm("godrej-edge-aluminium-profile", "Godrej Edge Aluminium Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ Edge Aluminium Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Edge Aluminium Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. MRP ₹345 – ₹570 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "12 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "12 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 345, 570);
+  gm("godrej-c-gola-aluminium-profile", "Godrej C Gola Aluminium Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ C Gola Aluminium Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "C Gola Aluminium Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. Sizes and options: Gola Aluminium Profiles C Type; s End Cap; Aluminium Profiles Gola Connector. Accessories: Aluminium Profiles Gola Connector, C Gola Aluminium Profiles End Cap. MRP ₹1,610 – ₹1,810 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "9 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "9 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 1610, 1810);
+  gm("godrej-y-gola-handle-profile", "Godrej Y Gola Handle Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ Y Gola Handle Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "Y Gola Handle Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. Sizes and options: Aluminium Profiles Handle Y Top; Aluminium Profiles Handle; Aluminium Profiles Handle Y Bottom. Accessories: Aluminium Profiles Handle. MRP ₹725 – ₹1,245 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "16 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "16 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 725, 1245);
+  gm("godrej-m-gola-handle-profile", "Godrej M Gola Handle Profile", "block", "grey", "kitchen",
+    "గోద్రెజ్ M Gola Handle Profile: అల్యూమినియం ప్రొఫైల్, 4 ఫినిష్‌లలో లభిస్తుంది.",
+    "M Gola Handle Profile from the Godrej aluminium profiles range. Available in 4 finishes: Anodised Silver, Matte Black, Graphite Grey, Rose Gold. Sizes and options: Aluminium Profiles Handle M Top; Aluminium Profiles Handle; Aluminium Profiles Handle M Bottom. Accessories: Aluminium Profiles Handle. MRP ₹580 – ₹960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["4 finishes available", "16 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Aluminium profile", "variants": "16 variants in the price list"}, ["Anodised Silver", "Matte Black", "Graphite Grey", "Rose Gold"], 580, 960);
+  gm("godrej-skido-wire-baskets", "Godrej SKIDO Wire Baskets", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Wire Baskets: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Wire Baskets from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹2,200 – ₹4,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "12 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "12 variants in the price list"}, ["Stainless Steel +"], 2200, 4080);
+  gm("godrej-skido-cutlery-wire-organiser", "Godrej SKIDO Cutlery Wire Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Cutlery Wire Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Cutlery Wire Organiser from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹680 – ₹2,230 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "3 variants in the price list"}, ["Stainless Steel +"], 680, 2230);
+  gm("godrej-skido-cup-saucer-wire-organiser", "Godrej SKIDO Cup & Saucer Wire Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Cup & Saucer Wire Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Cup & Saucer Wire Organiser from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹1,740 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Stainless Steel +"], 1740, 1740);
+  gm("godrej-skido-jars-bottles-wire-organiser", "Godrej SKIDO Jars & Bottles Wire Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Jars & Bottles Wire Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Jars & Bottles Wire Organiser from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹760 – ₹960 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["Stainless Steel +"], 760, 960);
+  gm("godrej-skido-thali-wire-organiser", "Godrej SKIDO Thali Wire Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Thali Wire Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Thali Wire Organiser from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹2,340 – ₹2,660 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Stainless Steel +"], 2340, 2660);
+  gm("godrej-skido-wok-kadhai-wire-organiser", "Godrej SKIDO Wok & Kadhai Wire Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Wok & Kadhai Wire Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Wok & Kadhai Wire Organiser from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Stainless Steel +"], 330, 330);
+  gm("godrej-skido-container-wire-organiser", "Godrej SKIDO Container Wire Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ SKIDO Container Wire Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "SKIDO Container Wire Organiser from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel +. MRP ₹2,000 – ₹2,200 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["Stainless Steel +"], 2000, 2200);
+  gm("godrej-universal-skido-cup-saucer-organiser", "Godrej Universal SKIDO Cup & Saucer Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Universal SKIDO Cup & Saucer Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Universal SKIDO Cup & Saucer Organiser from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹2,450 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Anthracite"], 2450, 2450);
+  gm("godrej-universal-skido-jars-bottles-organiser", "Godrej Universal SKIDO Jars & Bottles Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Universal SKIDO Jars & Bottles Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Universal SKIDO Jars & Bottles Organiser from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹3,090 – ₹4,140 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "3 variants in the price list"}, ["Anthracite"], 3090, 4140);
+  gm("godrej-universal-skido-thali-organiser", "Godrej Universal SKIDO Thali Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Universal SKIDO Thali Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Universal SKIDO Thali Organiser from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹3,080 – ₹3,580 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 3080, 3580);
+  gm("godrej-universal-skido-fry-pan-organiser", "Godrej Universal SKIDO Fry Pan Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Universal SKIDO Fry Pan Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Universal SKIDO Fry Pan Organiser from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹1,220 – ₹1,290 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 1220, 1290);
+  gm("godrej-universal-skido-wok-kadhai-organiser", "Godrej Universal SKIDO Wok & Kadhai Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Universal SKIDO Wok & Kadhai Organiser: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Universal SKIDO Wok & Kadhai Organiser from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Matte Grey. Sizes and options: Organiser; SKIDO Wok Organiser. MRP ₹499 – ₹1,610 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Anthracite", "Matte Grey"], 499, 1610);
+  gm("godrej-universal-skido-container-organiser", "Godrej Universal SKIDO Container Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Universal SKIDO Container Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Universal SKIDO Container Organiser from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹3,460 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Anthracite"], 3460, 3460);
+  gm("godrej-super-skido-slide-out-pantry", "Godrej Super SKIDO Slide Out Pantry", "block", "grey", "kitchen",
+    "గోద్రెజ్ Super SKIDO Slide Out Pantry: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Super SKIDO Slide Out Pantry from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹11,330 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Anthracite"], 11330, 11330);
+  gm("godrej-super-skido-corner-solution", "Godrej Super SKIDO Corner Solution", "block", "grey", "kitchen",
+    "గోద్రెజ్ Super SKIDO Corner Solution: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Super SKIDO Corner Solution from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹6,812 – ₹19,412 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "3 variants in the price list"}, ["Anthracite"], 6812, 19412);
+  gm("godrej-super-skido-swing-corner", "Godrej Super SKIDO Swing Corner", "block", "grey", "kitchen",
+    "గోద్రెజ్ Super SKIDO Swing Corner: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Super SKIDO Swing Corner from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹32,520 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Anthracite"], 32520, 32520);
+  gm("godrej-super-skido-undersink-solution", "Godrej Super SKIDO Undersink Solution", "block", "grey", "kitchen",
+    "గోద్రెజ్ Super SKIDO Undersink Solution: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Super SKIDO Undersink Solution from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹5,659 – ₹9,535 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "3 variants in the price list"}, ["Anthracite"], 5659, 9535);
+  gm("godrej-super-skido-perfect-grain-storage", "Godrej Super SKIDO Perfect Grain Storage", "block", "grey", "kitchen",
+    "గోద్రెజ్ Super SKIDO Perfect Grain Storage: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Super SKIDO Perfect Grain Storage from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹8,511 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Anthracite"], 8511, 8511);
+  gm("godrej-corner-solution-swing-tray", "Godrej Corner Solution - Swing Tray", "block", "grey", "kitchen",
+    "గోద్రెజ్ Corner Solution - Swing Tray: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Corner Solution - Swing Tray from the Godrej kitchen fittings range. Available in 1 finish: Chrome. Sizes and options: Swing Tray Left*; Swing Tray Right*. MRP ₹27,367 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Chrome"], 27367, 27367);
+  gm("godrej-corner-solution-magic-corner", "Godrej Corner Solution - Magic Corner", "block", "grey", "kitchen",
+    "గోద్రెజ్ Corner Solution - Magic Corner: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Corner Solution - Magic Corner from the Godrej kitchen fittings range. Available in 1 finish: Chrome. Sizes and options: Magic Corner Left*; Magic Corner Right*. MRP ₹33,012 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Chrome"], 33012, 33012);
+  gm("godrej-corner-solution-d-tray", "Godrej Corner Solution - D Tray", "block", "grey", "kitchen",
+    "గోద్రెజ్ Corner Solution - D Tray: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Corner Solution - D Tray from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹4,220 – ₹5,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Stainless Steel"], 4220, 5080);
+  gm("godrej-slim-ergo-drawer-system", "Godrej Slim Ergo Drawer System", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slim Ergo Drawer System: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slim Ergo Drawer System from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Black. MRP ₹3,010 – ₹5,170 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "36 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "36 variants in the price list"}, ["Anthracite", "Black"], 3010, 5170);
+  gm("godrej-slim-ergo-square-rail", "Godrej Slim Ergo Square Rail", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slim Ergo Square Rail: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slim Ergo Square Rail from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Black. MRP ₹385 – ₹540 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "12 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "12 variants in the price list"}, ["Anthracite", "Black"], 385, 540);
+  gm("godrej-slim-ergo-front-fascia", "Godrej Slim Ergo Front Fascia", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slim Ergo Front Fascia: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slim Ergo Front Fascia from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Black. MRP ₹1,820 – ₹2,690 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["Anthracite", "Black"], 1820, 2690);
+  gm("godrej-slim-ergo-front-fascia-rail", "Godrej Slim Ergo Front Fascia Rail", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slim Ergo Front Fascia Rail: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slim Ergo Front Fascia Rail from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Black. MRP ₹1,190 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Anthracite", "Black"], 1190, 1190);
+  gm("godrej-slim-ergo-front-fascia-clip", "Godrej Slim Ergo Front Fascia Clip", "block", "grey", "kitchen",
+    "గోద్రెజ్ Slim Ergo Front Fascia Clip: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Slim Ergo Front Fascia Clip from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Black. MRP ₹245 – ₹310 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "12 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "12 variants in the price list"}, ["Anthracite", "Black"], 245, 310);
+  gm("godrej-super-slim-ergo-drawer-system", "Godrej Super Slim Ergo Drawer System", "block", "grey", "kitchen",
+    "గోద్రెజ్ Super Slim Ergo Drawer System: కిచెన్ ఫిట్టింగ్, 2 ఫినిష్‌లలో లభిస్తుంది.",
+    "Super Slim Ergo Drawer System from the Godrej kitchen fittings range. Available in 2 finishes: Anthracite, Black. MRP ₹2,170 – ₹3,720 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["2 finishes available", "42 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "42 variants in the price list"}, ["Anthracite", "Black"], 2170, 3720);
+  gm("godrej-pantry-unit", "Godrej Pantry Unit", "block", "grey", "kitchen",
+    "గోద్రెజ్ Pantry Unit: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pantry Unit from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. Sizes and options: 450 mm; 600 mm. MRP ₹32,800 – ₹38,260 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 32800, 38260);
+  gm("godrej-bottle-pull-out-system", "Godrej Bottle Pull-out System", "block", "grey", "kitchen",
+    "గోద్రెజ్ Bottle Pull-out System: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Bottle Pull-out System from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹4,982 – ₹5,605 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "3 variants in the price list"}, ["Anthracite"], 4982, 5605);
+  gm("godrej-lift-up-flap-system", "Godrej Lift Up Flap System", "block", "grey", "kitchen",
+    "గోద్రెజ్ Lift Up Flap System: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Lift Up Flap System from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹3,052 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Anthracite"], 3052, 3052);
+  gm("godrej-lift-up-bi-fold-system", "Godrej Lift Up Bi-Fold System", "block", "grey", "kitchen",
+    "గోద్రెజ్ Lift Up Bi-Fold System: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Lift Up Bi-Fold System from the Godrej kitchen fittings range. Available in 1 finish: Anthracite. MRP ₹4,122 – ₹4,197 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["Anthracite"], 4122, 4197);
+  gm("godrej-expandable-wooden-cutlery-organiser", "Godrej Expandable Wooden Cutlery Organiser", "block", "grey", "kitchen",
+    "గోద్రెజ్ Expandable Wooden Cutlery Organiser: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Expandable Wooden Cutlery Organiser from the Godrej kitchen fittings range. Available in 1 finish: Dark Walnut. MRP ₹2,536 – ₹4,778 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "3 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "3 variants in the price list"}, ["Dark Walnut"], 2536, 4778);
+  gm("godrej-wire-plain-basket-ss", "Godrej Wire Plain Basket SS", "block", "grey", "kitchen",
+    "గోద్రెజ్ Wire Plain Basket SS: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Wire Plain Basket SS from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹1,300 – ₹4,360 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "72 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "72 variants in the price list"}, ["Stainless Steel"], 1300, 4360);
+  gm("godrej-wire-plain-basket-ss-304", "Godrej Wire Plain Basket SS 304", "block", "grey", "kitchen",
+    "గోద్రెజ్ Wire Plain Basket SS 304: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Wire Plain Basket SS 304 from the Godrej kitchen fittings range. Available in 1 finish: SS 304. MRP ₹2,730 – ₹4,730 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "12 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "12 variants in the price list"}, ["SS 304"], 2730, 4730);
+  gm("godrej-cup-saucer-basket-ss", "Godrej Cup & Saucer Basket SS", "block", "grey", "kitchen",
+    "గోద్రెజ్ Cup & Saucer Basket SS: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cup & Saucer Basket SS from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹1,600 – ₹3,720 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "23 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "23 variants in the price list"}, ["Stainless Steel"], 1600, 3720);
+  gm("godrej-cup-saucer-basket-ss-304", "Godrej Cup & Saucer Basket SS 304", "block", "grey", "kitchen",
+    "గోద్రెజ్ Cup & Saucer Basket SS 304: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cup & Saucer Basket SS 304 from the Godrej kitchen fittings range. Available in 1 finish: SS 304. MRP ₹3,150 – ₹3,870 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["SS 304"], 3150, 3870);
+  gm("godrej-perforated-cutlery-basket-ss", "Godrej Perforated Cutlery Basket SS", "block", "grey", "kitchen",
+    "గోద్రెజ్ Perforated Cutlery Basket SS: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Perforated Cutlery Basket SS from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹2,920 – ₹7,940 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "23 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "23 variants in the price list"}, ["Stainless Steel"], 2920, 7940);
+  gm("godrej-perforated-cutlery-basket-ss-304", "Godrej Perforated Cutlery Basket SS 304", "block", "grey", "kitchen",
+    "గోద్రెజ్ Perforated Cutlery Basket SS 304: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Perforated Cutlery Basket SS 304 from the Godrej kitchen fittings range. Available in 1 finish: SS 304. MRP ₹4,810 – ₹5,770 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["SS 304"], 4810, 5770);
+  gm("godrej-wire-basket-thali-ss", "Godrej Wire Basket - Thali SS", "block", "grey", "kitchen",
+    "గోద్రెజ్ Wire Basket - Thali SS: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Wire Basket - Thali SS from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹1,770 – ₹4,400 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "46 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "46 variants in the price list"}, ["Stainless Steel"], 1770, 4400);
+  gm("godrej-wire-basket-thali-ss-304", "Godrej Wire Basket - Thali SS 304", "block", "grey", "kitchen",
+    "గోద్రెజ్ Wire Basket - Thali SS 304: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Wire Basket - Thali SS 304 from the Godrej kitchen fittings range. Available in 1 finish: SS 304. MRP ₹3,070 – ₹4,600 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "8 variants in the price list"}, ["SS 304"], 3070, 4600);
+  gm("godrej-pull-out-ss", "Godrej Pull Out SS", "block", "grey", "kitchen",
+    "గోద్రెజ్ Pull Out SS: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pull Out SS from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. Sizes and options: Two Shelf Pull Out; Three Shelf Pull Out. MRP ₹3,400 – ₹5,630 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "8 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "8 variants in the price list"}, ["Stainless Steel"], 3400, 5630);
+  gm("godrej-pull-out-ss-304", "Godrej Pull Out SS 304", "block", "grey", "kitchen",
+    "గోద్రెజ్ Pull Out SS 304: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Pull Out SS 304 from the Godrej kitchen fittings range. Available in 1 finish: SS 304. Sizes and options: Two Shelf Pull Out; Three Shelf Pull Out. MRP ₹4,590 – ₹6,780 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["SS 304"], 4590, 6780);
+  gm("godrej-grain-trolley-ss", "Godrej Grain Trolley SS", "block", "grey", "kitchen",
+    "గోద్రెజ్ Grain Trolley SS: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Grain Trolley SS from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹4,840 – ₹6,420 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["Stainless Steel"], 4840, 6420);
+  gm("godrej-grain-trolley-ss-304", "Godrej Grain Trolley SS 304", "block", "grey", "kitchen",
+    "గోద్రెజ్ Grain Trolley SS 304: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Grain Trolley SS 304 from the Godrej kitchen fittings range. Available in 1 finish: SS 304. MRP ₹8,190 – ₹9,350 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "4 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "4 variants in the price list"}, ["SS 304"], 8190, 9350);
+  gm("godrej-movino-undermount-drawer-channel", "Godrej Movino Undermount Drawer Channel", "block", "grey", "kitchen",
+    "గోద్రెజ్ Movino Undermount Drawer Channel: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Movino Undermount Drawer Channel from the Godrej kitchen fittings range. Available in 1 finish: Zinc. Sizes and options: Undermount Channel; Undermount. MRP ₹1,420 – ₹2,010 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "11 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "11 variants in the price list"}, ["Zinc"], 1420, 2010);
+  gm("godrej-regular-gas-spring", "Godrej Regular Gas Spring", "block", "grey", "kitchen",
+    "గోద్రెజ్ Regular Gas Spring: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Regular Gas Spring from the Godrej kitchen fittings range. Available in 1 finish: Mild Steel. Sizes and options: Gas Spring Regular 60 N (6 kg); Gas Spring Regular 80 N (8 kg); Gas Spring Regular 100 N (10 Kg); Gas Spring Regular 120 N (12 kg); Gas Spring Regular 150 N (15 kg); Gas Spring Regular 200 N (20 kg); Gas Spring Regular 250 N (25 kg). MRP ₹415 – ₹530 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "7 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "7 variants in the price list"}, ["Mild Steel"], 415, 530);
+  gm("godrej-cylinder-trolley", "Godrej Cylinder Trolley", "block", "grey", "kitchen",
+    "గోద్రెజ్ Cylinder Trolley: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Cylinder Trolley from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. MRP ₹2,080 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Stainless Steel"], 2080, 2080);
+  gm("godrej-glass-plate-tray", "Godrej Glass Plate Tray", "block", "grey", "kitchen",
+    "గోద్రెజ్ Glass Plate Tray: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Glass Plate Tray from the Godrej kitchen fittings range. Available in 1 finish: Glass. Sizes and options: Plate Tray 535 mm; Plate Tray 610 mm. MRP ₹6,460 – ₹7,070 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Glass"], 6460, 7070);
+  gm("godrej-skid-free-mat", "Godrej Skid Free Mat", "block", "grey", "kitchen",
+    "గోద్రెజ్ Skid Free Mat: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Skid Free Mat from the Godrej kitchen fittings range. Available in 1 finish: Grey. MRP ₹1,930 – ₹2,220 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Grey"], 1930, 2220);
+  gm("godrej-waste-bin-14-l", "Godrej Waste Bin 14 L", "block", "grey", "kitchen",
+    "గోద్రెజ్ Waste Bin 14 L: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Waste Bin 14 L from the Godrej kitchen fittings range. Available in 1 finish: Black Stainless Steel. MRP ₹3,400 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "1 variants in the price list"}, ["Black Stainless Steel"], 3400, 3400);
+  gm("godrej-waste-bin-holder-shutter", "Godrej Waste Bin Holder & Shutter", "block", "grey", "kitchen",
+    "గోద్రెజ్ Waste Bin Holder & Shutter: కిచెన్ ఫిట్టింగ్, 1 ఫినిష్‌లలో లభిస్తుంది.",
+    "Waste Bin Holder & Shutter from the Godrej kitchen fittings range. Available in 1 finish: Stainless Steel. Sizes and options: Holder; Shutter. MRP ₹1,410 – ₹2,230 including taxes, as per the Godrej price list effective 1 July 2026. Price is negotiable with us, the distributor.",
+    ["1 finish available", "2 variants in the price list", "Genuine Godrej product, sold by the authorised distributor"], ["cup"], {"type": "Kitchen fitting", "variants": "2 variants in the price list"}, ["Stainless Steel"], 1410, 2230);
 
   /* ---------- "which cement for which job" (used on the home page) ---------- */
   var GUIDE = [
@@ -869,7 +1895,7 @@
   ];
 
   /* products with a pack photo in assets/img/products/<id>.png */
-  var PHOTOS = ['ambuja-buildcem','ambuja-cement','ambuja-compocem','ambuja-cool-walls','ambuja-kawach','ambuja-plus','ambuja-powercem','ambuja-purasand','ambuja-railcem','astral-bondtite-cyano','astral-bondtite-epoxy','astral-bondtite-pva','astral-fast-and-clear','astral-resibond-neutral','bharathi-opc-43','bharathi-opc-53','bharathi-ppc','bharathi-ultra-fast','birlawhite-ever-white','birlawhite-excel','birlawhite-level-plast','birlawhite-textura-roller','birlawhite-textura-trowel','birlawhite-wallcare-putty','birlawhite-wallcare-scented','birlawhite-wallseal','birlawhite-white-cement','chettinad-classic-slag','chettinad-composite','chettinad-hbc','chettinad-maxcrete','chettinad-opc-43','chettinad-opc-53','chettinad-super-grade','dalmia-cement','dalmia-dsp','dalmia-infra-pro','fevicol-ezeespray','fevicol-heatx','fevicol-hiper','fevicol-hiper-star','fevicol-marine','fevicol-mr','fevicol-plastilok','fevicol-probond','fevicol-probond-edgelok','fevicol-relam','fevicol-sh','fevicol-speedx','fevicol-sr-998','fosroc-brushbond','fosroc-conplast-wl','fosroc-nitobond-sbr','fosroc-nitoproof-100','fosroc-nitoproof-600pf','fosroc-nitoseal-pu','godrej-6-lever-mortise','godrej-advantis-iot9','godrej-advantis-rimtronic','godrej-aldrop','godrej-cabinet-hinges','godrej-centaur-rim-lock','godrej-curvo','godrej-cylindrical-locks','godrej-door-closer','godrej-drawer-channels','godrej-duralock','godrej-essential-mortise','godrej-furniture-locks','godrej-gloria','godrej-hikido','godrej-home-handles','godrej-navtal-ultra-xl','godrej-neh-21','godrej-neo-connect','godrej-neulift','godrej-no1-padlock','godrej-pentabolt-aries','godrej-pull-handles','godrej-shutter-lock','godrej-slim-ergo','godrej-ss-baskets','godrej-ss-hinges','godrej-super-skido','godrej-tower-bolt','godrej-tribolt-ultra-xl','godrej-ulturo-cylinder','hardworker-anchoring-grout','hardworker-block-fix','hardworker-bonding-epoxy','hardworker-bonding-sbr','hardworker-eco-plaster','hardworker-floor-screed','hardworker-integral-waterproofing','hardworker-micro-concrete','hardworker-tile-fix','hardworker-tile-fix-epoxy','hardworker-tile-fix-slurry','hardworker-tile-grout','hardworker-tile-grout-epoxy','hardworker-wall-putty','hardworker-waterproofing-coat','indiacements-coromandel-king','indiacements-sankar','kcp-opc-43','kcp-opc-53','kcp-opc-53s','kcp-rhpc','kcp-shreshtaa','kcp-super-shreshtaa','maha-concrete-special','maha-hd-ppc','maha-psc','maha-solid-hd','nagarjuna-irs-53s','nagarjuna-opc-43','nagarjuna-opc-53','nagarjuna-ppc','nagarjuna-visistha','penna-concrete-guard','penna-power-ppc','penna-premium-43','penna-premium-53','penna-suraksha-psc','ramco-infra-opc-43','ramco-infra-opc-53','ramco-infra-super-opc-53','ramco-karthic-super-plus','ramco-opc-43','ramco-opc-53','ramco-samudra','ramco-super-coast','ramco-super-fast','ramco-super-steel','ramco-supercrete','ramco-superfine-efc','ramco-supergrade','sagar-opc-53','sagar-ppc','shree-jungrodhak','shree-magna','shree-powermax','shree-rockstrong','shree-roofon','ultratech-bath-kit','ultratech-bath-membrane','ultratech-bitupro','ultratech-crack-filler','ultratech-epoxy-grout','ultratech-flex','ultratech-hiflex','ultratech-membranes','ultratech-opc-43','ultratech-opc-53','ultratech-ppc','ultratech-psc','ultratech-readiplast-pro','ultratech-sbr','ultratech-tilefixo','ultratech-top-shield','ultratech-top-shield-ezy','ultratech-weather-plus','ultratech-wp200'];
+  var PHOTOS = ['ambuja-buildcem','ambuja-cement','ambuja-compocem','ambuja-cool-walls','ambuja-kawach','ambuja-plus','ambuja-powercem','ambuja-purasand','ambuja-railcem','astral-bondtite-cyano','astral-bondtite-epoxy','astral-bondtite-pva','astral-fast-and-clear','astral-resibond-neutral','bharathi-opc-43','bharathi-opc-53','bharathi-ppc','bharathi-ultra-fast','birlawhite-ever-white','birlawhite-excel','birlawhite-level-plast','birlawhite-textura-roller','birlawhite-textura-trowel','birlawhite-wallcare-putty','birlawhite-wallcare-scented','birlawhite-wallseal','birlawhite-white-cement','chettinad-classic-slag','chettinad-composite','chettinad-hbc','chettinad-maxcrete','chettinad-opc-43','chettinad-opc-53','chettinad-super-grade','dalmia-cement','dalmia-dsp','dalmia-infra-pro','fevicol-ezeespray','fevicol-heatx','fevicol-hiper','fevicol-hiper-star','fevicol-marine','fevicol-mr','fevicol-plastilok','fevicol-probond','fevicol-probond-edgelok','fevicol-relam','fevicol-sh','fevicol-speedx','fevicol-sr-998','fosroc-brushbond','fosroc-conplast-wl','fosroc-nitobond-sbr','fosroc-nitoproof-100','fosroc-nitoproof-600pf','fosroc-nitoseal-pu','godrej-10-lever-push-button-lock','godrej-3d-cabinet-hinges-soft-close-4-hole','godrej-4-lever-hookbolt','godrej-4-lever-narrow-stile-mortise-lock','godrej-45-mm-frame-aluminium-profile','godrej-6-lever-mortise-2-way-deadlock','godrej-6-lever-universal-drawer-lock','godrej-7-lever-mortise-2-way-deadlock','godrej-7-lever-night-latch','godrej-7-lever-super-night-latch','godrej-ace-pro-ss-304-padlock','godrej-advantis-cabinet-lock','godrej-advantis-gsl-d1','godrej-advantis-gsl-d1r','godrej-advantis-iot9','godrej-advantis-remote-accessory','godrej-advantis-revolution','godrej-advantis-rimtronic','godrej-advantis-rimtronic-pcb-accessory','godrej-advantis-rimtronic-rf','godrej-advantis-rimtronic-verti','godrej-advantis-video-door-phone-module','godrej-aldrop','godrej-aldrop-brass','godrej-almirah-lock','godrej-alpine-rose-handle','godrej-anoushka-pull-handle','godrej-astron-digital-cabinet-lock','godrej-aura-240-mm-euro-mortise-combipack','godrej-bel-plate-handle','godrej-bel-rose-handle','godrej-bm-01-mortise-handle-set','godrej-bm-02-mortise-handle-set','godrej-bm-09-mortise-handle-set','godrej-bm-10-mortise-handle-set','godrej-bottle-pull-out-system','godrej-c-gola-aluminium-profile','godrej-calla-rose-handle','godrej-cam-lock','godrej-cameo-plate-handle','godrej-cameo-rose-handle','godrej-centaur-exs','godrej-centaur-ultra-xl','godrej-centaur-ultra-xl-double-door','godrej-cerus-universal-door-closer','godrej-chris-rose-handle','godrej-classic-cylindrical-locks-keyed-entrance','godrej-classic-cylindrical-locks-keyless-bathroom','godrej-clip-on-cabinet-hinges-regular','godrej-clip-on-cabinet-hinges-soft-close','godrej-concealed-door-closer-85-kg','godrej-corner-solution-d-tray','godrej-corner-solution-magic-corner','godrej-corner-solution-swing-tray','godrej-cup-saucer-basket-ss','godrej-cup-saucer-basket-ss-304','godrej-curvo-duo-ss-304-furniture-lock','godrej-cylinder-trolley','godrej-d-cor-6-lever-mortise-lock-combipack','godrej-deadbolt-compact','godrej-door-stopper','godrej-duralock-ultra-xl-padlock','godrej-ecstacy-rose-handle','godrej-edge-aluminium-profile','godrej-elc-01-6-lever-mortise-lock-combipack','godrej-elc-02-6-lever-mortise-lock-combipack','godrej-elc-03-6-lever-mortise-lock-combipack','godrej-elc-04-6-lever-mortise-lock-combipack','godrej-elc-05-6-lever-mortise-lock-combipack','godrej-elc-06-6-lever-mortise-lock-combipack','godrej-elc-07-6-lever-mortise-lock-combipack','godrej-elc-09-6-lever-mortise-lock-combipack','godrej-elc-10-6-lever-mortise-lock-combipack','godrej-elc-19-6-lever-mortise-lock-combipack','godrej-em-01-essential-mortise-handle-set','godrej-em-02-essential-mortise-handle-set','godrej-em-03-essential-mortise-handle-set','godrej-em-04-essential-mortise-handle-set','godrej-em-05-essential-mortise-handle-set','godrej-europrofile-mortise-lock-bodies','godrej-europrofile-pin-cylinder-100-mm','godrej-europrofile-pin-cylinder-40-mm','godrej-europrofile-pin-cylinder-60-mm','godrej-europrofile-pin-cylinder-70-mm','godrej-europrofile-pin-cylinder-80-mm','godrej-europrofile-pin-cylinder-90-mm','godrej-evolve-rose-handle','godrej-expandable-wooden-cutlery-organiser','godrej-freedom-padlock','godrej-glass-plate-tray','godrej-glass-shutter-slimline-profile','godrej-gloria-6-lever-mortise-lock-combipack','godrej-gloria-mortise-handle-set','godrej-gloria-mortise-handle-set-with-victor-cylinder','godrej-gloria-rose-handle','godrej-grain-trolley-ss','godrej-grain-trolley-ss-304','godrej-hdh-01-rose-handle','godrej-hdh-02-rose-handle','godrej-hdh-03-rose-handle','godrej-hdh-04-rose-handle','godrej-hdh-05-rose-handle','godrej-hdh-06-rose-handle','godrej-hdh-07-rose-handle','godrej-hdh-08-rose-handle','godrej-hdh-09-rose-handle','godrej-hdh-10-rose-handle','godrej-hdh-11-rose-handle','godrej-hdh-12-rose-handle','godrej-hdh-13-rose-handle','godrej-hdh-14-rose-handle','godrej-hdh-15-rose-handle','godrej-hdh-16-rose-handle','godrej-hdh-17-rose-handle','godrej-hdh-18-rose-handle','godrej-hdh-19-rose-handle','godrej-hdh-20-rose-handle','godrej-hdh-21-rose-handle','godrej-hdh-22-rose-handle','godrej-hdh-23-rose-handle','godrej-hercules-door-closer','godrej-herculoc-plus-3ks-padlock','godrej-hikido-cabinet-rollers-dampers','godrej-hikido-cabinet-track','godrej-hikido-inline','godrej-hikido-inset-rollers-dampers','godrej-hikido-inset-track-recess','godrej-hikido-inset-track-surface-mounted','godrej-hikido-topper-rollers-dampers','godrej-hikido-topper-track-top-bottom','godrej-incrust-plain-joint-hinges','godrej-inner-aldrop','godrej-j-gola-aluminium-profile','godrej-kaditala-6-lever-lock','godrej-kalasam-plate-handle','godrej-kalasam-rose-handle','godrej-khatakhat-lock-ultra-xl','godrej-lever-mortise-baby-latch','godrej-lift-up-bi-fold-system','godrej-lift-up-flap-system','godrej-m-gola-handle-profile','godrej-marin-pull-handle','godrej-minifix-connectors','godrej-minifix-folding-table-bracket','godrej-mor-plate-handle','godrej-mor-rose-handle','godrej-movino-undermount-drawer-channel','godrej-mylock-candy-luggage-lock','godrej-navtal-padlock','godrej-navtal-ultra-xl-padlock','godrej-neh-06-mortise-handle-set','godrej-neh-06-rose-handle','godrej-neh-07-mortise-handle-set','godrej-neh-07-rose-handle','godrej-neh-15-low-height-design','godrej-neh-15-rose-handle','godrej-neh-16-mortise-handle-set','godrej-neh-16-rose-handle','godrej-neh-17-mortise-handle-set','godrej-neh-17-rose-handle','godrej-neh-19-mortise-handle-set','godrej-neh-19-rose-handle','godrej-neh-20-mortise-handle-set','godrej-neh-20-rose-handle','godrej-neh-21-mortise-handle-set','godrej-neh-21-rose-handle','godrej-neh-22-mortise-handle-set','godrej-neh-22-rose-handle','godrej-neh-23-mortise-handle-set','godrej-neh-24-mortise-handle-set','godrej-neo-advantage','godrej-neo-connect','godrej-neo-prime','godrej-neo-pro-view','godrej-neulift-bed-arms','godrej-neulift-bed-frames','godrej-neulift-cross-bar-clamps','godrej-neulift-digital-bed','godrej-neulift-flat-bed','godrej-neulift-gas-spring','godrej-neulift-horizontal-murphy-bed','godrej-neulift-murphy-bed-folding-leg','godrej-neulift-telescopic-cross-bar','godrej-neulift-vertical-murphy-bed','godrej-no-1-solid-brass-padlock','godrej-nuvo-pin-cylinder-furniture-lock','godrej-orso-rose-handle','godrej-pantry-unit','godrej-pentabolt-aries-3ks','godrej-pentabolt-exs','godrej-perforated-cutlery-basket-ss','godrej-perforated-cutlery-basket-ss-304','godrej-pin-cylinder-premium-night-latch','godrej-pin-cylinder-rim-lock','godrej-premium-cylindrical-locks-keyed-entrance','godrej-premium-cylindrical-locks-keyless-bathroom','godrej-pull-out-ss','godrej-pull-out-ss-304','godrej-regular-drawer-channels-35-kg','godrej-regular-drawer-channels-45-kg','godrej-regular-gas-spring','godrej-remo-rose-handle','godrej-rim-deadbolt-reversible','godrej-rim-deadbolt-ultra-xl','godrej-rion-digital-cabinet-lock','godrej-round-padlock','godrej-scorpio-ultra-padlock','godrej-sec-01-240-mm-euro-mortise-combipack','godrej-sec-02-240-mm-euro-mortise-combipack','godrej-sec-03-240-mm-euro-mortise-combipack','godrej-seh-03-plate-handle','godrej-sherlock-solid-brass-padlock','godrej-shutter-locks-ultra','godrej-skid-free-mat','godrej-skido-container-wire-organiser','godrej-skido-cup-saucer-wire-organiser','godrej-skido-cutlery-wire-organiser','godrej-skido-jars-bottles-wire-organiser','godrej-skido-thali-wire-organiser','godrej-skido-wire-baskets','godrej-skido-wok-kadhai-wire-organiser','godrej-slim-ergo-drawer-system','godrej-slim-ergo-front-fascia','godrej-slim-ergo-front-fascia-clip','godrej-slim-ergo-front-fascia-rail','godrej-slim-ergo-square-rail','godrej-slip-on-cabinet-hinges-regular','godrej-slip-on-cabinet-hinges-soft-close','godrej-smooth-rose-handle','godrej-soft-close-drawer-channels','godrej-special-cabinet-hinges-regular-2-hole','godrej-special-cabinet-hinges-soft-close','godrej-square-padlock','godrej-ss-304-clip-on-cabinet-hinges-soft-close-4-hole','godrej-ss-304-plain-joint-hinges','godrej-ss-304-regular-drawer-channel-45-kg-zinc-finish','godrej-ss-ball-bearing-hinges','godrej-ss-cut-hinges','godrej-ss-d-type-tube-lever-combi-set','godrej-ss-plain-joint-hinges','godrej-stella-6-lever-mortise-lock-combipack','godrej-stick-on-frame-aluminium-profile','godrej-stick-on-g-handle-profile','godrej-super-skido-corner-solution','godrej-super-skido-perfect-grain-storage','godrej-super-skido-slide-out-pantry','godrej-super-skido-swing-corner','godrej-super-skido-undersink-solution','godrej-super-slim-ergo-drawer-system','godrej-supernova-ultra-wardrobe-lock','godrej-tibo-pull-handle','godrej-tower-bolt-designer','godrej-tower-bolt-regular','godrej-tribolt-compact','godrej-tribolt-ultra','godrej-tribolt-ultra-xl','godrej-trishaft-ultra','godrej-twinbolt-compact','godrej-twinbolt-ultra-xl','godrej-twist-rose-handle','godrej-udaan-plate-handle','godrej-udaan-rose-handle','godrej-ugo-plate-handle','godrej-ugo-rose-handle','godrej-ultra-retrofit-adaptor','godrej-ulturo-ultra-xl-euro-cylinder-60-mm','godrej-ulturo-ultra-xl-euro-cylinder-70-mm','godrej-ulturo-ultra-xl-euro-cylinder-80-mm','godrej-universal-skido-container-organiser','godrej-universal-skido-cup-saucer-organiser','godrej-universal-skido-fry-pan-organiser','godrej-universal-skido-jars-bottles-organiser','godrej-universal-skido-thali-organiser','godrej-universal-skido-wok-kadhai-organiser','godrej-venus-6-lever-mortise-lock-combipack','godrej-vertibolt-ultra','godrej-vertibolt-ultra-xl','godrej-wafer-tumbler-multipurpose-lock','godrej-wardrobe-lock-for-sliding-door','godrej-waste-bin-14-l','godrej-waste-bin-holder-shutter','godrej-wire-basket-thali-ss','godrej-wire-basket-thali-ss-304','godrej-wire-plain-basket-ss','godrej-wire-plain-basket-ss-304','godrej-y-gola-handle-profile','hardworker-anchoring-grout','hardworker-block-fix','hardworker-bonding-epoxy','hardworker-bonding-sbr','hardworker-eco-plaster','hardworker-floor-screed','hardworker-integral-waterproofing','hardworker-micro-concrete','hardworker-tile-fix','hardworker-tile-fix-epoxy','hardworker-tile-fix-slurry','hardworker-tile-grout','hardworker-tile-grout-epoxy','hardworker-wall-putty','hardworker-waterproofing-coat','indiacements-coromandel-king','indiacements-sankar','kcp-opc-43','kcp-opc-53','kcp-opc-53s','kcp-rhpc','kcp-shreshtaa','kcp-super-shreshtaa','maha-concrete-special','maha-hd-ppc','maha-psc','maha-solid-hd','nagarjuna-irs-53s','nagarjuna-opc-43','nagarjuna-opc-53','nagarjuna-ppc','nagarjuna-visistha','penna-concrete-guard','penna-power-ppc','penna-premium-43','penna-premium-53','penna-suraksha-psc','ramco-infra-opc-43','ramco-infra-opc-53','ramco-infra-super-opc-53','ramco-karthic-super-plus','ramco-opc-43','ramco-opc-53','ramco-samudra','ramco-super-coast','ramco-super-fast','ramco-super-steel','ramco-supercrete','ramco-superfine-efc','ramco-supergrade','sagar-opc-53','sagar-ppc','shree-jungrodhak','shree-magna','shree-powermax','shree-rockstrong','shree-roofon','ultratech-bath-kit','ultratech-bath-membrane','ultratech-bitupro','ultratech-crack-filler','ultratech-epoxy-grout','ultratech-flex','ultratech-hiflex','ultratech-membranes','ultratech-opc-43','ultratech-opc-53','ultratech-ppc','ultratech-psc','ultratech-readiplast-pro','ultratech-sbr','ultratech-tilefixo','ultratech-top-shield','ultratech-top-shield-ezy','ultratech-weather-plus','ultratech-wp200'];
 
   /* ---------- shop details and page text (editable in /admin when Supabase is set up) ---------- */
   var SETTINGS = {
