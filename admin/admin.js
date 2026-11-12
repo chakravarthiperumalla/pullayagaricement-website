@@ -399,6 +399,7 @@
       var cur = byId('category', c.id), sort = cur ? cur.sort : (STATIC.CATEGORIES.indexOf(c) * 10);
       var d = Object.assign({}, cur || {}, c, { sort: sort, img: cur && cur.img ? cur.img : c.img });
       if (!d.img) delete d.img;
+      if (!c.ask) delete d.ask; // the category now has products
       rows.push({ kind: 'category', id: c.id, sort: sort, data: d });
     });
     prods.forEach(function (p, i) {
