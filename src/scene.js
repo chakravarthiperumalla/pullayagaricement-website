@@ -331,6 +331,45 @@ function palletModel(w, d) {
   return g;
 }
 
+/* A sand heap: lumpy cone with a grainy texture, a shovel stuck in it and a price-on-request sign. */
+function heapModel(o) {
+  var base = '#B3854F';
+  var c = document.createElement('canvas'); c.width = c.height = 256;
+  var x = c.getContext('2d'); x.fillStyle = base; x.fillRect(0, 0, 256, 256);
+  for (var i = 0; i < 2600; i++) {
+    var k = Math.random();
+    x.fillStyle = k < 0.5 ? 'rgba(60,40,20,' + (0.08 + Math.random() * 0.2) + ')' : 'rgba(255,245,220,' + (0.08 + Math.random() * 0.25) + ')';
+    x.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2);
+  }
+  var t = tex(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 2);
+  var mat = std('#ffffff', 1); mat.map = t;
+  // lumpy cone: lathe profile, then jitter the vertices a little
+  var pts = [];
+  for (var j = 0; j <= 12; j++) { var u = j / 12; pts.push(new THREE.Vector2(1.05 * (1 - Math.pow(u, 0.9)) + 0.0001, 0.85 * (1 - Math.pow(1 - u, 1.6)))); }
+  var geo = new THREE.LatheGeometry(pts, 48), pos = geo.attributes.position;
+  for (var v = 0; v < pos.count; v++) {
+    var px = pos.getX(v), py = pos.getY(v), pz = pos.getZ(v), a = Math.atan2(pz, px);
+    var n = 1 + 0.06 * Math.sin(a * 5 + py * 4) + 0.035 * Math.sin(a * 11);
+    if (py > 0.01) { pos.setX(v, px * n); pos.setZ(v, pz * n); }
+  }
+  geo.computeVertexNormals();
+  var g = new THREE.Group();
+  var heap = new THREE.Mesh(geo, mat); heap.scale.set(1, 1, 0.8); g.add(heap);
+  // shovel
+  var wood = std('#8B6D45', 0.8), steel = std('#9DA3A8', 0.45, 0.6);
+  var sh = new THREE.Group();
+  var handle = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.0, 10), wood); handle.position.y = 0.5; sh.add(handle);
+  var grip = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.04, 0.04), wood); grip.position.y = 1.0; sh.add(grip);
+  var blade = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.3, 0.02), steel); blade.position.y = -0.1; sh.add(blade);
+  sh.position.set(0.32, 0.55, 0.12); sh.rotation.z = -0.45; sh.rotation.x = 0.15; g.add(sh);
+  // sign on a stake
+  var lab = std('#ffffff', 0.7); lab.map = labelTexture({ base: '#2B2528', brand: o.brand, name: o.name, sub: o.sub, logo: o.logo }, true);
+  var sign = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.5, 0.03), [wood, wood, wood, wood, lab, wood]);
+  sign.position.set(-0.5, 0.7, 0.75); sign.rotation.y = 0.25; g.add(sign);
+  var stake = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.6, 0.04), wood); stake.position.set(-0.5, 0.3, 0.73); g.add(stake);
+  return g;
+}
+
 /* One factory for every product shape. Returns a Group standing on y=0, ~2 units tall. */
 function buildModel(shape, o) {
   var m;
@@ -346,6 +385,7 @@ function buildModel(shape, o) {
     case 'block': m = blockModel(o); break;
     case 'roll': m = rollModel(o); break;
     case 'rebar': m = rebarModel(); break;
+    case 'heap': m = heapModel(o); break;
     default: m = bagModel(o); m.position.y = 0.75;
   }
   var wrap = new THREE.Group(); wrap.add(m);
@@ -463,7 +503,8 @@ function hero(container, opts) {
     var cats = opts.items || [];
     var spots = {
       steel: [-2.1, 2.3, 1.5, 0.35], paint: [-1.9, 0.6, 1.05, 0.15], chem: [1.25, 0.55, 1.3, -0.15],
-      adhesive: [-0.95, 2.15, 1.5, 0.1], hardware: [0.2, 2.05, 1.2, -0.1], white: [2.25, 1.8, 1.4, -0.3]
+      adhesive: [-0.95, 2.15, 1.5, 0.1], hardware: [0.2, 2.05, 1.2, -0.1], white: [2.25, 1.8, 1.4, -0.3],
+      sand: [1.25, 2.45, 1.4, -0.3]
     };
     cats.forEach(function (c) {
       var s = spots[c.id]; if (!s) return;

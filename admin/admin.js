@@ -26,10 +26,10 @@
   function fail(e) { console.error(e); toast('Error: ' + ((e && e.message) || e)); }
   function val(form, name) { var el = form.elements[name]; return el ? el.value.trim() : ''; }
   function staticPhoto(id) { return (STATIC.PHOTOS || []).indexOf(id) > -1 ? '../assets/img/products/' + id + '.png' : ''; }
-  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1 };
+  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1, birlaopus: 1 };
   function imgOf(kind, x) {
     if (kind === 'product') return x.img || staticPhoto(x.id);
-    if (kind === 'brand') return x.logo || '../assets/img/brands/' + x.id + (SVG_LOGO[x.id] ? '.svg' : '.png');
+    if (kind === 'brand') return x.logo ? (/^(https?:|\/|data:)/.test(x.logo) ? x.logo : '../' + x.logo) : '../assets/img/brands/' + x.id + (SVG_LOGO[x.id] ? '.svg' : '.png');
     if (kind === 'category') return x.img || '../assets/img/cats/' + x.id + '.jpg';
     return '';
   }

@@ -17,7 +17,6 @@
   var PHONES = (S.phones && S.phones.length ? S.phones : [{ num: '918179951999', show: '81799 51999', name: 'Perumalla Ramu' }]).filter(function (x) { return x && x.num; });
   var PHONE = String(S.whatsapp || PHONES[0].num).replace(/\D/g, ''), PHONE_SHOW = PHONES[0].show || PHONES[0].num;
   var REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJYXtqRQDTNzoRZ1EW4Wtk4a8';
-  var PROFILE_EMBED = 'https://maps.google.com/maps?cid=12673521240897900903&hl=en&output=embed';
   var GEN_URL = 'https://chakravarthiperumalla.github.io/pullayagaricement-googlereview/';
   var MAP_EMBED = 'https://maps.google.com/maps?q=16.5412239,81.5264281&z=17&hl=en&output=embed';
   var SITE = 'Sri Rama Mohana Agencies, Bhimavaram';
@@ -31,7 +30,7 @@
   var photo = {};
   (C.PHOTOS || []).forEach(function (id) { photo[id] = 'assets/img/products/' + id + '.png'; });
   C.PRODUCTS.forEach(function (p) { if (p.img) photo[p.id] = p.img; });
-  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1 };
+  var SVG_LOGO = { nagarjuna: 1, birlawhite: 1, hardworker: 1, godrej: 1, sagar: 1, birlaopus: 1 };
   function brandLogo(b) { return b.logo || ('assets/img/brands/' + b.id + (SVG_LOGO[b.id] ? '.svg' : '.png')); }
   function catImg(c) { return c.img || ('assets/img/cats/' + c.id + '.jpg'); }
   function inStock(p) { return p.in_stock !== false; }
@@ -143,6 +142,10 @@
       case 'block':
         s = '<rect x="14" y="40" width="92" height="50" rx="2" fill="#E7E7E2"/><g fill="#5a5a55" opacity=".3"><circle cx="24" cy="50" r="1.5"/><circle cx="40" cy="74" r="1.8"/><circle cx="52" cy="48" r="1.3"/><circle cx="70" cy="80" r="1.6"/><circle cx="88" cy="52" r="1.5"/><circle cx="96" cy="76" r="1.3"/><circle cx="30" cy="82" r="1.2"/></g><rect x="34" y="56" width="52" height="18" fill="' + o + '"/><rect x="40" y="62" width="40" height="5" fill="' + ink + '" opacity=".8"/>';
         break;
+      case 'heap':
+        s = '<path d="M10 110Q30 58 60 40Q90 58 110 110z" fill="' + c + '"/><path d="M60 40Q74 52 84 72Q70 64 60 66z" fill="' + l + '" opacity=".55"/>' +
+          '<path d="M10 110Q30 58 60 40Q42 70 36 110z" fill="' + d + '" opacity=".35"/><circle cx="48" cy="88" r="1.6" fill="' + d + '"/><circle cx="70" cy="94" r="1.4" fill="' + d + '"/><circle cx="60" cy="76" r="1.2" fill="' + d + '"/>';
+        break;
       case 'roll':
         s = '<rect x="18" y="36" width="84" height="56" rx="6" fill="#2B2B2E"/><rect x="46" y="36" width="28" height="56" fill="' + c + '"/><rect x="46" y="58" width="28" height="12" fill="' + ink + '" opacity=".85"/><ellipse cx="102" cy="64" rx="4" ry="28" fill="#3B3B3F"/>';
         break;
@@ -170,6 +173,7 @@
       '<strong class="pcard-name">' + esc(lineName(p)) + '</strong>' +
       '<span class="pcard-te l-te" lang="te">' + esc(p.te) + '</span>' +
       (p.mrp ? '<span class="pcard-mrp">MRP ' + mrpText(p) + '</span>' : '') +
+      (p.quote ? '<span class="pcard-mrp">' + T('Price on request', 'ధర కోసం సంప్రదించండి') + '</span>' : '') +
       '<span class="pcard-chips">' + stockTag(p) + chips + '</span></span></a>';
   }
   function crumbs(list) {
@@ -268,10 +272,9 @@
   function secReviews() {
     return '<section class="sec sec-reviews" aria-labelledby="h-rev">' +
       sectionHead(T('Be one of our first Google reviewers', 'మా మొదటి Google రివ్యూ ఇచ్చేవారిలో మీరూ ఒకరు కండి'), T('If we served you well, a short review on Google helps the next customer find us.', 'మా సేవ నచ్చితే, Googleలో చిన్న రివ్యూ ఇస్తే తర్వాతి కస్టమర్ మమ్మల్ని సులభంగా కనుగొంటారు.'), 'h-rev') +
-      '<div class="rv-wrap"><div class="rv"><label class="fld"><span>' + T('Your review (optional draft)', 'మీ రివ్యూ (డ్రాఫ్ట్, ఐచ్ఛికం)') + '</span><textarea id="rv-text" rows="3" data-ph-en="Write a line or two, we copy it for you" data-ph-te="ఒకటి రెండు లైన్లు రాయండి, మేము కాపీ చేస్తాం"></textarea></label>' +
+      '<div class="rv"><label class="fld"><span>' + T('Your review (optional draft)', 'మీ రివ్యూ (డ్రాఫ్ట్, ఐచ్ఛికం)') + '</span><textarea id="rv-text" rows="3" data-ph-en="Write a line or two, we copy it for you" data-ph-te="ఒకటి రెండు లైన్లు రాయండి, మేము కాపీ చేస్తాం"></textarea></label>' +
       '<div class="rv-act"><button type="button" class="btn btn-pri" data-act="review">' + T('Copy and open Google reviews', 'కాపీ చేసి Google రివ్యూ తెరువు') + '</button>' +
-      '<a class="btn btn-ghost" href="' + GEN_URL + '" target="_blank" rel="noopener">' + T('Help me write it', 'రాయడంలో సహాయం చేయండి') + '</a></div></div>' +
-      '<div class="rv-profile"><iframe src="' + PROFILE_EMBED + '" title="Our Google business profile" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></div></section>';
+      '<a class="btn btn-ghost" href="' + GEN_URL + '" target="_blank" rel="noopener">' + T('Help me write it', 'రాయడంలో సహాయం చేయండి') + '</a></div></div></section>';
   }
 
   function secVisit() {
@@ -307,13 +310,14 @@
     }).filter(Boolean);
     var spec = [
       { id: 'steel', brand: 'Steel', line: 'TMT bars', sub: '', shape: 'rebar', tint: 'slate' },
-      { id: 'paint', brand: 'Paints', line: 'Interior & exterior', sub: 'Ask us', shape: 'can', tint: 'orange' },
+      { id: 'paint', brand: 'Birla Opus', line: 'Paints', sub: 'Interior & exterior', shape: 'can', tint: 'b-birlaopus' },
+      { id: 'sand', brand: 'Sand', line: 'River & M sand', sub: 'Call for price', shape: 'heap', tint: 'kraft' },
       { id: 'chem', brand: 'Fosroc', line: 'Waterproofing', sub: 'Roof & bathroom', shape: 'pail', tint: 'b-fosroc' },
       { id: 'adhesive', brand: 'Fevicol', line: 'Adhesives', sub: 'Wood & tile', shape: 'bottle', tint: 'b-fevicol' },
       { id: 'hardware', brand: 'Godrej', line: 'Locks', sub: 'Security', shape: 'padlock', tint: 'b-godrej' },
       { id: 'white', brand: 'Birla White', line: 'WallCare Putty', sub: 'Wall finish', shape: 'sack', tint: 'white' }
     ];
-    var HERO_BRAND = { chem: 'fosroc', adhesive: 'fevicol', hardware: 'godrej', white: 'birlawhite' };
+    var HERO_BRAND = { paint: 'birlaopus', chem: 'fosroc', adhesive: 'fevicol', hardware: 'godrej', white: 'birlawhite' };
     var items = spec.filter(function (s) { return catById[s.id]; }).map(function (s) {
       var c = catById[s.id];
       var hb = HERO_BRAND[s.id] && brandById[HERO_BRAND[s.id]];
@@ -442,6 +446,11 @@
     related.sort(function (x, y) { return (y.cat === p.cat) - (x.cat === p.cat); });
     related = related.slice(0, 4);
     var msg = 'Hello, I would like a price for: ' + p.name + ' (' + b.name + ')';
+    if (p.quote) msg = 'Hello, I need ' + p.name + '.\nQuantity (tractor / lorry loads): \nSite location: \nPlease share today\'s price and delivery date.';
+    var quote = p.quote ? '<div class="mrp quote"><p class="mrp-n">' + T('Price on request', 'ధర కోసం సంప్రదించండి') + '</p>' +
+      '<p class="mrp-note">' + T('Rates change with the season and the load size. Call or WhatsApp us, the distributor, with the quantity and your site location for today\'s price and delivery.', 'సీజన్, లోడ్ సైజును బట్టి ధర మారుతుంది. ఈరోజు ధర, డెలివరీ కోసం పరిమాణం, సైట్ లొకేషన్‌తో డిస్ట్రిబ్యూటర్ అయిన మాకు కాల్ లేదా వాట్సాప్ చేయండి.') + '</p>' +
+      '<div class="quote-act">' + PHONES.map(function (x) { return '<a class="btn btn-pri" href="tel:+' + x.num + '">' + T('Call', 'కాల్') + ' ' + esc(x.show || x.num) + (x.name ? ' <small>(' + esc(x.name) + ')</small>' : '') + '</a>'; }).join('') +
+      '<a class="btn btn-wa" href="' + wa(msg) + '" target="_blank" rel="noopener">' + T('WhatsApp for price', 'ధర కోసం WhatsApp') + '</a></div></div>' : '';
     app.innerHTML = '<div class="page">' + crumbs([homeCrumb, [T(c.en, c.te), '#/c/' + c.id], [esc(b.name), '#/b/' + b.id + '?c=' + c.id], [esc(lineName(p))]]) +
       '<article class="prod" style="--t:' + hex(p.tint) + '">' +
       (photo[id] || vids(p).length ? '<div class="prod-view">' + gallery(p) +
@@ -452,7 +461,7 @@
       '<div class="prod-info"><p class="by"><a href="#/b/' + b.id + '">' + esc(b.name) + '</a></p>' +
       '<h1 class="ph">' + esc(lineName(p)) + '</h1>' + (inStock(p) ? '<p class="stock in">' + T('In stock', 'స్టాక్ ఉంది') + '</p>' : '<p class="stock out">' + T('Out of stock right now. Ask us when it comes back.', 'ప్రస్తుతం స్టాక్ లేదు. ఎప్పుడు వస్తుందో అడగండి.') + '</p>') +
       '<p class="te-line l-te" lang="te">' + esc(p.te) + '</p>' +
-      '<p class="desc">' + esc(p.desc) + '</p>' +
+      '<p class="desc">' + esc(p.desc) + '</p>' + quote +
       (p.mrp ? '<div class="mrp"><p class="mrp-n"><span>MRP</span> ' + mrpText(p) + '</p>' +
         '<p class="mrp-note">' + T('Price is negotiable: we are Godrej distributors, so ask us for the best rate. MRP includes taxes, from the Godrej price list effective 1 July 2026.', 'ధర చర్చించుకోవచ్చు: మేము గోద్రెజ్ డిస్ట్రిబ్యూటర్లం, మంచి ధర కోసం అడగండి. MRP పన్నులతో కలిపి, 1 జూలై 2026 గోద్రెజ్ ధరల జాబితా ప్రకారం.') + '</p></div>' : '') +
       (p.finishes && p.finishes.length ? '<h2 class="mini">' + T(plural(p.finishes.length, 'finish', 'finishes') + ' available', p.finishes.length + ' ఫినిష్‌లు అందుబాటులో') + '</h2><ul class="fins">' + p.finishes.map(function (f) { return '<li class="chip">' + esc(f) + '</li>'; }).join('') + '</ul>' : '') +
