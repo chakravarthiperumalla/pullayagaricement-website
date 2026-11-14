@@ -2,12 +2,13 @@
  * 3D scenes for the site (Three.js). Everything is built in code: no model files. Hero labels carry the brand logo when one is passed in.
  * Bundled to assets/js/scene.js with:  npm run build
  *
- * PGScene.hero(container, opts)    interactive godown display on the home page
+ * PGScene.hero(container, opts)    3D logo with brand logos travelling on a helix around it (home page)
  * PGScene.product(container, spec) turntable viewer on a product page
  * PGScene.supported()              true when WebGL is available
  */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import LOGO_SHAPE from './logo-shape.js';
 
 var INK = '#241E20';
 var ORANGE = '#F58220';
@@ -454,75 +455,77 @@ function makeLoop(container, tick) {
 /* ------------------------------------------------------------------ HERO */
 function hero(container, opts) {
   opts = opts || {};
-  var reduced = !!opts.reduced;
-  var renderer, scene, camera, root, stop, disposed = false;
-  var hitObjs = [], hovered = null, tip = opts.tooltip || null;
-  var TINT = opts.tint || {};
-
-  var logos = {};
-  var urls = (opts.bags || []).concat(opts.items || []).map(function (b) { return b.logo; }).filter(Boolean);
-  return Promise.all([fontsReady()].concat(urls.map(function (u) { return loadImg(u).then(function (im) { logos[u] = im; }); }))).then(function () {
+  var reduced = !!opts.reduced, disposed = false;
+  var tip = opts.tooltip || null;
+  var brands = (opts.brands || []).filter(function (b) { return b && b.logo; });
+  var imgs = {};
+  return Promise.all(brands.map(function (b) { return loadImg(b.logo).then(function (im) { imgs[b.logo] = im; }); })).then(function () {
     if (disposed) return { dispose: function () {} };
-    renderer = makeRenderer(container);
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
+    var renderer = makeRenderer(container);
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
     addLights(scene, renderer);
-    root = new THREE.Group(); scene.add(root);
+    var warm = new THREE.PointLight('#FF9A3C', 6, 9, 1.6); warm.position.set(0, 0.2, 2.2); scene.add(warm);
+    var root = new THREE.Group(); scene.add(root);
 
-    // floor
-    var fc = document.createElement('canvas'); fc.width = fc.height = 256;
-    var fx = fc.getContext('2d'), fg = fx.createRadialGradient(128, 128, 10, 128, 128, 126);
-    fg.addColorStop(0, 'rgba(58,50,54,0.9)'); fg.addColorStop(0.55, 'rgba(46,39,42,0.6)'); fg.addColorStop(1, 'rgba(36,30,32,0)');
-    fx.fillStyle = fg; fx.fillRect(0, 0, 256, 256);
-    var floor = new THREE.Mesh(new THREE.PlaneGeometry(8.4, 8.4), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(fc), transparent: true, depthWrite: false, toneMapped: false }));
-    floor.rotation.x = -Math.PI / 2; floor.position.y = -0.002; root.add(floor);
+    /* soft orange glow behind the logo */
+    var gc = document.createElement('canvas'); gc.width = gc.height = 256;
+    var gx = gc.getContext('2d'), gg = gx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    gg.addColorStop(0, 'rgba(245,130,32,0.55)'); gg.addColorStop(0.45, 'rgba(245,130,32,0.16)'); gg.addColorStop(1, 'rgba(245,130,32,0)');
+    gx.fillStyle = gg; gx.fillRect(0, 0, 256, 256);
+    var glow = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 6.4), new THREE.MeshBasicMaterial({ map: tex(gc), transparent: true, depthWrite: false, toneMapped: false }));
+    glow.position.z = -1.4; scene.add(glow);
 
-    var pallet = palletModel(5.8, 1.5); pallet.position.set(0, 0, -1.35); root.add(pallet);
-
-    function place(shape, o, x, z, scaleH, rotY, hit, onPallet) {
-      var m = buildModel(shape, o);
-      normalise(m, scaleH);
-      var holder = new THREE.Group();
-      holder.add(m);
-      holder.position.set(x, onPallet ? 0.14 : 0, z);
-      holder.rotation.y = rotY || 0;
-      holder.userData.hit = hit; holder.userData.base = holder.scale.x; holder.userData.k = 1;
-      if (!onPallet) { var sh = blobShadow(scaleH * 1.0, 0.5); sh.position.set(x, 0.006, z); root.add(sh); }
-      root.add(holder);
-      hitObjs.push(holder);
-      return holder;
+    /* the logo, extruded from its traced outline */
+    var logo = new THREE.Group();
+    function extrude(list, depth, mat, z) {
+      list.forEach(function (s) {
+        var shape = new THREE.Shape(s.o.map(function (p) { return new THREE.Vector2(p[0], p[1]); }));
+        s.h.forEach(function (h) { shape.holes.push(new THREE.Path(h.map(function (p) { return new THREE.Vector2(p[0], p[1]); }))); });
+        var geo = new THREE.ExtrudeGeometry(shape, { depth: depth, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.012, bevelSegments: 2, curveSegments: 4 });
+        var m = new THREE.Mesh(geo, mat); m.position.z = z; logo.add(m);
+      });
     }
+    extrude(LOGO_SHAPE.white, 0.26, new THREE.MeshStandardMaterial({ color: '#F4F1EC', roughness: 0.32, metalness: 0.08 }), -0.13);
+    extrude(LOGO_SHAPE.orange, 0.2, new THREE.MeshStandardMaterial({ color: ORANGE, roughness: 0.3, metalness: 0.25, emissive: '#5A2400', emissiveIntensity: 0.25 }), -0.07);
+    logo.scale.setScalar(1.5);
+    var logoHolder = new THREE.Group(); logoHolder.add(logo); root.add(logoHolder);
 
-    // five cement bags on the pallet (each opens its brand page)
-    var bags = opts.bags || [];
-    bags.forEach(function (b, i) {
-      var x = -2.3 + i * 1.15;
-      place('bag', { tintHex: TINT[b.tint] || '#C9A06A', brand: b.name, name: b.line, sub: b.sub, logo: logos[b.logo] }, x, -1.35, 1.7, -x * 0.07, { href: b.href, label: b.label }, true);
-    });
-    // category objects in front
-    var cats = opts.items || [];
-    var spots = {
-      steel: [-2.1, 2.3, 1.5, 0.35], paint: [-1.9, 0.6, 1.05, 0.15], chem: [1.25, 0.55, 1.3, -0.15],
-      adhesive: [-0.95, 2.15, 1.5, 0.1], hardware: [0.2, 2.05, 1.2, -0.1], white: [2.25, 1.8, 1.4, -0.3],
-      sand: [1.25, 2.45, 1.4, -0.3]
-    };
-    cats.forEach(function (c) {
-      var s = spots[c.id]; if (!s) return;
-      var o = { tintHex: TINT[c.tint] || '#C9A06A', brand: c.brand || '', name: c.line || '', sub: c.sub || '', logo: logos[c.logo] };
-      place(c.shape, o, s[0], s[1], s[2], s[3], { href: c.href, label: c.label }, false);
+    /* brand tiles travelling up a helix around the logo */
+    var R = 2.75, HH = 5.0, TURNS = 2.0, N = brands.length;
+    function helixAt(u) { var a = u * TURNS * Math.PI * 2; return new THREE.Vector3(Math.sin(a) * R, (u - 0.5) * HH, Math.cos(a) * R); }
+    var path = [];
+    for (var i = 0; i <= 240; i++) path.push(helixAt(i / 240));
+    var helixLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(path), new THREE.LineDashedMaterial({ color: '#F58220', dashSize: 0.1, gapSize: 0.06, transparent: true, opacity: 0.7 }));
+    helixLine.computeLineDistances(); root.add(helixLine);
+
+    var tiles = brands.map(function (b, k) {
+      var c = document.createElement('canvas'); c.width = 320; c.height = 160;
+      var x = c.getContext('2d');
+      x.fillStyle = '#ffffff'; x.beginPath();
+      if (x.roundRect) x.roundRect(4, 4, 312, 152, 26); else x.rect(4, 4, 312, 152);
+      x.fill(); x.lineWidth = 6; x.strokeStyle = '#C9A06A'; x.stroke();
+      var im = imgs[b.logo];
+      if (im) {
+        var iw = im.naturalWidth || im.width || 1, ih = im.naturalHeight || im.height || 1, s = Math.min(256 / iw, 108 / ih);
+        x.drawImage(im, 160 - iw * s / 2, 80 - ih * s / 2, iw * s, ih * s);
+      }
+      var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex(c), transparent: true, depthWrite: false, toneMapped: false }));
+      sp.userData = { u0: k / N, k: 1, b: b };
+      root.add(sp);
+      return sp;
     });
 
     var el = renderer.domElement;
-    var spin = 0, vel = 0, dragging = false, moved = 0, lx = 0, ly = 0, ptr = { x: 0, y: 0 }, aspect = 1.2;
+    el.setAttribute('role', 'img');
+    el.setAttribute('aria-label', 'Sri Rama Mohana Agencies logo in 3D, with the logos of the brands we stock circling it');
+    var yaw = 0, vel = 0, dragging = false, moved = 0, lx = 0, hovered = null, flow = 0, ptr = { x: 0, y: 0 };
 
     function resize() {
       var w = container.clientWidth || 600, h = container.clientHeight || 500;
-      renderer.setSize(w, h, false);
-      aspect = w / h; camera.aspect = aspect;
-      var dist = 10.6 * Math.max(1, 1.2 / aspect);
-      camera.position.set(0, 5.4 + (dist - 10.6) * 0.2, dist);
-      camera.lookAt(0, 0.55, 0.35);
-      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false); camera.aspect = w / h;
+      var dist = 14.2 * Math.max(1, 0.95 / (w / h));
+      camera.position.set(0, 3.4, dist); camera.lookAt(0, 0.1, 0); camera.updateProjectionMatrix();
     }
     var ro = ('ResizeObserver' in window) ? new ResizeObserver(resize) : null;
     if (ro) ro.observe(container); else window.addEventListener('resize', resize);
@@ -533,58 +536,62 @@ function hero(container, opts) {
       var r = el.getBoundingClientRect();
       v2.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
       ray.setFromCamera(v2, camera);
-      var hits = ray.intersectObjects(hitObjs, true);
-      if (!hits.length) return null;
-      var o = hits[0].object; while (o && !o.userData.hit) o = o.parent;
-      return o || null;
+      var hits = ray.intersectObjects(tiles.filter(function (t) { return t.material.opacity > 0.35; }), false);
+      return hits.length ? hits[0].object : null;
     }
     function setHover(o) {
       if (o === hovered) return;
-      hovered = o;
-      el.style.cursor = o ? 'pointer' : 'grab';
-      if (tip) {
-        if (!o) { tip.hidden = true; }
-        else { tip.hidden = false; tip.innerHTML = o.userData.hit.label; }
-      }
+      hovered = o; el.style.cursor = o ? 'pointer' : 'grab';
+      if (tip) { if (!o) tip.hidden = true; else { tip.hidden = false; tip.innerHTML = o.userData.b.label; } }
     }
-    function onDown(ev) { dragging = true; moved = 0; lx = ev.clientX; ly = ev.clientY; vel = 0; try { el.setPointerCapture(ev.pointerId); } catch (e) {} }
+    function onDown(ev) { dragging = true; moved = 0; lx = ev.clientX; vel = 0; try { el.setPointerCapture(ev.pointerId); } catch (e) {} }
     function onMove(ev) {
-      ptr.x = (ev.clientX / window.innerWidth) * 2 - 1;
-      if (dragging) {
-        var dx = ev.clientX - lx; moved += Math.abs(dx) + Math.abs(ev.clientY - ly);
-        lx = ev.clientX; ly = ev.clientY;
-        spin = Math.max(-0.75, Math.min(0.75, spin + dx * 0.006)); vel = dx * 0.006;
-        el.style.cursor = 'grabbing';
-      } else { setHover(pick(ev)); }
+      var r = el.getBoundingClientRect();
+      ptr.x = ((ev.clientX - r.left) / r.width) * 2 - 1; ptr.y = ((ev.clientY - r.top) / r.height) * 2 - 1;
+      if (dragging) { var dx = ev.clientX - lx; moved += Math.abs(dx); lx = ev.clientX; yaw += dx * 0.008; vel = dx * 0.008; el.style.cursor = 'grabbing'; }
+      else setHover(pick(ev));
     }
     function onUp(ev) {
       var wasDrag = moved > 6; dragging = false;
       try { el.releasePointerCapture(ev.pointerId); } catch (e) {}
-      if (!wasDrag) { var o = pick(ev); if (o && opts.onNavigate) opts.onNavigate(o.userData.hit.href); }
-      el.style.cursor = 'grab';
+      if (!wasDrag) { var o = pick(ev); if (o && opts.onNavigate) opts.onNavigate(o.userData.b.href); }
+      el.style.cursor = hovered ? 'pointer' : 'grab';
     }
-    function onLeave() { setHover(null); }
+    function onLeave() { setHover(null); ptr.x = ptr.y = 0; }
     el.style.cursor = 'grab';
     el.addEventListener('pointerdown', onDown); el.addEventListener('pointermove', onMove);
     el.addEventListener('pointerup', onUp); el.addEventListener('pointercancel', onUp); el.addEventListener('pointerleave', onLeave);
 
-    var proj = new THREE.Vector3();
+    var proj = new THREE.Vector3(), wp = new THREE.Vector3();
+    function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
     function tick(dt, t) {
-      if (!dragging) { spin += vel; vel *= 0.9; if (!reduced) spin += (Math.sin(t * 0.35) * 0.18 - spin) * 0.006; }
-      root.rotation.y += ((spin + ptr.x * 0.06) - root.rotation.y) * 0.1;
-      hitObjs.forEach(function (o) {
-        var target = (o === hovered) ? 1.07 : 1; o.userData.k += (target - o.userData.k) * 0.18;
-        o.scale.setScalar(o.userData.k);
+      if (!dragging) { yaw += vel; vel *= 0.93; }
+      if (!reduced && !hovered) flow += dt * 0.035;
+      root.rotation.y += (yaw + ptr.x * 0.18 - root.rotation.y) * 0.08;
+      root.rotation.x += (ptr.y * 0.08 - root.rotation.x) * 0.08;
+      // the logo turns gently on its own so the depth reads, but always faces front again
+      logoHolder.rotation.y = -root.rotation.y + (reduced ? 0 : Math.sin(t * 0.6) * 0.38);
+      logoHolder.position.y = reduced ? 0 : Math.sin(t * 0.9) * 0.06;
+      tiles.forEach(function (sp) {
+        var u = (sp.userData.u0 + flow) % 1;
+        sp.position.copy(helixAt(u));
+        sp.getWorldPosition(wp);
+        var front = 0.5 + 0.5 * (wp.z / R);                       // 1 in front of the logo, 0 behind it
+        var fade = smooth(0, 0.08, u) * (1 - smooth(0.92, 1, u));  // fade in at the bottom, out at the top
+        sp.material.opacity = fade * (0.35 + 0.65 * front);
+        var target = (sp === hovered ? 1.25 : 1) * (0.78 + 0.32 * front);
+        sp.userData.k += (target - sp.userData.k) * 0.15;
+        sp.scale.set(0.96 * sp.userData.k, 0.48 * sp.userData.k, 1);
+        sp.renderOrder = front > 0.5 ? 2 : 0;
       });
       if (tip && hovered && !tip.hidden) {
-        var b = new THREE.Box3().setFromObject(hovered);
-        proj.set((b.min.x + b.max.x) / 2, b.max.y, (b.min.z + b.max.z) / 2).project(camera);
+        hovered.getWorldPosition(proj); proj.y += 0.35; proj.project(camera);
         tip.style.left = ((proj.x * 0.5 + 0.5) * container.clientWidth) + 'px';
         tip.style.top = ((-proj.y * 0.5 + 0.5) * container.clientHeight) + 'px';
       }
       renderer.render(scene, camera);
     }
-    stop = makeLoop(container, tick);
+    var stop = makeLoop(container, tick);
     tick(0, 0);
     if (opts.onReady) opts.onReady();
 
@@ -596,11 +603,6 @@ function hero(container, opts) {
         el.removeEventListener('pointerup', onUp); el.removeEventListener('pointercancel', onUp); el.removeEventListener('pointerleave', onLeave);
         if (ro) ro.disconnect(); else window.removeEventListener('resize', resize);
         disposeAll(scene, renderer);
-      },
-      highlight: function (id) {
-        // used by the legend buttons below the canvas
-        var found = null; hitObjs.forEach(function (o) { if (id && o.userData.hit.href === id) found = o; });
-        setHover(found);
       }
     };
   });

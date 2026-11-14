@@ -204,18 +204,13 @@
 
   function secBrands() {
     var rows = C.BRANDS.map(function (b) {
-      var cs = catsOf(b.id), n = prodsOf(b.id).length;
-      return '<li><a class="wall-row" href="#/b/' + b.id + '">' +
-        '<span class="wall-logo"><img src="' + brandLogo(b) + '" alt="' + esc(b.name) + ' logo" loading="lazy"></span>' +
-        '<span class="wall-name">' + esc(b.name) + '</span>' +
-        '<span class="wall-te l-te" lang="te">' + esc(b.te) + '</span>' +
-        '<span class="wall-by">' + esc(b.by) + '</span>' +
-        '<span class="wall-cats">' + cs.map(function (c) { return '<span class="chip chip-line">' + T(c.en, c.te) + '</span>'; }).join('') + '</span>' +
-        '<span class="wall-n">' + T(plural(n, 'product', 'products'), n + ' ఉత్పత్తులు') + '</span></a></li>';
+      return '<li><a class="brand-tile" href="#/b/' + b.id + '">' +
+        '<span class="brand-logo"><img src="' + brandLogo(b) + '" alt="" loading="lazy"></span>' +
+        '<span class="brand-name">' + T(esc(b.name), esc(b.te || b.name)) + '</span></a></li>';
     }).join('');
     return '<section class="sec sec-wall" aria-labelledby="h-brands">' +
-      sectionHead(T('The brands on our shelves', 'మా షెల్ఫ్‌లలో ఉన్న బ్రాండ్లు'), T('Every brand from our visiting card, with the products we deal in.', 'మా విజిటింగ్ కార్డులోని ప్రతి బ్రాండ్, మేము అమ్మే ఉత్పత్తులతో.'), 'h-brands') +
-      '<ul class="wall">' + rows + '</ul></section>';
+      sectionHead(T('The brands on our shelves', 'మా షెల్ఫ్‌లలో ఉన్న బ్రాండ్లు'), '', 'h-brands') +
+      '<ul class="brand-grid">' + rows + '</ul></section>';
   }
 
   function secGuide() {
@@ -300,49 +295,24 @@
     { en: 'Trusted service', te: 'నమ్మకమైన సేవ', ic: '<path d="M12 3l7 3v5.500c0 4.500-3 7.800-7 9.500-4-1.700-7-5-7-9.500V6z"/><path d="M8.800 12.200l2.200 2.200 4.200-4.400"/>' }
   ];
 
-  function heroItems() {
-    var cementBrands = ['ultratech', 'ambuja', 'kcp', 'ramco', 'nagarjuna'];
-    var bags = cementBrands.map(function (id) {
-      var p = prodsOf(id, 'cement')[0]; if (!p) return null;
-      var b = brandById[id];
-      return { name: b.name, logo: brandLogo(b), line: lineName(p), sub: subLine(p), tint: 'b-' + id, mark: packMark(p), href: '#/b/' + id,
-        label: '<b>' + esc(b.name) + '</b><small>' + T(plural(prodsOf(id).length, 'product', 'products'), prodsOf(id).length + ' ఉత్పత్తులు') + '</small>' };
-    }).filter(Boolean);
-    var spec = [
-      { id: 'steel', brand: 'Steel', line: 'TMT bars', sub: '', shape: 'rebar', tint: 'slate' },
-      { id: 'paint', brand: 'Birla Opus', line: 'Paints', sub: 'Interior & exterior', shape: 'can', tint: 'b-birlaopus' },
-      { id: 'sand', brand: 'Sand', line: 'River & M sand', sub: 'Call for price', shape: 'heap', tint: 'kraft' },
-      { id: 'chem', brand: 'Fosroc', line: 'Waterproofing', sub: 'Roof & bathroom', shape: 'pail', tint: 'b-fosroc' },
-      { id: 'adhesive', brand: 'Fevicol', line: 'Adhesives', sub: 'Wood & tile', shape: 'bottle', tint: 'b-fevicol' },
-      { id: 'hardware', brand: 'Godrej', line: 'Locks', sub: 'Security', shape: 'padlock', tint: 'b-godrej' },
-      { id: 'white', brand: 'Birla White', line: 'WallCare Putty', sub: 'Wall finish', shape: 'sack', tint: 'white' }
-    ];
-    var HERO_BRAND = { paint: 'birlaopus', chem: 'fosroc', adhesive: 'fevicol', hardware: 'godrej', white: 'birlawhite' };
-    var items = spec.filter(function (s) { return catById[s.id]; }).map(function (s) {
-      var c = catById[s.id];
-      var hb = HERO_BRAND[s.id] && brandById[HERO_BRAND[s.id]];
-      return { id: s.id, logo: hb ? brandLogo(hb) : '', shape: s.shape, tint: s.tint, brand: s.brand, line: s.line, sub: s.sub, href: '#/c/' + s.id, label: '<b>' + T(c.en, c.te) + '</b><small>' + (c.ask ? T('Ask us', 'అడగండి') : T('Open category', 'కేటగిరీ తెరువు')) + '</small>' };
-    });
-    return { bags: bags, items: items };
-  }
-
   function viewHome() {
     var nb = C.BRANDS.length, np = C.PRODUCTS.length;
     app.innerHTML =
       '<section class="hero" aria-labelledby="hero-h"><div class="hero-in">' +
       '<div class="hero-copy">' +
-      '<div class="hero-brand"><div class="hero-word"><img src="assets/img/logo-mark.png" width="240" height="200" alt=""><p class="hw-name">' + T('Sri Rama Mohana Agencies', 'శ్రీ రామ మోహన ఏజెన్సీస్') + '</p><p class="hw-tag">' + T('Your trusted store for cement, paint and hardware', 'సిమెంట్, పెయింట్, హార్డ్‌వేర్ కోసం మీ నమ్మకమైన స్టోర్') + '</p></div>' +
-      '<a class="hero-poster" href="assets/img/poster.jpg" target="_blank" rel="noopener"><img src="assets/img/poster.jpg" width="1000" height="1000" alt="Sri Rama Mohana Agencies poster: Mee Ramu, all leading brands, Bhimavaram"></a></div>' +
-      '<ul class="tags" aria-label="' + esc('Premium quality, High strength, Waterproof protection, Trusted service') + '">' + TAGS.map(function (t, i) {
-        return '<li class="tag" style="--i:' + i + '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + t.ic + '</svg><span>' + T(t.en, t.te) + '</span></li>';
-      }).join('') + '</ul>' +
+      '<p class="eyebrow"><span>' + T('Sri Rama Mohana Agencies', 'శ్రీ రామ మోహన ఏజెన్సీస్') + '</span><span>' + T('Bhimavaram', 'భీమవరం') + '</span></p>' +
       '<h1 id="hero-h">' + T(S.heroTitleEn || 'A complete building solution', S.heroTitleTe || 'సంపూర్ణ నిర్మాణ పరిష్కారం') + '</h1>' +
-      '<p class="lead">' + (S.heroLeadEn ? T(S.heroLeadEn, S.heroLeadTe || S.heroLeadEn) : T(nb + ' brands and ' + np + ' products: cement, white cement, waterproofing, adhesives and locks under one roof in Gunupudi, Bhimavaram.', 'గుణుపూడి, భీమవరంలో ఒకే చోట ' + nb + ' బ్రాండ్లు, ' + np + ' ఉత్పత్తులు: సిమెంట్, వైట్ సిమెంట్, వాటర్‌ప్రూఫింగ్, అడ్హెసివ్స్, తాళాలు.')) + '</p>' +
+      '<p class="lead">' + (S.heroLeadEn ? T(S.heroLeadEn, S.heroLeadTe || S.heroLeadEn) : T(nb + ' brands and ' + np + ' products: cement, paint, sand, waterproofing, adhesives and locks under one roof in Gunupudi, Bhimavaram.', 'గుణుపూడి, భీమవరంలో ఒకే చోట ' + nb + ' బ్రాండ్లు, ' + np + ' ఉత్పత్తులు: సిమెంట్, పెయింట్, ఇసుక, వాటర్‌ప్రూఫింగ్, అడ్హెసివ్స్, తాళాలు.')) + '</p>' +
       '<div class="hero-cta"><a class="btn btn-pri" href="#/categories">' + T('Browse by category', 'కేటగిరీల వారీగా చూడండి') + '</a>' +
       '<a class="btn btn-wa" href="' + wa('Hello, I would like a price for building materials.') + '" target="_blank" rel="noopener">' + T('Ask for a price', 'ధర అడగండి') + '</a></div>' +
+      '<div class="hero-proof"><a class="hero-poster" href="assets/img/poster.jpg" target="_blank" rel="noopener"><img src="assets/img/poster.jpg" width="1000" height="1000" alt="Sri Rama Mohana Agencies poster: Mee Ramu, all leading brands, Bhimavaram"></a>' +
+      '<div class="proof-side"><p class="proof-cap">' + T('Your trusted store for cement, paint and hardware', 'సిమెంట్, పెయింట్, హార్డ్‌వేర్ కోసం మీ నమ్మకమైన స్టోర్') + '</p>' +
+      '<ul class="tags" aria-label="' + esc('Premium quality, High strength, Waterproof protection, Trusted service') + '">' + TAGS.map(function (t) {
+        return '<li class="tag"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + t.ic + '</svg><span>' + T(t.en, t.te) + '</span></li>';
+      }).join('') + '</ul></div></div>' +
       '</div>' +
       '<div class="stage" id="stage"><div class="stage-gl" id="gl"></div><div class="hero-tip" id="tip" hidden></div>' +
-      '<p class="stage-hint">' + T('Drag to turn the pallet. Tap a bag or an item to open it.', 'ప్యాలెట్‌ని లాగి తిప్పండి. బస్తా లేదా వస్తువుని తాకితే తెరుచుకుంటుంది.') + '</p></div>' +
+      '<p class="stage-hint">' + T('Drag to turn. Tap a brand logo to open it.', 'లాగి తిప్పండి. బ్రాండ్ లోగోను తాకితే తెరుచుకుంటుంది.') + '</p></div>' +
       '</div><div class="ruler" aria-hidden="true"></div></section>' +
       secCategories() + secBrands() + secGuide() + secQuote() + secReviews() + secVisit();
     renderQuoteList();
@@ -351,18 +321,19 @@
 
   function startHero() {
     var gl = $('#gl'), stage = $('#stage');
-    var data = heroItems();
+    var brands = C.BRANDS.filter(function (b) { return !b.logo; }).map(function (b) { // our own logo is the centrepiece
+      return { logo: brandLogo(b), href: '#/b/' + b.id, label: '<b>' + esc(b.name) + '</b><small>' + T('Open brand', 'బ్రాండ్ తెరువు') + '</small>' };
+    });
     function fallback() {
       stage.classList.add('no-gl');
-      gl.innerHTML = '<ul class="shelf">' + data.bags.map(function (b) { return '<li><a href="' + b.href + '" style="--t:' + hex(b.tint) + '">' + thumb('bag', b.tint) + '<span>' + esc(b.name) + '</span></a></li>'; }).join('') +
-        data.items.map(function (i) { return '<li><a href="' + i.href + '" style="--t:' + hex(i.tint) + '">' + thumb(i.shape, i.tint) + '<span>' + T(catById[i.id].en, catById[i.id].te) + '</span></a></li>'; }).join('') + '</ul>';
+      gl.innerHTML = '<img class="stage-logo" src="assets/img/logo-mark.png" width="240" height="200" alt="">';
     }
     if (!window.PGScene || !PGScene.supported()) { fallback(); return; }
     live = PGScene.hero(gl, {
-      reduced: REDUCED, tint: C.TINT, bags: data.bags, items: data.items, tooltip: $('#tip'),
+      reduced: REDUCED, brands: brands, tooltip: $('#tip'),
       onNavigate: function (href) { location.hash = href; },
       onReady: function () { stage.classList.add('gl-on'); }
-    }).catch(function (e) { fallback(); return null; });
+    }).catch(function () { fallback(); return null; });
   }
 
   function viewCategories() {
